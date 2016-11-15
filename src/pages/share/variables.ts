@@ -1,8 +1,8 @@
 import { Http, URLSearchParams } from '@angular/http';
-
+import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
-import { } from 'rxjs'
+import 'rxjs';
 @Injectable()
 export class Service {
     private url = `http://test3.hutech.edu.vn/quantrac/api/Static/`
@@ -14,7 +14,7 @@ export class Service {
         let body = new URLSearchParams()
         body.set("Username", user)
         body.set("pass", pass)
-        return this._http.post(`${this.url}url`, body)
+        return this._http.post(`${this.url}${url}`, body)
             .toPromise()
             .then(respone => respone['_body'])
             .catch(this.handleError)

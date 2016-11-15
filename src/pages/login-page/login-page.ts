@@ -1,6 +1,7 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Service } from '../share/variables';
+import { NK_Navigation } from '../NK_Navigation/NK_Navigation'
 /*
   Generated class for the LoginPage page.
 
@@ -72,15 +73,20 @@ export class LoginPage {
   constructor(public navCtrl: NavController, private service: Service) {
   }
 
-  Login() {
-    this.service.LoginToSever(this.username, this.password, `/Static/POST_Login`)
-      .then(data => {
-        if (data == "true") {
-          this.service.ShowToastOK("Đăng nhập thành công")
-          return this.navCtrl.push(LoginPage)
-        }else{
-          return 
-        }
-      })
+  Login = () => {
+    if (this.username.length == 0 || this.password.length == 0) {
+      this.service.ShowToastOK("Không được để trống")
+    } else {
+      this.service.LoginToSever(this.username, this.password, `POST_Login`)
+        .then(data => {
+          if (data == "true") {
+            this.service.ShowToastOK("Đăng nhập thành công")
+            return this.navCtrl.push(NK_Navigation)
+          } else {
+            return this.service.ShowToastOK("Đăng nhập không thành công")
+          }
+        })
+    }
+
   }
 }

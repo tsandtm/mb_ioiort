@@ -3,7 +3,7 @@
   <name>nkengineering</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-  <content src="http://10.1.219.128:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>

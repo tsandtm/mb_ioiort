@@ -24,9 +24,9 @@ export class Service {
      * Get_DataInfo_Service
      */
     public GetData(url: string) {
-        return this._http.get(`${this.url}Get_InfoLogin?username=system`)
+        return this._http.get(`${this.url}${url}`)
             .toPromise()
-            .then(respone => { respone['_body'] })
+            .then(respone => { JSON.parse(respone['_body']) })
             .catch(this.handleError)
     }
 

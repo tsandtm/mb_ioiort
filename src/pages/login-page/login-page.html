@@ -4,7 +4,12 @@
  
     <ion-row>
       <ion-col>
-        <img [@flyInBottomSlow]="logoState" src="assets/images/joshuamorony.png" />
+        <h2 [@flyInBottomSlow]="logoState" >NK Engineering</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h4 [@flyInBottomSlow]="logoState" >Đăng nhập hệ thống</h4>
       </ion-col>
     </ion-row>
  
@@ -13,12 +18,12 @@
         <ion-list inset [@bounceInBottom]="formState">
  
           <ion-item>
-            <ion-label>Username</ion-label>
+            <ion-label>Tài khoản</ion-label>
             <ion-input type="text"  name="name" [(ngModel)]=username clearInput></ion-input>
           </ion-item>
  
           <ion-item>
-            <ion-label>Password</ion-label>
+            <ion-label>Mật Mã</ion-label>
             <ion-input type="password" name="password" [(ngModel)]=password clearInput></ion-input>
           </ion-item>
  
@@ -28,7 +33,7 @@
  
     <ion-row>
       <ion-col>
-        <button ion-button class="login-button" [@fadeIn]="loginState" (click)="Login()">Login</button>
+        <button ion-button class="login-button" [@fadeIn]="loginState" (click)="Login()">Đăng nhập</button>
       </ion-col>
     </ion-row>
  

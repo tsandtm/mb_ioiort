@@ -74,7 +74,7 @@ export class LoginPage {
   }
 
   Login = () => {
-    if (this.username.length == 0 || this.password.length == 0) {
+    if (this.username.toString().length == 0 || this.password.toString().length == 0) {
       this.service.ShowToastOK("Không được để trống")
     } else {
       this.service.LoginToSever(this.username, this.password, `POST_Login`)

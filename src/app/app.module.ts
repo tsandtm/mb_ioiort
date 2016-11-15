@@ -7,6 +7,8 @@ import { Service } from '../pages/share/variables';
 import { NK_Navigation } from '../pages/NK_Navigation/NK_Navigation'
 import { PageGoogleMapPage } from '../pages/page-google-map/page-google-map';
 import { TabsViewPage } from '../pages/tabs-view/tabs-view';
+import {LogoutPage} from '../pages/logout/logout';
+import { ChartPage } from '../pages/chart/chart'
 @NgModule({
   declarations: [
     MyApp,
@@ -14,7 +16,9 @@ import { TabsViewPage } from '../pages/tabs-view/tabs-view';
     NK_Navigation,
     PageGoogleMapPage,
     TabsViewPage,
-    LoginPage
+    LogoutPage,
+    LoginPage,
+    ChartPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -26,7 +30,9 @@ import { TabsViewPage } from '../pages/tabs-view/tabs-view';
     NK_Navigation,
     PageGoogleMapPage,
     LoginPage,
-    TabsViewPage
+    LogoutPage,
+    TabsViewPage,
+    ChartPage
   ],
   providers: [Service]
 })

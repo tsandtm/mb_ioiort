@@ -14,12 +14,12 @@
  
           <ion-item>
             <ion-label>Username</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text"  name="name" [(ngModel)]=username clearInput></ion-input>
           </ion-item>
  
           <ion-item>
             <ion-label>Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input type="password" name="password" [(ngModel)]=password clearInput></ion-input>
           </ion-item>
  
         </ion-list>
@@ -28,7 +28,7 @@
  
     <ion-row>
       <ion-col>
-        <button ion-button class="login-button" [@fadeIn]="loginState">Login</button>
+        <button ion-button class="login-button" [@fadeIn]="loginState" (click)="Login()">Login</button>
       </ion-col>
     </ion-row>
  

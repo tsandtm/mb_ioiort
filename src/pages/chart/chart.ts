@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import { NavController } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
 
 /*
@@ -14,11 +14,12 @@ import { ThongTinQuanTrac } from './thongtinquantrac';
   templateUrl: 'chart.html'
 })
 export class PageChartPage {
-
+  settime:any
   options: any;
   chart: any;
   past: any = {};
   isLoading = true;
+  errorMessage: string;
   summary: {
     time: Date,
     info: Array<{ name: string, value: number, DonViTinh: string }>
@@ -26,7 +27,7 @@ export class PageChartPage {
 
 
 
-  constructor(public navCtrl: NavController, private _http: Http) {
+  constructor(public navCtrl: NavController, private _http: Http, public viewCtrl: ViewController) {
 
   }
 
@@ -38,6 +39,9 @@ export class PageChartPage {
     this.callApi();
   }
 
+/**
+ *  tạo biểu đồ
+ */
   private createChartOption() {
     let options = {
       chart: {
@@ -74,6 +78,9 @@ export class PageChartPage {
     this.chart = charInstance;
   }
 
+/**
+ * Gọi đến api get để lấy 60 giá trị đầu
+ */
   callApi() {
     this.service(60)
       .subscribe(
@@ -84,6 +91,13 @@ export class PageChartPage {
       (error) => { console.error('Error: ', error) })
   }
 
+  showError(message: string){
+    this.errorMessage = message;
+  }
+
+/**
+ * cái service để gọi xuống api
+ */
   private service(sl: number) {
     return this._http
       .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
@@ -94,6 +108,9 @@ export class PageChartPage {
       })
   }
 
+/**
+ * chuyển json thành thông tin quản trắc
+ */
   private convertToThongTinQuanTrac(json: any[]): ThongTinQuanTrac[] {
     let ttqt = json.map(value => {
       let qt: ThongTinQuanTrac = new ThongTinQuanTrac();
@@ -112,6 +129,9 @@ export class PageChartPage {
     return ttqt;
   }
 
+/**
+ * tạo và update Summary
+ */
   private createAndUpdateSummary(ttqt: ThongTinQuanTrac[]) {
     let a = [];
     ttqt.forEach(qt => {
@@ -123,6 +143,9 @@ export class PageChartPage {
     };
   }
 
+/**
+ * thêm dữ liệu vào biểu đồ và đặt thời gian chạy update
+ */
   private addDataToChart(thongtinquantrac: ThongTinQuanTrac[]) {
     for (let i = 0; i < 4; i++) {
       this.chart.addSeries({
@@ -149,12 +172,16 @@ export class PageChartPage {
 
     this.chart.redraw();
 
-    setInterval(() => {
+    this.settime = setInterval(() => {
       this.checkPast();
-    }, 5000);
+    }, 2000);
   }
 
+/**
+ * kiểm tra dữ liệu có thay đổi
+ */
   private checkPast() {
+    console.log('chay');
     let qtToUpdate: ThongTinQuanTrac[] = [];
     this.service(4).subscribe(
       (ttqt) => {
@@ -176,6 +203,9 @@ export class PageChartPage {
     )
   }
 
+/**
+ * update cái biểu đồ
+ */
   private updateChart(qt: ThongTinQuanTrac[]) {
     qt.forEach(ttqt => {
       this.chart.series.forEach(sery => {
@@ -190,6 +220,14 @@ export class PageChartPage {
       })
     })
     this.chart.redraw();
+  }
+
+/**
+ *
+ */
+  public dismiss(){
+    clearInterval(this.settime);
+    this.viewCtrl.dismiss();
   }
 
 }

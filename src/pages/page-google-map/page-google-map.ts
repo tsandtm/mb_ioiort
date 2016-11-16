@@ -46,6 +46,7 @@ export class PageGoogleMapPage {
       .then(data => {
         console.log(data)
         this.result = data;
+        console.log(this.result)
         this.LoadMap(parseInt(this.result[0].map_lat), parseInt(this.result[0].map_long),"IONIC")
       })
   }

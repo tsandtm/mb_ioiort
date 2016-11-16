@@ -1,7 +1,7 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Service } from '../share/variables';
-import { NK_Navigation } from '../NK_Navigation/NK_Navigation'
+import {HomePage} from '../home/home';
 /*
   Generated class for the LoginPage page.
 
@@ -81,7 +81,7 @@ export class LoginPage {
         .then(data => {
           if (data == "true") {
             this.service.ShowToastOK("Đăng nhập thành công")
-            return this.navCtrl.push(NK_Navigation)
+            return this.navCtrl.push(HomePage)
           } else {
             return this.service.ShowToastOK("Đăng nhập không thành công")
           }

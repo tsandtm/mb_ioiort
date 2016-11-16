@@ -1,24 +1,23 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {LoginPage} from '../login-page/login-page';
-import { NK_Navigation } from '../NK_Navigation/NK_Navigation';
 
-/*
-  Generated class for the Home page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+import { PageGoogleMapPage } from '../page-google-map/page-google-map';
+import { LoginPage } from '../login-page/login-page';
+import {PageChartPage} from '../chart/chart';
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+    templateUrl: 'home.html'
 })
 export class HomePage {
+    constructor(public navCtrl: NavController) {
+    }
 
-  constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    this.navCtrl.push(NK_Navigation)
-  }
-
+    GoToMap = () => {
+        this.navCtrl.push(PageGoogleMapPage)
+    }
+    GoToChart = () => {
+        this.navCtrl.push(PageChartPage)
+    }
+    Logout = () => {
+        this.navCtrl.setRoot(LoginPage)
+    }
 }

@@ -18,9 +18,10 @@ export class PageChartPage {
   options: any;
   chart: any;
   past: any = {};
+  isLoading = true;
   summary: {
     time: Date,
-    info: Array<{ name: string, value: number }>
+    info: Array<{ name: string, value: number, DonViTinh: string }>
   };
 
 
@@ -77,6 +78,7 @@ export class PageChartPage {
     this.service(60)
       .subscribe(
       (ttqt: ThongTinQuanTrac[]) => {
+        this.isLoading = false;
         this.addDataToChart(ttqt);
       },
       (error) => { console.error('Error: ', error) })
@@ -87,7 +89,7 @@ export class PageChartPage {
       .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
       .map(res => res.json())
       .map(json => {
-        let ttqt = this.convertToThongTinQuanTrac(json);;
+        let ttqt = this.convertToThongTinQuanTrac(json);
         return ttqt;
       })
   }
@@ -113,7 +115,7 @@ export class PageChartPage {
   private createAndUpdateSummary(ttqt: ThongTinQuanTrac[]) {
     let a = [];
     ttqt.forEach(qt => {
-      a.push({ name: qt.DoDo_Name, value: qt.PropertyValueDecimal });
+      a.push({ name: qt.DoDo_Name, value: qt.PropertyValueDecimal, DonViTinh: qt.DonViTinh });
     })
     this.summary = {
       time: ttqt[0].time,
@@ -170,7 +172,7 @@ export class PageChartPage {
           this.updateChart(qtToUpdate);
         }
       },
-      (error) => {console.error('Error: ', error)}
+      (error) => { console.error('Error: ', error) }
     )
   }
 

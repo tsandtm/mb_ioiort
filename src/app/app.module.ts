@@ -5,9 +5,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login-page/login-page';
 import { Service } from '../pages/share/variables';
-import { NK_Navigation } from '../pages/NK_Navigation/NK_Navigation'
 import { PageGoogleMapPage } from '../pages/page-google-map/page-google-map';
-import { TabsViewPage } from '../pages/tabs-view/tabs-view';
 import {PageChartPage} from '../pages/chart/chart'
 import {ChartModule} from 'angular2-highcharts';
 import {LogoutPage} from '../pages/logout/logout';
@@ -16,9 +14,7 @@ import {LogoutPage} from '../pages/logout/logout';
   declarations: [
     MyApp,
     HomePage,
-    NK_Navigation,
     PageGoogleMapPage,
-    TabsViewPage,
     LoginPage,
     PageChartPage,
     LogoutPage
@@ -32,10 +28,8 @@ import {LogoutPage} from '../pages/logout/logout';
   entryComponents: [
     MyApp,
     HomePage,
-    NK_Navigation,
     PageGoogleMapPage,
     LoginPage,
-    TabsViewPage,
     PageChartPage,
     LogoutPage
   ],

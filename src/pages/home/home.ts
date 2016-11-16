@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {LoginPage} from '../login-page/login-page';
+import { NK_Navigation } from '../NK_Navigation/NK_Navigation';
 
 /*
   Generated class for the Home page.
@@ -16,7 +18,7 @@ export class HomePage {
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    console.log('Hello HomePage Page');
+    this.navCtrl.push(NK_Navigation)
   }
 
 }

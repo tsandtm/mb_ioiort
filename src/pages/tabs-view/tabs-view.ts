@@ -4,8 +4,7 @@ import { HomePage } from '../home/home'
 import { PageGoogleMapPage } from '../page-google-map/page-google-map'
 import {PageChartPage} from '../chart/chart';
 import {LogoutPage} from '../logout/logout';
-
-
+import { NK_Navigation } from '../NK_Navigation/NK_Navigation';
 
 /*
   Generated class for the TabsView tabs.
@@ -27,5 +26,6 @@ export class TabsViewPage {
   constructor(public navCtrl: NavController) {
 
   }
+
 
 }

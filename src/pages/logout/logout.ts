@@ -14,7 +14,9 @@ import {LoginPage} from '../login-page/login-page';
 })
 export class LogoutPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {
+
+  }
 
   ionViewDidLoad() {
     this.navCtrl.parent.parent.setRoot(LoginPage);

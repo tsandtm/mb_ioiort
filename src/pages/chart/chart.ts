@@ -19,7 +19,7 @@ export class PageChartPage {
   chart: any;
   past: any = {};
   isLoading = true;
-  errorMessage: string;
+  errorMessage: string = "";
   summary: {
     time: Date,
     info: Array<{ name: string, value: number, DonViTinh: string }>
@@ -88,10 +88,14 @@ export class PageChartPage {
         this.isLoading = false;
         this.addDataToChart(ttqt);
       },
-      (error) => { console.error('Error: ', error) })
+      (error) => {
+        console.error('Error: ', error);
+        this.showError(error._body);
+       })
   }
 
   showError(message: string){
+    this.isLoading = false;
     this.errorMessage = message;
   }
 
@@ -174,7 +178,7 @@ export class PageChartPage {
 
     this.settime = setInterval(() => {
       this.checkPast();
-    }, 2000);
+    }, 20000);
   }
 
 /**
@@ -199,7 +203,10 @@ export class PageChartPage {
           this.updateChart(qtToUpdate);
         }
       },
-      (error) => { console.error('Error: ', error) }
+      (error) => {
+        console.error('Error: ', error);
+        this.showError(error._body);
+       }
     )
   }
 

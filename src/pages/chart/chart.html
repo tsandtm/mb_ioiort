@@ -30,15 +30,15 @@
             {{value.name}}
           </td>
           <td style="text-align: right;">
-           <strong>{{value.value}}</strong> ({{value.DonViTinh}})
+            <strong>{{value.value}}</strong> ({{value.DonViTinh}})
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div>
-
+  <div *ngIf="errorMessage" style="color: red">
+    {{errorMessage}}
   </div>
 
 </ion-content>

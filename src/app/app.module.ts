@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {HttpModule} from '@angular/http';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -7,6 +8,10 @@ import { Service } from '../pages/share/variables';
 import { NK_Navigation } from '../pages/NK_Navigation/NK_Navigation'
 import { PageGoogleMapPage } from '../pages/page-google-map/page-google-map';
 import { TabsViewPage } from '../pages/tabs-view/tabs-view';
+import {PageChartPage} from '../pages/chart/chart'
+import {ChartModule} from 'angular2-highcharts';
+import {LogoutPage} from '../pages/logout/logout';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -14,10 +19,14 @@ import { TabsViewPage } from '../pages/tabs-view/tabs-view';
     NK_Navigation,
     PageGoogleMapPage,
     TabsViewPage,
-    LoginPage
+    LoginPage,
+    PageChartPage,
+    LogoutPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    ChartModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,7 +35,9 @@ import { TabsViewPage } from '../pages/tabs-view/tabs-view';
     NK_Navigation,
     PageGoogleMapPage,
     LoginPage,
-    TabsViewPage
+    TabsViewPage,
+    PageChartPage,
+    LogoutPage
   ],
   providers: [Service]
 })

@@ -1,23 +1,22 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {LoginPage} from '../login-page/login-page';
 
 /*
-  Generated class for the Logout page.
+  Generated class for the Hom2 page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-logout',
-  templateUrl: 'logout.html'
+  selector: 'page-hom2',
+  templateUrl: 'hom2.html'
 })
-export class LogoutPage {
+export class Hom2Page {
 
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    this.navCtrl.parent.parent.setRoot(LoginPage);
+    console.log('Hello Hom2Page Page');
   }
 
 }

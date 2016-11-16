@@ -30,7 +30,8 @@ export class PageGoogleMapPage {
   LoadAPI = () => {
     this.service.GetData(`Get_ThongTinDiaDiem`)
       .then(data => {
-        this.result = JSON.parse(data['_body']);
+        console.log(data[`_body`])
+        this.result = data
         this.LoadMap(parseInt(this.result[0].map_lat), parseInt(this.result[0].map_long),"IONIC")
       })
   }

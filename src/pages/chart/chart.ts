@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { NavController, ViewController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
+import {Service} from '../share/variables';
 
 /*
   Generated class for the PageChart page.
@@ -27,7 +28,10 @@ export class PageChartPage {
 
 
 
-  constructor(public navCtrl: NavController, private _http: Http, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController,
+   private _http: Http,
+   public viewCtrl: ViewController,
+   private service: Service) {
 
   }
 
@@ -82,11 +86,16 @@ export class PageChartPage {
  * Gọi đến api get để lấy 60 giá trị đầu
  */
   callApi() {
-    this.service(60)
+    this.getData(60)
       .subscribe(
       (ttqt: ThongTinQuanTrac[]) => {
         this.isLoading = false;
-        this.addDataToChart(ttqt);
+        if(ttqt.length !== 0){
+          this.addDataToChart(ttqt);
+        }else{
+          this.showError('Hiện tại không có dữ liệu');
+        }
+
       },
       (error) => {
         console.error('Error: ', error);
@@ -102,14 +111,15 @@ export class PageChartPage {
 /**
  * cái service để gọi xuống api
  */
-  private service(sl: number) {
-    return this._http
-      .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
-      .map(res => res.json())
-      .map(json => {
-        let ttqt = this.convertToThongTinQuanTrac(json);
-        return ttqt;
-      })
+  private getData(sl: number) {
+    // return this._http
+    //   .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
+    //   .map(res => res.json())
+    //   .map(json => {
+    //     let ttqt = this.convertToThongTinQuanTrac(json);
+    //     return ttqt;
+    //   })
+    return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
   }
 
 /**
@@ -187,7 +197,7 @@ export class PageChartPage {
   private checkPast() {
     console.log('chay');
     let qtToUpdate: ThongTinQuanTrac[] = [];
-    this.service(4).subscribe(
+    this.getData(4).subscribe(
       (ttqt) => {
         ttqt.forEach(qt => {
           if (this.past[qt.DoDo_Name].getTime() !== qt.time.getTime()) {

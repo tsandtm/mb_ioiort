@@ -1,7 +1,7 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController,Loading } from 'ionic-angular';
 import { Service } from '../share/variables';
-import {HomePage} from '../home/home';
+import { HomePage } from '../home/home';
 /*
   Generated class for the LoginPage page.
 
@@ -62,7 +62,7 @@ import {HomePage} from '../home/home';
   ]
 })
 export class LoginPage {
-
+  loader:Loading
   logoState: any = "in";
   cloudState: any = "in";
   loginState: any = "in";
@@ -70,10 +70,11 @@ export class LoginPage {
   // username + password
   username: string;
   password: string;
-  constructor(public navCtrl: NavController, private service: Service) {
+  constructor(public navCtrl: NavController, private service: Service, public loadingCtrl: LoadingController) {
   }
 
   Login = () => {
+    this.presentLoading()
     if (this.username.toString().length == 0 || this.password.toString().length == 0) {
       this.service.ShowToastOK("Không được để trống")
     } else {
@@ -83,10 +84,20 @@ export class LoginPage {
             this.service.ShowToastOK("Đăng nhập thành công")
             return this.navCtrl.push(HomePage)
           } else {
+            this.loader.dismiss();
             return this.service.ShowToastOK("Đăng nhập không thành công")
           }
         })
     }
 
+  }
+  presentLoading() {
+    this.loader = this.loadingCtrl.create(
+      {
+        content: "Please wait...",
+        dismissOnPageChange: true
+      }
+    );
+    this.loader.present();
   }
 }

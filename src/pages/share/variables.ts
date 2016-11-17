@@ -2,10 +2,12 @@ import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { ToastController } from 'ionic-angular';
+import { ThongTinQuanTrac } from '../chart/thongtinquantrac';
 import 'rxjs';
 @Injectable()
 export class Service {
-  private url = `http://quantrac.nkengineering.com.vn/api/Static/`
+  //  private url = `http://quantrac.nkengineering.com.vn/api/Static/`
+  private url = `http://test3.hutech.edu.vn/quantrac/api/Static/`
   constructor(private _http: Http, private _toast: ToastController) {
     this._http = _http
   }
@@ -42,10 +44,40 @@ export class Service {
   }
   public ShowToastOK = (mess: string) => {
     let toast = this._toast.create({
-      position: `middle`,
+      position: `bottom`,
       duration: 2000,
       message: mess
     })
     toast.present()
+  }
+
+  public getThongTinQuanTrac(url: string){
+    return this._http.get(this.url + url)
+      .map(res => res.json())
+      .map((json) => {
+        let ttqt = this.convertToThongTinQuanTrac(json);
+        return ttqt;
+      })
+  }
+
+  /**
+ * chuyển json thành thông tin quản trắc
+ */
+  private convertToThongTinQuanTrac(json: any[]): ThongTinQuanTrac[] {
+    let ttqt = json.map(value => {
+      let qt: ThongTinQuanTrac = new ThongTinQuanTrac();
+      qt.ColumnName = value.ColumnName;
+      qt.DiemQuanTracID = value.DiemQuanTracID;
+      qt.DoDo_ID = value.DoDo_ID;
+      qt.DoDo_Name = value.DoDo_Name;
+      qt.DonViTinh = value.DonViTinh;
+      qt.id = value.id;
+      qt.PropertyValueDecimal = value.PropertyValueDecimal;
+      qt.PropertyValueString = value.PropertyValueString;
+      qt.time = new Date(value.time);
+      return qt;
+    })
+
+    return ttqt;
   }
 }

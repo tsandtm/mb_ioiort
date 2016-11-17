@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { Service } from '../share/variables'
 import { Http } from '@angular/http';
@@ -22,32 +22,35 @@ export class PageGoogleMapPage {
 
   home = HomePage;
   result: any;
-  constructor(public navCtrl: NavController, private service: Service, private http: Http) { this.http = http }
+  constructor(public navCtrl: NavController, private service: Service, private http: Http, public platform: Platform) { this.http = http }
 
+  /**
+   * Nếu IOS thì thông báo Alert rồi back về trang trước
+   */
   ionViewDidLoad() {
-    this.LoadAPI()
+    if (this.platform.is('ios')) {
+      this.service.ShowToastOK(`Chua Update cho IOS`);
+      this.navCtrl.pop()
+      // return this.service.Alert(`Thông báo`, `Chưa phát triển trên IOS`, `OK`)
+    } else {
+      return this.LoadAPI()
+    }
   }
 
   LoadAPI = () => {
-    // this.http.get("http://test3.hutech.edu.vn/quantrac/api/Static/Get_ThongTinDiaDiem")
-    //   .subscribe(data => {
-    //     this.result = JSON.parse(data['_body']);//Bind data to items object
-    //     console.log(this.result)
-
-    //     // console.log(this.result[0].DiaChi);
-    //     // this.TieuDe = this.result[0].TenGoi;
-    //     // this.DiaChi = this.result[0].DiaChi;
-    //     this.LoadMap(parseInt(this.result[0].map_lat), parseInt(this.result[0].map_long), "IONIC")
-    //     // this.LoadMapBrower(this.result[0].map_lat, this.result[0].map_long)
-    //   }, error => {
-    //     console.log(error);
-    //   });
     this.service.GetData(`Get_ThongTinDiaDiem`)
       .then(data => {
-        console.log(data)
-        this.result = data;
-        console.log(this.result)
-        this.LoadMap(parseInt(this.result[0].map_lat), parseInt(this.result[0].map_long),"IONIC")
+        this.LoadMap(parseInt(data[0].map_lat), parseInt(data[0].map_long), "IONIC")
+      })
+      .catch(err => {
+        this.service.ShowToastOK(`Da co loi vui long thu lai sau`);
+        this.navCtrl.pop()
+        // return this.service.Alert(
+        //   `Lỗi`,
+        //   `Lỗi từ server vui lòng quay lại sau`,
+        //   `OK`
+        // )
+
       })
   }
 

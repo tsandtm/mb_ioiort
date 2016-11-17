@@ -5,14 +5,14 @@ import { ToastController } from 'ionic-angular';
 import 'rxjs';
 @Injectable()
 export class Service {
-  private url = `http://test3.hutech.edu.vn/quantrac/api/Static/`
+  private url = `http://quantrac.nkengineering.com.vn/api/Static/`
   constructor(private _http: Http, private _toast: ToastController) {
     this._http = _http
   }
 
   public LoginToSever(user: any, pass: any, url: string): Promise<any> {
     let body = new URLSearchParams()
-    body.set("Username", user)
+    body.set("UserName", user)
     body.set("pass", pass)
     return this._http.post(`${this.url}${url}`, body)
       .toPromise()

@@ -229,10 +229,16 @@ export class PageChartPage {
     this.chart.redraw();
   }
 
+  onPageWillLeave(){
+    console.log('leave page')
+    this.dismiss();
+  }
+
 /**
  *
  */
   public dismiss(){
+    console.log('cancel page')
     clearInterval(this.settime);
     this.viewCtrl.dismiss();
   }

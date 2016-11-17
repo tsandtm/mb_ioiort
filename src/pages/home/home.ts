@@ -3,7 +3,7 @@ import { NavController, ModalController } from 'ionic-angular';
 
 import { PageGoogleMapPage } from '../page-google-map/page-google-map';
 import { LoginPage } from '../login-page/login-page';
-import {PageChartPage} from '../chart/chart';
+import { PageChartPage } from '../chart/chart';
 @Component({
     templateUrl: 'home.html'
 })
@@ -13,7 +13,7 @@ export class HomePage {
 
     GoToMap = () => {
         // this.navCtrl.push(PageGoogleMapPage)
-        let modal = this.modalCtrl.create(PageChartPage);
+        let modal = this.modalCtrl.create(PageGoogleMapPage);
         modal.present();
     }
     GoToChart = () => {

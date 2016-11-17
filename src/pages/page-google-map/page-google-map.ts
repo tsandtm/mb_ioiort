@@ -24,13 +24,19 @@ export class PageGoogleMapPage {
   result: any;
   constructor(public navCtrl: NavController, private service: Service, private http: Http, public platform: Platform) { this.http = http }
 
+  /**
+   * Nếu IOS thì thông báo Alert rồi back về trang trước
+   */
   ionViewDidLoad() {
     if (this.platform.is('ios')) {
+
       this.service.ShowToastOK(`Chưa hộ trợ IOS...vui lòng thử lại sau`)
       this.navCtrl.pop()
     } else {
       this.LoadAPI()
+
     }
+    
   }
 
   LoadAPI = () => {
@@ -42,6 +48,7 @@ export class PageGoogleMapPage {
         console.log(this.result)
         this.LoadMap(parseInt(this.result[0].map_lat), parseInt(this.result[0].map_long), "IONIC")
       })
+   
   }
 
   LoadMap = (lat: number, lng: number, tieude: string) => {

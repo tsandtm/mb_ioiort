@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { NavController, ViewController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
 import {Service} from '../share/variables';
@@ -120,27 +120,6 @@ export class PageChartPage {
     //     return ttqt;
     //   })
     return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
-  }
-
-/**
- * chuyển json thành thông tin quản trắc
- */
-  private convertToThongTinQuanTrac(json: any[]): ThongTinQuanTrac[] {
-    let ttqt = json.map(value => {
-      let qt: ThongTinQuanTrac = new ThongTinQuanTrac();
-      qt.ColumnName = value.ColumnName;
-      qt.DiemQuanTracID = value.DiemQuanTracID;
-      qt.DoDo_ID = value.DoDo_ID;
-      qt.DoDo_Name = value.DoDo_Name;
-      qt.DonViTinh = value.DonViTinh;
-      qt.id = value.id;
-      qt.PropertyValueDecimal = value.PropertyValueDecimal;
-      qt.PropertyValueString = value.PropertyValueString;
-      qt.time = new Date(value.time);
-      return qt;
-    })
-
-    return ttqt;
   }
 
 /**

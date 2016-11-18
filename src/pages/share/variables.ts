@@ -6,8 +6,8 @@ import { ThongTinQuanTrac } from '../chart/thongtinquantrac';
 import 'rxjs';
 @Injectable()
 export class Service {
-  //  private url = `http://quantrac.nkengineering.com.vn/api/Static/`
-  private url = `http://test3.hutech.edu.vn/quantrac/api/Static/`
+  private url = `http://quantrac.nkengineering.com.vn/api/Static/`
+  // private url = `http://test3.hutech.edu.vn/quantrac/api/Static/`
   constructor(private _http: Http, private _toast: ToastController) {
     this._http = _http
   }

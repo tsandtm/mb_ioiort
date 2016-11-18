@@ -9,6 +9,7 @@ import { PageGoogleMapPage } from '../pages/page-google-map/page-google-map';
 import {PageChartPage} from '../pages/chart/chart'
 import {ChartModule} from 'angular2-highcharts';
 import {LogoutPage} from '../pages/logout/logout';
+import {Map} from '../pages/map/map';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {LogoutPage} from '../pages/logout/logout';
     PageGoogleMapPage,
     LoginPage,
     PageChartPage,
-    LogoutPage
+    LogoutPage,
+    Map
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -31,7 +33,8 @@ import {LogoutPage} from '../pages/logout/logout';
     PageGoogleMapPage,
     LoginPage,
     PageChartPage,
-    LogoutPage
+    LogoutPage,
+    Map
   ],
   providers: [Service]
 })

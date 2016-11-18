@@ -18,9 +18,12 @@ export class Service {
     body.set("pass", pass)
     return this._http.post(`${this.url}${url}`, body)
       .toPromise()
-      .then(respone => respone['_body'])
+      .then(respone => respone.json())
       .catch(this.handleError)
+
+
   }
+
 
   /**
    * Get_DataInfo_Service
@@ -51,7 +54,7 @@ export class Service {
     toast.present()
   }
 
-  public getThongTinQuanTrac(url: string){
+  public getThongTinQuanTrac(url: string) {
     return this._http.get(this.url + url)
       .map(res => res.json())
       .map((json) => {

@@ -80,7 +80,8 @@ export class LoginPage {
     } else {
       this.service.LoginToSever(this.username, this.password, `POST_Login`)
         .then(data => {
-          if (data == "true") {
+          console.log('Data:' + data)
+          if (data) {
             this.service.ShowToastOK("Đăng nhập thành công")
             return this.navCtrl.push(HomePage)
           } else {

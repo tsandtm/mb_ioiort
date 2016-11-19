@@ -18,7 +18,10 @@ export class Service {
     body.set("pass", pass)
     return this._http.post(`${this.url}${url}`, body)
       .toPromise()
-      .then(respone => respone.json())
+      .then(respone => {
+        console.log(respone.json());
+        return respone.json();
+      })
       .catch(this.handleError)
 
 

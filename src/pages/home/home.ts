@@ -14,9 +14,9 @@ export class HomePage {
   }
 
   GoToMap = () => {
-    this.navCtrl.push(Map)
-    // let modal = this.modalCtrl.create(PageGoogleMapPage);
-    // modal.present();
+    // this.navCtrl.push(Map)
+    let modal = this.modalCtrl.create(Map);
+    modal.present();
   }
   GoToChart = () => {
     // this.navCtrl.push(PageChartPage)

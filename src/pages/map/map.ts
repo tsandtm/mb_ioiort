@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 import { Service } from '../share/variables'
 import { Geolocation } from 'ionic-native';
 
@@ -14,18 +14,18 @@ export class Map {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public service: Service) {
+  constructor(public navCtrl: NavController, public service: Service, private viewCtrl: ViewController) {
 
   }
 
   ionViewDidLoad() {
     this.service.GetData(`Get_ThongTinDiaDiem`).then(data => {
-      this.loadMap(parseFloat(data[0].map_lat), parseFloat(data[0].map_long),data[0])
+      this.loadMap(parseFloat(data[0].map_lat), parseFloat(data[0].map_long), data[0])
 
     })
   }
 
-  loadMap(lat, long,data:{}) {
+  loadMap(lat, long, data: {}) {
 
     console.log('Lat: ' + lat);
     console.log('Long: ' + long);
@@ -45,7 +45,7 @@ export class Map {
 
       let mapOptions = {
         center: latLng,
-        zoom: 15,
+        zoom: 5,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
 
@@ -58,7 +58,7 @@ export class Map {
 
   }
 
-  addMarker(data:{}) {
+  addMarker(data: {}) {
 
     let marker = new google.maps.Marker({
       map: this.map,
@@ -86,4 +86,14 @@ export class Map {
     });
 
   }
+
+  /**
+ *
+ */
+  public dismiss() {
+    console.log('cancel page')
+    this.viewCtrl.dismiss();
+  }
+
+
 }

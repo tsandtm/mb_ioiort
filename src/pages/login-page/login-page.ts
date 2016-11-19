@@ -95,7 +95,7 @@ export class LoginPage {
   presentLoading() {
     this.loader = this.loadingCtrl.create(
       {
-        content: "Please wait...",
+        content: "Xin vui lòng đợi...",
         dismissOnPageChange: true
       }
     );

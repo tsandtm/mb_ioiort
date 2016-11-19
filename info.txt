@@ -1,0 +1,179 @@
+Node version: v6.9.1
+
+Cordova version: 6.4.0
+
+Config.xml file: 
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.ionicframework.nkengineering197580" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>nkengineering</name>
+  <description>An awesome Ionic/Cordova app.</description>
+  <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <allow-intent href="tel:*"/>
+  <allow-intent href="sms:*"/>
+  <allow-intent href="mailto:*"/>
+  <allow-intent href="geo:*"/>
+  <platform name="android">
+    <allow-intent href="market:*"/>
+  </platform>
+  <platform name="ios">
+    <allow-intent href="itms:*"/>
+    <allow-intent href="itms-apps:*"/>
+  </platform>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <preference name="SplashMaintainAspectRatio" value="true"/>
+  <preference name="FadeSplashScreenDuration" value="300"/>
+  <feature name="StatusBar">
+    <param name="ios-package" onload="true" value="CDVStatusBar"/>
+  </feature>
+  <allow-navigation href="http://10.1.219.128:8100"/>
+  <allow-navigation href="http://192.168.56.1:8100"/>
+  <allow-navigation href="http://192.168.3.67:8100"/>
+  <plugin name="cordova-plugin-whitelist" spec="~1.3.0"/>
+  <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
+  <plugin name="cordova-plugin-console" spec="~1.0.4"/>
+  <plugin name="cordova-plugin-splashscreen" spec="~4.0.0"/>
+  <plugin name="cordova-plugin-device" spec="~1.1.3"/>
+  <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
+</widget>
+
+Plugins: 
+
+cordova-plugin-compat,cordova-plugin-console,cordova-plugin-device,cordova-plugin-geolocation,cordova-plugin-splashscreen,cordova-plugin-statusbar,cordova-plugin-whitelist,ionic-plugin-keyboard,plugin.google.maps
+
+Android platform:
+
+Available Android targets:
+----------
+id: 1 or "android-7"
+     Name: Android 2.1
+     Type: Platform
+     API level: 7
+     Revision: 3
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WVGA800 (default), WVGA854
+ Tag/ABIs : default/armeabi
+----------
+id: 2 or "android-8"
+     Name: Android 2.2
+     Type: Platform
+     API level: 8
+     Revision: 3
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WVGA800 (default), WVGA854
+ Tag/ABIs : default/armeabi
+----------
+id: 3 or "android-16"
+     Name: Android 4.1.2
+     Type: Platform
+     API level: 16
+     Revision: 5
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : google_apis/armeabi-v7a, google_apis/x86
+----------
+id: 4 or "android-22"
+     Name: Android 5.1.1
+     Type: Platform
+     API level: 22
+     Revision: 2
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : google_apis/armeabi-v7a, google_apis/x86, google_apis/x86_64
+----------
+id: 5 or "android-23"
+     Name: Android 6.0
+     Type: Platform
+     API level: 23
+     Revision: 3
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : default/x86, default/x86_64, google_apis/armeabi-v7a, google_apis/x86, google_apis/x86_64
+----------
+id: 6 or "android-24"
+     Name: Android 7.0
+     Type: Platform
+     API level: 24
+     Revision: 2
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : default/arm64-v8a, default/armeabi-v7a, default/x86_64, google_apis/arm64-v8a, google_apis/armeabi-v7a, google_apis/x86, google_apis/x86_64
+----------
+id: 7 or "android-25"
+     Name: Android 7.1.1
+     Type: Platform
+     API level: 25
+     Revision: 1
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : android-tv/x86, google_apis/x86, google_apis/x86_64
+----------
+id: 8 or "Google Inc.:Google APIs:16"
+     Name: Google APIs
+     Type: Add-On
+     Vendor: Google Inc.
+     Revision: 4
+     Description: Android + Google APIs
+     Based on Android 4.1.2 (API level 16)
+     Libraries:
+      * com.android.future.usb.accessory (usb.jar)
+          API for USB Accessories
+      * com.google.android.media.effects (effects.jar)
+          Collection of video effects
+      * com.google.android.maps (maps.jar)
+          API for Google Maps
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : default/armeabi-v7a
+----------
+id: 9 or "Google Inc.:Google APIs:22"
+     Name: Google APIs
+     Type: Add-On
+     Vendor: Google Inc.
+     Revision: 1
+     Description: Android + Google APIs
+     Based on Android 5.1.1 (API level 22)
+     Libraries:
+      * com.android.future.usb.accessory (usb.jar)
+          API for USB Accessories
+      * com.google.android.media.effects (effects.jar)
+          Collection of video effects
+      * com.google.android.maps (maps.jar)
+          API for Google Maps
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : no ABIs.
+----------
+id: 10 or "Google Inc.:Google APIs:23"
+     Name: Google APIs
+     Type: Add-On
+     Vendor: Google Inc.
+     Revision: 1
+     Description: Android + Google APIs
+     Based on Android 6.0 (API level 23)
+     Libraries:
+      * com.android.future.usb.accessory (usb.jar)
+          API for USB Accessories
+      * com.google.android.media.effects (effects.jar)
+          Collection of video effects
+      * com.google.android.maps (maps.jar)
+          API for Google Maps
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : no ABIs.
+----------
+id: 11 or "Google Inc.:Google APIs:24"
+     Name: Google APIs
+     Type: Add-On
+     Vendor: Google Inc.
+     Revision: 1
+     Description: Android + Google APIs
+     Based on Android 7.0 (API level 24)
+     Libraries:
+      * com.android.future.usb.accessory (usb.jar)
+          API for USB Accessories
+      * com.google.android.media.effects (effects.jar)
+          Collection of video effects
+      * com.google.android.maps (maps.jar)
+          API for Google Maps
+     Skins: HVGA, QVGA, WQVGA400, WQVGA432, WSVGA, WVGA800 (default), WVGA854, WXGA720, WXGA800, WXGA800-7in
+ Tag/ABIs : no ABIs.
+

@@ -50,9 +50,7 @@ export class PageChartPage {
     let options = {
       chart: {
         type: 'spline',
-        spacingLeft: 3,
-        width: 350,
-        height: 400
+        spacingLeft: 3
       },
       title: { text: null },
       series: [],
@@ -73,6 +71,36 @@ export class PageChartPage {
         title: {
           text: null
         }
+      },
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          chartOptions: {
+            legend: {
+              align: 'center',
+              verticalAlign: 'bottom',
+              layout: 'horaizontal'
+            },
+            yAxis: {
+              labels: {
+                align: 'left',
+                x: 0,
+                y: -5
+              },
+              title: {
+                text: null
+              }
+            },
+            subtitle:{
+              text: null
+            },
+            credits:{
+              enable: false
+            }
+          }
+        }]
       }
     };
     return options;

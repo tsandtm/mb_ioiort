@@ -19,7 +19,7 @@
     <ion-spinner></ion-spinner>
   </div>
 
-  <chart [options]="options" (load)="saveInstance($event.context)"></chart>
+  <chart id="chart-container" [options]="options" (load)="saveInstance($event.context)"></chart>
   <hr />
   <div *ngIf="summary">
     <p class="content">{{this.summary.time | date:'yMd'}} {{this.summary.time | date:'jms'}}</p>

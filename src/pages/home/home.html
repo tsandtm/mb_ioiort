@@ -1,14 +1,18 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content >
+    <ion-title padding="center">NK Engineering System</ion-title>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+    <ion-list>
+        <ion-item (click)="GoToChart()">
+            <ion-icon item-left ios="ios-analytics" md="md-analytics" large></ion-icon>
+            <h2>Giám sát hệ thống</h2>
+        </ion-item>
+        <ion-item (click)="GoToMap()">
+            <ion-icon item-left ios="ios-map" md="md-map" large></ion-icon>
+            <h2>Bản đồ</h2>
+        </ion-item>
+        <ion-item (click)="Logout()">
+            <ion-icon item-left ios="ios-power" md="md-power" large></ion-icon>
+            <h2>Đăng xuất</h2>
+        </ion-item>
+    </ion-list>
 </ion-content>

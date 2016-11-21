@@ -114,18 +114,12 @@ export class PageChartPage {
    * Gọi đến api get để lấy 60 giá trị đầu
    */
   callApi() {
-    this.getData(60,false)
+    this.getData(75)
       .subscribe(
       (ttqt: ThongTinQuanTrac[]) => {
         this.isLoading = false;
         if (ttqt.length !== 0) {
           this.addDataToChart(ttqt);
-          // lấy 5 dữ liệu để tạo summary
-          this.getData(5,true).subscribe(
-            (ttqt: ThongTinQuanTrac[]) => {
-              this.createAndUpdateSummary(ttqt);
-            }
-          )
         } else {
           this.showError('Hiện tại không có dữ liệu');
         }
@@ -142,18 +136,18 @@ export class PageChartPage {
     this.errorMessage = message;
   }
 
-  /**
-   * cái service để gọi xuống api
-   */
-  private getData(sl: number, isIncludeLuuLuongTong: boolean) {
-
-    if (isIncludeLuuLuongTong) {
-      return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27,%27coldata32%27&diemquantrac=2&tongsododo=' + sl)
-    } else {
-      return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
-    }
-
-
+/**
+ * cái service để gọi xuống api
+ */
+  private getData(sl: number) {
+    // return this._http
+    //   .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
+    //   .map(res => res.json())
+    //   .map(json => {
+    //     let ttqt = this.convertToThongTinQuanTrac(json);
+    //     return ttqt;
+    //   })
+    return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27,%27coldata32%27&diemquantrac=2&tongsododo=' + sl)
   }
 
   /**
@@ -182,7 +176,9 @@ export class PageChartPage {
       this.past[thongtinquantrac[i].DoDo_Name] = thongtinquantrac[i].time;
     }
 
-    // this.createAndUpdateSummary(thongtinquantrac.slice(0, 4))
+    this.past[thongtinquantrac[4].DoDo_Name] = thongtinquantrac[4].time;
+
+    this.createAndUpdateSummary(thongtinquantrac.slice(0, 5))
 
     thongtinquantrac.forEach(ttqt => {
       this.chart.series.forEach(sery => {
@@ -209,7 +205,7 @@ export class PageChartPage {
    */
   private checkPast() {
     let qtToUpdate: ThongTinQuanTrac[] = [];
-    this.getData(5,true).subscribe(
+    this.getData(5).subscribe(
       (ttqt) => {
         ttqt.forEach(qt => {
           if (this.past[qt.DoDo_Name].getTime() !== qt.time.getTime()) {
@@ -220,7 +216,7 @@ export class PageChartPage {
 
         if (qtToUpdate.length !== 0) {
           this.createAndUpdateSummary(ttqt)
-          this.updateChart(qtToUpdate.slice(0,4));
+          this.updateChart(qtToUpdate);
         }
       },
       (error) => {

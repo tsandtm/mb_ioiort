@@ -114,7 +114,7 @@ export class PageChartPage {
  * Gọi đến api get để lấy 60 giá trị đầu
  */
   callApi() {
-    this.getData(60)
+    this.getData(75)
       .subscribe(
       (ttqt: ThongTinQuanTrac[]) => {
         this.isLoading = false;
@@ -147,7 +147,7 @@ export class PageChartPage {
     //     let ttqt = this.convertToThongTinQuanTrac(json);
     //     return ttqt;
     //   })
-    return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
+    return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27,%27coldata32%27&diemquantrac=2&tongsododo=' + sl)
   }
 
 /**
@@ -176,7 +176,9 @@ export class PageChartPage {
       this.past[thongtinquantrac[i].DoDo_Name] = thongtinquantrac[i].time;
     }
 
-    this.createAndUpdateSummary(thongtinquantrac.slice(0, 4))
+    this.past[thongtinquantrac[4].DoDo_Name] = thongtinquantrac[4].time;
+
+    this.createAndUpdateSummary(thongtinquantrac.slice(0, 5))
 
     thongtinquantrac.forEach(ttqt => {
       this.chart.series.forEach(sery => {
@@ -204,9 +206,11 @@ export class PageChartPage {
   private checkPast() {
     console.log('chay');
     let qtToUpdate: ThongTinQuanTrac[] = [];
-    this.getData(4).subscribe(
+    this.getData(5).subscribe(
       (ttqt) => {
         ttqt.forEach(qt => {
+          console.log('Dodo_name: ' + qt.DoDo_Name);
+          console.log('past: ' + JSON.stringify(this.past))
           if (this.past[qt.DoDo_Name].getTime() !== qt.time.getTime()) {
             console.log('past: ' + this.past[qt.DoDo_Name].getTime())
             console.log('now: ' + qt.time.getTime())

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { NavController, ViewController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
-import {Service} from '../share/variables';
+import { Service } from '../share/variables';
 
 /*
   Generated class for the PageChart page.
@@ -15,7 +15,7 @@ import {Service} from '../share/variables';
   templateUrl: 'chart.html'
 })
 export class PageChartPage {
-  settime:any
+  settime: any
   options: any;
   chart: any;
   past: any = {};
@@ -29,9 +29,9 @@ export class PageChartPage {
 
 
   constructor(public navCtrl: NavController,
-   private _http: Http,
-   public viewCtrl: ViewController,
-   private service: Service) {
+    private _http: Http,
+    public viewCtrl: ViewController,
+    private service: Service) {
 
   }
 
@@ -43,9 +43,9 @@ export class PageChartPage {
     this.callApi();
   }
 
-/**
- *  tạo biểu đồ
- */
+  /**
+   *  tạo biểu đồ
+   */
   private createChartOption() {
     let options = {
       chart: {
@@ -93,10 +93,10 @@ export class PageChartPage {
                 text: null
               }
             },
-            subtitle:{
+            subtitle: {
               text: null
             },
-            credits:{
+            credits: {
               enable: false
             }
           }
@@ -110,17 +110,23 @@ export class PageChartPage {
     this.chart = charInstance;
   }
 
-/**
- * Gọi đến api get để lấy 60 giá trị đầu
- */
+  /**
+   * Gọi đến api get để lấy 60 giá trị đầu
+   */
   callApi() {
-    this.getData(60)
+    this.getData(60,false)
       .subscribe(
       (ttqt: ThongTinQuanTrac[]) => {
         this.isLoading = false;
-        if(ttqt.length !== 0){
+        if (ttqt.length !== 0) {
           this.addDataToChart(ttqt);
-        }else{
+          // lấy 5 dữ liệu để tạo summary
+          this.getData(5,true).subscribe(
+            (ttqt: ThongTinQuanTrac[]) => {
+              this.createAndUpdateSummary(ttqt);
+            }
+          )
+        } else {
           this.showError('Hiện tại không có dữ liệu');
         }
 
@@ -128,31 +134,31 @@ export class PageChartPage {
       (error) => {
         console.error('Error: ', error);
         this.showError(error._body);
-       })
+      })
   }
 
-  showError(message: string){
+  showError(message: string) {
     this.isLoading = false;
     this.errorMessage = message;
   }
 
-/**
- * cái service để gọi xuống api
- */
-  private getData(sl: number) {
-    // return this._http
-    //   .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
-    //   .map(res => res.json())
-    //   .map(json => {
-    //     let ttqt = this.convertToThongTinQuanTrac(json);
-    //     return ttqt;
-    //   })
-    return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
+  /**
+   * cái service để gọi xuống api
+   */
+  private getData(sl: number, isIncludeLuuLuongTong: boolean) {
+
+    if (isIncludeLuuLuongTong) {
+      return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27,%27coldata32%27&diemquantrac=2&tongsododo=' + sl)
+    } else {
+      return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
+    }
+
+
   }
 
-/**
- * tạo và update Summary
- */
+  /**
+   * tạo và update Summary
+   */
   private createAndUpdateSummary(ttqt: ThongTinQuanTrac[]) {
     let a = [];
     ttqt.forEach(qt => {
@@ -164,9 +170,9 @@ export class PageChartPage {
     };
   }
 
-/**
- * thêm dữ liệu vào biểu đồ và đặt thời gian chạy update
- */
+  /**
+   * thêm dữ liệu vào biểu đồ và đặt thời gian chạy update
+   */
   private addDataToChart(thongtinquantrac: ThongTinQuanTrac[]) {
     for (let i = 0; i < 4; i++) {
       this.chart.addSeries({
@@ -176,7 +182,7 @@ export class PageChartPage {
       this.past[thongtinquantrac[i].DoDo_Name] = thongtinquantrac[i].time;
     }
 
-    this.createAndUpdateSummary(thongtinquantrac.slice(0, 4))
+    // this.createAndUpdateSummary(thongtinquantrac.slice(0, 4))
 
     thongtinquantrac.forEach(ttqt => {
       this.chart.series.forEach(sery => {
@@ -198,18 +204,15 @@ export class PageChartPage {
     }, 20000);
   }
 
-/**
- * kiểm tra dữ liệu có thay đổi
- */
+  /**
+   * kiểm tra dữ liệu có thay đổi
+   */
   private checkPast() {
-    console.log('chay');
     let qtToUpdate: ThongTinQuanTrac[] = [];
-    this.getData(4).subscribe(
+    this.getData(5,true).subscribe(
       (ttqt) => {
         ttqt.forEach(qt => {
           if (this.past[qt.DoDo_Name].getTime() !== qt.time.getTime()) {
-            console.log('past: ' + this.past[qt.DoDo_Name].getTime())
-            console.log('now: ' + qt.time.getTime())
             qtToUpdate.push(qt);
             this.past[qt.DoDo_Name] = qt.time;
           }
@@ -217,19 +220,19 @@ export class PageChartPage {
 
         if (qtToUpdate.length !== 0) {
           this.createAndUpdateSummary(ttqt)
-          this.updateChart(qtToUpdate);
+          this.updateChart(qtToUpdate.slice(0,4));
         }
       },
       (error) => {
         console.error('Error: ', error);
         this.showError(error._body);
-       }
+      }
     )
   }
 
-/**
- * update cái biểu đồ
- */
+  /**
+   * update cái biểu đồ
+   */
   private updateChart(qt: ThongTinQuanTrac[]) {
     qt.forEach(ttqt => {
       this.chart.series.forEach(sery => {
@@ -246,15 +249,15 @@ export class PageChartPage {
     this.chart.redraw();
   }
 
-  onPageWillLeave(){
+  onPageWillLeave() {
     console.log('leave page')
     this.dismiss();
   }
 
-/**
- *
- */
-  public dismiss(){
+  /**
+   *
+   */
+  public dismiss() {
     console.log('cancel page')
     clearInterval(this.settime);
     this.viewCtrl.dismiss();

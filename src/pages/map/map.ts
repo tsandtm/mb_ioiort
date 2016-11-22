@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
-import { Service } from '../share/variables'
 import { Geolocation } from 'ionic-native';
+
+import { MapService } from './map.service';
 
 declare var google;
 
@@ -14,7 +15,7 @@ export class Map {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public service: Service, private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public service: MapService, private viewCtrl: ViewController) {
 
   }
 

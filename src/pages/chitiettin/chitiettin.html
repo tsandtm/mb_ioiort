@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar color="main">
+    <ion-title>EXPRESS</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="top">
+    <h2><strong style="font-size:20px;margin-bottom:5px">{{dnew.TieuDe}}</strong></h2>
+    <!--<p>{{dnew.ThoiGianDangTin | date : "medium"}}</p>-->
+    <br/>
+    <img [src]="dnew.URLThumbImage">
+    <div class="pan">
+      <div class="header">
+        <ion-icon name="bookmark"></ion-icon>
+      </div>
+      <div class="header">
+        <ion-icon name="share"></ion-icon>
+      </div>
+      <div class="header">
+        <ion-icon name="thumbs-up" md="md-thumbs-up"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <p>{{dnew.NoiDung}}</p>
+  </div>
+  <div class="bottom">
+    <h4>Các Tin Liên Quan</h4>
+    <div class="foter">
+      <ion-list>
+        <ion-item>
+          <div class="img-tin">
+            <img src="https://i.ytimg.com/vi/W1JfbZbHVuo/hqdefault.jpg">
+          </div>
+          <h2>Tin Tức Biển Đông Mới Nhất </h2>
+        </ion-item>
+        <ion-item>
+          <div class="img-tin">
+            <img src="https://i.ytimg.com/vi/W1JfbZbHVuo/hqdefault.jpg">
+          </div>
+          <h2>Tin Tức Biển Đông Mới Nhất </h2>
+        </ion-item>
+        <ion-item>
+          <div class="img-tin">
+            <img src="https://i.ytimg.com/vi/W1JfbZbHVuo/hqdefault.jpg">
+          </div>
+          <h2>Tin Tức Biển Đông Mới Nhất </h2>
+        </ion-item>
+        <ion-item>
+          <div class="img-tin">
+            <img src="https://i.ytimg.com/vi/W1JfbZbHVuo/hqdefault.jpg">
+          </div>
+          <h2>Tin Tức Biển Đông Mới Nhất </h2>
+        </ion-item>
+       
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

@@ -1,14 +1,24 @@
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login-page/login-page';
+
+import {TinTucPage} from '../pages/tintuc/tintuc';
+import {ChiTietTinPage} from '../pages/chitiettin/chitiettin';
+import { HomePage } from '../pages/homepage/homepage';
+import{ChuyenMucPage} from '../pages/chuyenmuc/chuyenmuc';
+import {WebsService} from '../pages/shared/website.service';
+import {NewsService} from '../pages/shared/news.service';
+import {HomeFilterPipe} from '../pages/homepage/homepage-filter.pipe';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    TinTucPage,
+    ChiTietTinPage,
+    ChuyenMucPage,
+    HomeFilterPipe
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -17,8 +27,10 @@ import { LoginPage } from '../pages/login-page/login-page';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    TinTucPage,
+    ChiTietTinPage,
+    ChuyenMucPage
   ],
-  providers: []
+  providers: [WebsService,NewsService]
 })
 export class AppModule {}

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-
 import { NavController, LoadingController } from 'ionic-angular';
+
+
 import { TinTucPage } from '../tintuc/tintuc';
-import { WebsService } from '../shared/website.service';
-import { IWeb } from '../shared/website.model';
-import { HomeFilterPipe } from './homepage-filter.pipe'
+import { WebsService } from '../shared/services/website.service';
+import { IWeb } from '../shared/models/website.model';
 
 
 @Component({
@@ -12,7 +12,6 @@ import { HomeFilterPipe } from './homepage-filter.pipe'
     templateUrl: 'homepage.html'
 })
 export class HomePage {
-    // webs: IWeb[];
     webs1: IWeb[];
     count: number = 0;
     listFilter: string = '';
@@ -20,13 +19,10 @@ export class HomePage {
 
     constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController) {
     }
+
     ngOnInit(): void {
-        // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
-        //     .then(web => this.webs = web)
-        //     .catch(errorMessage => {
-        //         console.error(errorMessage.message)
-        //     });
-        this._webService.getWebs(0) //lấy danh sách web ban đầu
+      // lay danh sach ban dau
+        this._webService.getWebs(0)
             .then(web => this.webs1 = web)
             .catch(errorMessage => {
                 console.error(errorMessage.message)
@@ -61,41 +57,5 @@ export class HomePage {
         loader.present();
         this.navCtrl.push(TinTucPage);
     }
-
-    // chon(id: number, index) {
-
-    //     let web = this.webs1[index]; // web mặc định là false
-    //     if (web.show) {
-    //         console.log('Show: ' + web.show);
-    //         this.count--;
-    //         web.show = false;
-    //         this.webs1[index] = web;
-    //         this._webService.updateShow_delete(id)
-    //             .then(t => {
-    //                 if (t) {
-    //                     console.log('Show: ' + web.show);
-    //                 }
-    //             })
-    //             .catch(errorMessage => {
-    //                 console.error(errorMessage.message)
-    //             });
-    //     } else {
-    //         console.log('Show: ' + web.show);
-    //         this.count++;
-    //         web.show = true;
-    //         this.webs1[index] = web;
-
-    //         this._webService.updateShow_add(id)
-    //             .then(t => {
-    //                 if (t.show) {
-    //                     console.log('Show: ' + t.show);
-    //                 }
-    //             })
-    //             .catch(errorMessage => {
-    //                 console.error(errorMessage.message)
-    //             });
-    //     }
-
-    //}
 
 }

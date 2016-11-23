@@ -1,18 +1,16 @@
-import {  PipeTransform, Pipe } from '@angular/core';
-import { IWeb } from '../shared/website.model';
+import { PipeTransform, Pipe } from '@angular/core';
+import { IWeb } from '../shared/models/website.model';
 
 @Pipe({
-    name: 'homeFilter'
+  name: 'homeFilter'
 })
 export class HomeFilterPipe implements PipeTransform {
 
-     transform(value: IWeb[], agrs: string): IWeb[] {
-        let filter: string = agrs ? agrs.toLocaleLowerCase() : null;
-        return filter ? value.filter((webs: IWeb) => {
-            console.log('value: ' + filter);
-            console.log('index: ' + webs.TenGoi.toLocaleLowerCase().indexOf(filter))
-            return webs.TenGoi.toLocaleLowerCase().indexOf(filter) !== -1;
-        }
-        ) : value;
+  transform(value: IWeb[], agrs: string): IWeb[] {
+    let filter: string = agrs ? agrs.toLocaleLowerCase() : null;
+    return filter ? value.filter((webs: IWeb) => {
+      return webs.TenGoi.toLocaleLowerCase().indexOf(filter) !== -1;
     }
+    ) : value;
+  }
 }

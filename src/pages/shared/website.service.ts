@@ -9,13 +9,13 @@ import { IWeb } from './website.model';
 @Injectable()
 export class WebsService {
     // private _newsUrl = 'api/json/news.json';
-
-    private limit : number= 4;
+    webs: IWeb[];
+    private limit : number= 6;
     constructor(private _http: Http) { }
 
     getWebs(start:number): Promise<IWeb[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/website?filter[limit]='+this.limit+'&filter[skip]='+start)
+        this._http.get('http://localhost:8080/api/website?limit='+this.limit+'&skip='+start)
         .map(res => res.json())
         .subscribe(data => {
 
@@ -38,22 +38,25 @@ export class WebsService {
             .catch(this.handleError);
     }
 
-    //Them website duyet tin
-    updateShow_add(id: number): Promise<IWeb> {
-       
-        return this._http.put('http://localhost:8080/api/website?id=' + id, { show: true })
-            .toPromise()
-            .then(response => response.json() as IWeb)
-            .catch(this.handleError);
-    }
-    //Xoa website duyet tin
-    updateShow_delete(id: number): Promise<IWeb> {
 
-        return this._http.put('http://localhost:8080/api/website?id=' + id, { show: false })
-            .toPromise()
-            .then(response => response.json() as IWeb)
-            .catch(this.handleError);
-    }
+
+
+    // //Them website duyet tin
+    // updateShow_add(id: number): Promise<IWeb> {
+       
+    //     return this._http.put('http://localhost:8080/api/website?id=' + id, { show: true })
+    //         .toPromise()
+    //         .then(response => response.json() as IWeb)
+    //         .catch(this.handleError);
+    // }
+    // //Xoa website duyet tin
+    // updateShow_delete(id: number): Promise<IWeb> {
+
+    //     return this._http.put('http://localhost:8080/api/website?id=' + id, { show: false })
+    //         .toPromise()
+    //         .then(response => response.json() as IWeb)
+    //         .catch(this.handleError);
+    // }
 
     private handleError(error: Error): Promise<any> {
         console.error(error);

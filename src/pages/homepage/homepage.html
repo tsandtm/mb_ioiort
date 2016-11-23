@@ -8,8 +8,8 @@
 <ion-content class="card-background-page">
   <ion-card>
     <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
-      <div [class.opi]="web.show" (click)="chon(web.id,i)">
-        <img [src]='web.TempateCrawlImage' />
+      <div>
+        <img [src]='web.Icon' (click)="chon(web.IDDanhMucSite,i)" />
       </div>
     </div>
   </ion-card>

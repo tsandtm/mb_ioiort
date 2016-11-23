@@ -9,6 +9,7 @@ import{ChuyenMucPage} from '../pages/chuyenmuc/chuyenmuc';
 import {WebsService} from '../pages/shared/website.service';
 import {NewsService} from '../pages/shared/news.service';
 import {HomeFilterPipe} from '../pages/homepage/homepage-filter.pipe';
+import {UserWebService} from '../pages/shared/user_website.service';
 
 
 @NgModule({
@@ -31,6 +32,6 @@ import {HomeFilterPipe} from '../pages/homepage/homepage-filter.pipe';
     ChiTietTinPage,
     ChuyenMucPage
   ],
-  providers: [WebsService,NewsService]
+  providers: [WebsService,NewsService,UserWebService]
 })
 export class AppModule {}

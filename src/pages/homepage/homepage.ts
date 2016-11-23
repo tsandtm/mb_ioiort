@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { TinTucPage } from '../tintuc/tintuc';
 import { WebsService } from '../shared/website.service';
+import { UserWebService } from '../shared/user_website.service';
 import { IWeb } from '../shared/website.model';
 import { HomeFilterPipe } from './homepage-filter.pipe'
 
@@ -16,9 +17,9 @@ export class HomePage {
     webs1: IWeb[];
     count: number = 0;
     listFilter: string = '';
-    public start: number = 0;
+    public start: number = 6;
 
-    constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController) {
+    constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController, private userWebSite: UserWebService) {
     }
     ngOnInit(): void {
         // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
@@ -35,13 +36,15 @@ export class HomePage {
 
     doInfinite(infiniteScroll) {
         console.log('Begin async operation');
-        this.start+=6;
         setTimeout(() => {
             this._webService.getWebs(this.start)
                 .then(
                 (res) => {
-                    for (let x of res) {
-                        this.webs1.push(x);
+                    if (res.length !== 0) {
+                        for (let x of res)
+                            this.webs1.push(x);
+                        // this.webs1.concat(res);
+                        this.start += 6;
                     }
                 })
                 .catch(errorMessage => {
@@ -60,6 +63,20 @@ export class HomePage {
         })
         loader.present();
         this.navCtrl.push(TinTucPage);
+    }
+
+    chon(id: number, index: number) {
+        console.log('I run :D');
+        console.log('id: ' + id);
+        this.count++;
+        this.userWebSite.createUserWebSite(1, id, new Date())
+            .then(() => {
+                console.log('da them');
+
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+            })
     }
 
     // chon(id: number, index) {

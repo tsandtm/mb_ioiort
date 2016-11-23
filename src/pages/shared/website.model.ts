@@ -1,14 +1,14 @@
 export interface IWeb {
     IDDanhMucSite: number;
-    DuongDan:string;
+    DuongDan: string;
     TenGoi: string;
-    MoTa:string;
-    SoLuongTinDuyetTim:number;
-    TempateCrawlTieuDe:string;
-    TempateCrawlMoTa:string;
-    TempateCrawlNoiDung:string;
-    TempateCrawlImage:string;
-    LinkRSS:string;
-
-
+    MoTa: string;
+    SoLuongTinDuyetTim: number;
+    TempateCrawlTieuDe: string;
+    TempateCrawlMoTa: string;
+    TempateCrawlNoiDung: string;
+    TempateCrawlImage: string;
+    LinkRSS: string;
+    Icon: string;
+    TenGoi_KoDau: string;
 }

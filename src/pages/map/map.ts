@@ -3,6 +3,7 @@ import { NavController, ViewController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { MapService } from './map.service';
+import { DiaDiem } from './diadiem.model';
 
 declare var google;
 
@@ -20,29 +21,22 @@ export class Map {
   }
 
   ionViewDidLoad() {
-    this.service.GetData(`Get_ThongTinDiaDiem`).then(data => {
-      this.loadMap(parseFloat(data[0].map_lat), parseFloat(data[0].map_long), data[0])
+    // this.service.GetData(`Get_ThongTinDiaDiem`).then(data => {
+    //   this.loadMap(parseFloat(data[0].map_lat), parseFloat(data[0].map_long), data[0])
 
-    })
+    // })
+    this.service.layDanhSachDiem('GET_ListDiemQuanTrac')
+      .then(data => {
+        this.loadMap(data);
+      })
   }
 
-  loadMap(lat, long, data: {}) {
+  loadMap(data: DiaDiem[]) {
 
-    console.log('Lat: ' + lat);
-    console.log('Long: ' + long);
-    // let latLng = new google.maps.LatLng(-34.9290, 138.6010);
-
-    // let mapOptions = {
-    //   center: latLng,
-    //   zoom: 15,
-    //   mapTypeId: google.maps.MapTypeId.ROADMAP
-    // }
-
-    // this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
     Geolocation.getCurrentPosition().then((position) => {
 
-      let latLng = new google.maps.LatLng(lat, long);
+      let latLng = new google.maps.LatLng(parseFloat(data[0].map_lat), parseFloat(data[0].map_long));
 
       let mapOptions = {
         center: latLng,
@@ -51,7 +45,10 @@ export class Map {
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      this.addMarker(data)
+
+      data.forEach(diaDiem => {
+        this.addMarker(diaDiem);
+      })
 
     }, (err) => {
       console.log(err);
@@ -59,38 +56,59 @@ export class Map {
 
   }
 
-  addMarker(data: {}) {
+  addMarker(data: DiaDiem) {
 
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
+      position: new google.maps.LatLng(parseFloat(data.map_lat), parseFloat(data.map_long))
+    }, (error) => {
+      console.error(error)
     });
 
     let content = `
-    <h3>${data['TenGoi']}</h3>
-    <p>Địa chỉ: ${data['DiaChi']}</p>
+      <h4>${data.TenGoi}</h4>
+      <p>Địa chỉ: ${data.DiaChi}</p>
+      <p>Người phụ trách: ${data.NguoiPhuTrach}</p>
     `;
 
-    this.addInfoWindow(marker, content);
+    this.layThongTinDoDo(data.DiemQuanTracID)
+        .then(data => {
+          let table = '';
+          data.listThongSoDo.forEach(thongso => {
+            table += `<tr><td>${thongso.DoDo_Name}</td><td>${thongso.DonViTinh}</td></tr>`
+          })
 
-  }
+          content += `
+          <table class="table_thongso">
+            <tr>
+              <td>Độ đo</td>
+              <td>Đơn vị</td>
+            </tr>
+            ${table}
+          </table>
+          `
+        })
 
-  addInfoWindow(marker, content) {
 
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
 
     google.maps.event.addListener(marker, 'click', () => {
+
+      let infoWindow = new google.maps.InfoWindow({
+        content: content
+      });
       infoWindow.open(this.map, marker);
+
     });
 
   }
 
-  /**
- *
- */
+  layThongTinDoDo(id: number): Promise<DiaDiem> {
+    return this.service.layThongTinDoDo('GET_ThongTinDiemQuanTracVaListDoDo?DiemQuanTrac=' + id)
+      .then(data => data)
+      .catch(error => alert(error.message));
+  }
+
   public dismiss() {
     console.log('cancel page')
     this.viewCtrl.dismiss();

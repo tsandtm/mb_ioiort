@@ -15,28 +15,16 @@ export class MapService extends ServiceBase {
   }
 
 
-  /**
-   * Get_DataInfo_Service
-   */
-  public GetData(url: string) {
-    return this._http.get(`${urlApi}${url}`)
-      .toPromise()
-      .then(respone => {
-        return JSON.parse(respone['_body'])
-      })
-      .catch(this.handleError)
-  }
-
-  public layDanhSachDiem(url: string): Promise<DiaDiem[]>{
+  public layDanhSachDiem(): Promise<DiaDiem[]>{
+    let url = 'GET_ListDiemQuanTrac';
     return this._http.get(urlApi + url)
-          .toPromise()
-          .then(res => {
-            return res.json();
-          })
-          .catch(this.handleError)
+        .toPromise()
+        .then(res => res.json())
+        .catch(this.handleError)
   }
 
-  public layThongTinDoDo(url: string): Promise<DiaDiem>{
+  public layThongTinDoDo(diemQuanTracId: number, soLuongThongSo: number): Promise<DiaDiem>{
+    let url = `GET_ThongTinDiemQuanTracVaThongSoDoDo?DiemQuanTrac=${diemQuanTracId}&soLuongThongSo=${soLuongThongSo}`;
     return this._http.get(urlApi + url)
             .toPromise()
             .then(res => {

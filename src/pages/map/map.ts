@@ -21,11 +21,7 @@ export class Map {
   }
 
   ionViewDidLoad() {
-    // this.service.GetData(`Get_ThongTinDiaDiem`).then(data => {
-    //   this.loadMap(parseFloat(data[0].map_lat), parseFloat(data[0].map_long), data[0])
-
-    // })
-    this.service.layDanhSachDiem('GET_ListDiemQuanTrac')
+    this.service.layDanhSachDiem()
       .then(data => {
         this.loadMap(data);
       })
@@ -72,25 +68,11 @@ export class Map {
       <p>Người phụ trách: ${data.NguoiPhuTrach}</p>
     `;
 
-    this.layThongTinDoDo(data.DiemQuanTracID)
-        .then(data => {
-          let table = '';
-          data.listThongSoDo.forEach(thongso => {
-            table += `<tr><td>${thongso.DoDo_Name}</td><td>${thongso.DonViTinh}</td></tr>`
-          })
-
-          content += `
-          <table class="table_thongso">
-            <tr>
-              <td>Độ đo</td>
-              <td>Đơn vị</td>
-            </tr>
-            ${table}
-          </table>
-          `
-        })
-
-
+    this.service.layThongTinDoDo(data.DiemQuanTracID, 4)
+      .then(data => {
+        content += data;
+      })
+      .catch(error => alert(error));
 
     google.maps.event.addListener(marker, 'click', () => {
 
@@ -101,12 +83,6 @@ export class Map {
 
     });
 
-  }
-
-  layThongTinDoDo(id: number): Promise<DiaDiem> {
-    return this.service.layThongTinDoDo('GET_ThongTinDiemQuanTracVaListDoDo?DiemQuanTrac=' + id)
-      .then(data => data)
-      .catch(error => alert(error.message));
   }
 
   public dismiss() {

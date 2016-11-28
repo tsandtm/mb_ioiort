@@ -10,7 +10,7 @@ import { IWeb } from './website.model';
 export class WebsService {
     // private _newsUrl = 'api/json/news.json';
     webs: IWeb[];
-    private limit : number= 6;
+    private limit : number = 12;
     constructor(private _http: Http) { }
 
     getWebs(start:number): Promise<IWeb[]> {
@@ -25,8 +25,8 @@ export class WebsService {
     });
     }
 
-    getListWebs(): Promise<IWeb[]> {
-        return this._http.get('http://localhost:8080/api/website')
+    getList_user(): Promise<IWeb[]> {
+        return this._http.get('http://localhost:8080/api/getWebs')
             .toPromise()
             .then(response => response.json() as IWeb[])
             .catch(this.handleError);

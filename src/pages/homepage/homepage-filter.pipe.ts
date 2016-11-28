@@ -10,11 +10,10 @@ export class HomeFilterPipe implements PipeTransform {
         let filter: string = agrs ? agrs.toLocaleLowerCase() : null;
         return filter ? value.filter((webs: IWeb) => {
             console.log('value: ' + filter);
-            console.log('index: ' + webs.TenGoi.toLocaleLowerCase().indexOf(filter))
-            if (webs.TenGoi_KoDau.indexOf(filter))
-                return webs.TenGoi_KoDau.toLocaleLowerCase().indexOf(filter) !== -1;
-            else if (webs.TenGoi.indexOf(filter))
-                return webs.TenGoi.toLocaleLowerCase().indexOf(filter) !== -1;
+            // console.log('index: ' + webs.TenGoi.toLocaleLowerCase().indexOf(filter))
+            let a = webs.TenGoi.toLocaleLowerCase().indexOf(filter) !== -1;
+            let b = webs.TenGoi_KoDau.toLocaleLowerCase().indexOf(filter) !== -1;
+            return (a||b)? true : false
         }
         ) : value;
     }

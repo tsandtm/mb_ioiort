@@ -15,9 +15,12 @@ import { HomeFilterPipe } from './homepage-filter.pipe'
 export class HomePage {
     // webs: IWeb[];
     webs1: IWeb[];
+    webs2: IWeb[];
     count: number = 0;
     listFilter: string = '';
-    public start: number = 6;
+    public start: number = 12;
+    public click: boolean = false;
+    index: number;
 
     constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController, private userWebSite: UserWebService) {
     }
@@ -35,7 +38,6 @@ export class HomePage {
     }
 
     doInfinite(infiniteScroll) {
-        console.log('Begin async operation');
         setTimeout(() => {
             this._webService.getWebs(this.start)
                 .then(
@@ -44,13 +46,12 @@ export class HomePage {
                         for (let x of res)
                             this.webs1.push(x);
                         // this.webs1.concat(res);
-                        this.start += 6;
+                        this.start += 12;
                     }
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
                 });
-            console.log('Async operation has ended');
             infiniteScroll.complete();
         }, 2000);
     }
@@ -66,17 +67,83 @@ export class HomePage {
     }
 
     chon(id: number, index: number) {
-        console.log('I run :D');
-        console.log('id: ' + id);
-        this.count++;
-        this.userWebSite.createUserWebSite(1, id, new Date())
-            .then(() => {
-                console.log('da them');
 
-            })
-            .catch(error => {
-                console.error('Error: ', error);
-            })
+        let web = this.webs1[index];
+
+        if (!web.chontin) {
+            console.log('post :D');
+            console.log('id: ' + id);
+            this.count++;
+            this.userWebSite.createUserWebSite(1, id, new Date())
+                .then(() => {
+                    console.log('da them');
+                    web.chontin = true;
+                    this.webs1[index] = web;
+                    console.log('chon ' + web.chontin);
+                })
+                .catch(error => {
+                    console.error('Error: ', error);
+                })
+        } else {
+            console.log('delete :D');
+            console.log('id: ' + id);
+            this.count--;
+            this.userWebSite.deleteUserWebSite(1, id)
+                .then(() => {
+                    console.log('da xoa');
+                    web.chontin = false;
+                    this.webs1[index] = web;
+                    console.log('chon ' + web.chontin);
+
+                })
+                .catch(error => {
+                    console.error('Error: ', error);
+                })
+        }
+    }
+
+    dschon(): void {
+        this.click = !this.click;
+        console.log('hien tai 1: ' + this.click);
+
+        if (this.click) {
+            console.log('hien tai 2: ' + this.click);
+            this._webService.getList_user()
+                .then(web => {
+                    this.webs1 = web;
+                    this.webs2 = this.webs1;
+                })
+                .catch(errorMessage => {
+                    console.error(errorMessage.message)
+                });
+
+        } else {
+            console.log('hien tai 3: ' + this.click);
+            this._webService.getWebs(0)
+                .then(web => {
+                    this.webs1 = web;
+                    // console.log("chieu dai webs1 " + this.webs1.length);
+                    for (var i = 0; i < this.webs2.length; i++) {
+                        let web2 = this.webs2[i];
+                        for (var j = 0; j < this.webs1.length; j++) {
+                            let web1 = this.webs1[j];
+                            if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
+                                // console.log("web1.IDDanhMucSite " + web1.IDDanhMucSite);
+                                // console.log("web2.IDDanhMucSite " + web2.IDDanhMucSite);
+                                // console.log("mảng thứ " + j + "bị đổi");
+                                web1.chontin = true;
+                                this.webs1[j] = web1;
+                            }
+                        }
+                    }
+                })
+                .catch(errorMessage => {
+                    console.error(errorMessage.message)
+                });
+
+
+
+        }
     }
 
     // chon(id: number, index) {

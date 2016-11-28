@@ -29,22 +29,43 @@
 }
 
 .tool-home {
+    
     button {
-        background-color: #248f8f;
         color: white;
         height: 55px;
         width: 180px;
+        float: right;
         /*padding: 20px 0px;*/
-        font-size: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        border-left: 2px solid white; 
+    }
+    .dachon {
+        height: 55px;
+        width: 165px;
+        float: left;
+        padding: 18px;
+        label {
+            color: white;
+            position: absolute;
+            /*padding: 20px 0px;*/
+            font-size: 18px;
+            font-weight: bold;
+            margin-left:5px;
+        }
     }
 }
-ion-toolbar{
+
+ion-toolbar {
     max-height: 50px;
 }
 
-div.opi{
-    img {
-        opacity: .3;
+.opi {
+    .card-md {
+        background-color: red;
+        h4 {
+            color: white;
+        }
     }
 }
 
@@ -64,24 +85,39 @@ div.blur {
     /*overflow: hidden;*/
 }
 
-
+div.scroll-content {
+    margin-top: 70px;
+    margin-left: 4px;
+    margin-right: 2px;
+}
 
 .card-background-page {
-    img {
-    max-width: 47%;
-    height: 165px;
-    float: left;
     margin: 3px;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    opacity: 1;
-    -webkit-transition: .3s ease-in-out;
-    transition: .3s ease-in-out;
-}
+    .card-md {
+        margin: 4px;
+    }
+    img {
+        max-width: 70%;
+        height: 80px;
+        float: left;
+        /*margin-bottom: 15px;*/
+        margin: 20px 18px 15px 18px;
+        /*padding: 10px;*/
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        /*opacity: .8;*/
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+    }
     ion-card {
-        position: relative;
+        width: 30%;
+        height: 150px;
+        float: left;
         text-align: center;
-
+        h4 {
+            font-weight: bold;
+            margin: 1px;
+            font-size: 15px;
+        }
     }
     .card-title {
         position: absolute;

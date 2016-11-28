@@ -11,4 +11,5 @@ export interface IWeb {
     LinkRSS: string;
     Icon: string;
     TenGoi_KoDau: string;
+    chontin: boolean;
 }

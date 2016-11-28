@@ -1,18 +1,19 @@
 <ion-header>
   <ion-navbar color="main" class="header">
-    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter'></ion-searchbar>
-    <!--<input type ='text' [(ngModel)] ='listFilter'/>-->
+    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter' ></ion-searchbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="card-background-page">
-  <ion-card>
-    <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
-      <div>
-        <img [src]='web.Icon' (click)="chon(web.IDDanhMucSite,i)" />
-      </div>
+<ion-content class="card-background-page" >
+  <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
+    <div [class.opi]="web.chontin" (click)="chon(web.IDDanhMucSite,i);chontin =! chontin">
+      <ion-card>
+        <img [src]='web.Icon' />
+        <h4>{{web.TenGoi}}</h4>
+      </ion-card>
     </div>
-  </ion-card>
+  </div>
+
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
     </ion-infinite-scroll-content>
@@ -40,11 +41,17 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar no-border class="tool-home">
-    <ion-buttons left>
-      <button ion-button> ĐÃ CHỌN: {{count}}</button>
-    </ion-buttons>
-    <ion-buttons>
-      <button ion-button (click)='nextToPage()'>Tiếp Theo</button>
-    </ion-buttons>
+    <div style="background-color: #248f8f;
+    height: 55px;
+    width: 100%;">
+      <div class="dachon" (click)='dschon()'>
+        <label> ĐÃ CHỌN: {{count}}</label>
+      </div>
+      <ion-buttons>
+        <button ion-button (click)='nextToPage()'>Tiếp Theo <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+
+</button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
 </ion-footer>

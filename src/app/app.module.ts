@@ -11,6 +11,7 @@ import {Map} from '../pages/map/map';
 import {ChartService} from '../pages/chart/chart.service';
 import {MapService} from '../pages/map/map.service';
 import {LoginService} from '../pages/login-page/login.service';
+import {VietNamDecimal} from '../pipes/viet-nam-decimal';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {LoginService} from '../pages/login-page/login.service';
     HomePage,
     LoginPage,
     PageChartPage,
-    Map
+    Map,
+    VietNamDecimal
   ],
   imports: [
     IonicModule.forRoot(MyApp),

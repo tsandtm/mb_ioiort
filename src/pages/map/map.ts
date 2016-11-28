@@ -72,7 +72,7 @@ export class Map {
       .then(data => {
         content += data;
       })
-      .catch(error => alert(error));
+      .catch(error => alert('Lỗi kết nối hãy thử lại sau'));
 
     google.maps.event.addListener(marker, 'click', () => {
 

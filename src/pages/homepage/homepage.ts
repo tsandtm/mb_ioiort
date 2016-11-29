@@ -73,12 +73,12 @@ export class HomePage {
         if (!web.chontin) {
             console.log('post :D');
             console.log('id: ' + id);
-            this.count++;
             this.userWebSite.createUserWebSite(1, id, new Date())
                 .then(() => {
                     console.log('da them');
                     web.chontin = true;
                     this.webs1[index] = web;
+                    this.count++;
                     console.log('chon ' + web.chontin);
                 })
                 .catch(error => {
@@ -87,12 +87,13 @@ export class HomePage {
         } else {
             console.log('delete :D');
             console.log('id: ' + id);
-            this.count--;
+
             this.userWebSite.deleteUserWebSite(1, id)
                 .then(() => {
                     console.log('da xoa');
                     web.chontin = false;
                     this.webs1[index] = web;
+                    this.count--;
                     console.log('chon ' + web.chontin);
 
                 })

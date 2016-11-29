@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Http } from '@angular/http';
 import 'rxjs'
 import 'rxjs/add/operator/toPromise';
 import { INews } from './news.model';

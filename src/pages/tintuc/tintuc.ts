@@ -35,8 +35,16 @@ export class TinTucPage implements OnInit{
             
     }
 
-    goDetail($event,dnew ){
-        this.navCtrl.push(ChiTietTinPage,dnew);
+    goDetail($event,index ){
+        console.log("url : "+ this.news[index].URLNews);
+        // for(var i = 0; i < this.news.length; i++)
+        // {
+        // }
+
+
+        this.navCtrl.push(ChiTietTinPage, { url: this.news[index].URLNews })
+        
+        // this.navCtrl.push(ChiTietTinPage,dnew);
     }
 
     chuyenmuc(){

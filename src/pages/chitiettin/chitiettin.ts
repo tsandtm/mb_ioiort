@@ -1,39 +1,88 @@
-import { Component,OnInit } from '@angular/core';
-import{NewsService} from '../shared/news.service';
-import {INews} from  '../shared/news.model'
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { NewsService } from '../shared/news.service';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+
+import { INews } from '../shared/news.model'
+import { } from 'module';
+import { Safe } from './chitiettin/safe'
 
 
-import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
-  selector: 'page-chitiettin',
-  templateUrl: 'chitiettin.html'
+    selector: 'page-chitiettin',
+    templateUrl: 'chitiettin.html'
 })
-export class ChiTietTinPage implements OnInit{
-   
-   dnew:INews;
+export class ChiTietTinPage implements OnInit {
+    @ViewChild('iframe') iframe: ElementRef
+    url: string;
+    link: string;
+    spinner: boolean = true;
+    dnew: INews[];
+    str: string = "";
+    index : number;
 
-  constructor(private _newsService: NewsService,public navCtrl: NavController,public navParams: NavParams) {
-      this.dnew = this.navParams.data;
-      console.log("**params : " , this.navParams);
-  }
-    ngOnInit() {
-    // this._route.params.forEach((params: Params) => {
-    //     console.log(params["id"])
-    //     let id = +params["id"];
-    //     this.getNew(id);
-    // })
-}
-//   getNew(id:number){
-//      this._newsService.getNew(id)
-//                 .then(news => this.new = news)
-//                 .catch(errorMessage => {
-//                     console.error(errorMessage.message)
-//                 })
-//   }
-  
-    goBack(){
-        this.navCtrl.pop();
+    constructor(private _newsService: NewsService, public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
+        
+        this.dnew = this.navParams.get('url');
+     
+        console.log("news: ",  this.navParams.get('url'));
+        
+        
     }
+    ngOnInit() {
+        // this._route.params.forEach((params: Params) => {
+        //     console.log(params["id"])
+        //     let id = +params["id"];
+        //     this.getNew(id);
+        // })
+    }
+    //   getNew(id:number){
+    //      this._newsService.getNew(id)
+    //                 .then(news => this.new = news)
+    //                 .catch(errorMessage => {
+    //                     console.error(errorMessage.message)
+    //                 })
+    //   }
+    // goBack() {
+    //     this.navCtrl.pop();
+    // }
+
+    ionViewDidLoad() {
+       
+        console.log("url: ", this.navParams.get('url'));
+       
+        
+        // for(var i=0; i < this.navCtrl.length() ;i++){
+        //     this.str += i+1;
+        // }
+
+        this.url = this.navParams.get('url');
+    }
+    Back() {
+        window.history.back(1)
+    }
+    Forward() {
+        window.history.go(1)
+    }
+    Close() {
+        this.navCtrl.pop()
+    }
+    Like() {
+        this.toastCtrl.create({
+            message: 'Đã Like',
+            duration: 3000,
+            position: 'middle'
+        }).present();
+    }
+
+    onLoad(event) {
+
+        this.link = event
+        if (!event)
+            this.spinner = true
+        else
+            this.spinner = false
+    }
+
 
 }

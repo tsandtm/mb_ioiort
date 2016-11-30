@@ -25,18 +25,20 @@
         <ion-list *ngSwitchCase="'tinmoi'">
 			<ion-card *ngFor="let n of new,let i = index">
 				<ion-item-sliding >
+           
 					<ion-item (click)="daxem(n)" (click)="page3(n)">
-						<ion-title  style="text-align:center"><strong>{{n.TieuDe}}</strong></ion-title>
-						<img [src]=n.URLThumbImage class="img" >
-						<p>{{n.ThoiGianDangTin}}</p>
+						<ion-thumbnail item-left>
+              <img [src]=n.URLThumbImage class="img" >  
+            </ion-thumbnail>
+             <strong>{{n.TieuDe}}</strong>
+             <br/>
+             {{n.ThoiGianDangTin}}
 					</ion-item>
 
-					<ion-item-options>  
-						<button ion-button color="danger" expandable (click)="del(n,i)">
-							<ion-icon name="trash"></ion-icon>
-								Xóa 
-						</button>
+					<ion-item-options (ionSwipe)="del(n,i)" side="right">  
+			
 					</ion-item-options>
+
 					<ion-item-options side="left" >
 						<button ion-button color="primary" expandable (click)="qt(n)">
 						<ion-icon name="heart"></ion-icon>
@@ -45,6 +47,7 @@
 					</ion-item-options>
 				</ion-item-sliding>
 		    </ion-card>
+
     	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     		<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
     		</ion-infinite-scroll-content>
@@ -52,7 +55,7 @@
 	</ion-list>
 
         <ion-list *ngSwitchCase="'tinnoibat'"  class="card-tin">
-                <page-tinnoibat></page-tinnoibat>
+                <page-tinnoibat></page-tinnoibat>               
         </ion-list>
 
     </div>
@@ -63,7 +66,7 @@
             <button ion-fab color="light" (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
             </ion-fab-list>
             <ion-fab-list side="right">
-            <button ion-fab color="dark"><ion-icon ios="ios-share" md="md-share"></ion-icon></button>
+            <button ion-fab color="dark" (click)='phuchoi()'><ion-icon ios="ios-share" md="md-share"></ion-icon></button>
             </ion-fab-list>
       </ion-fab>
 </ion-content>

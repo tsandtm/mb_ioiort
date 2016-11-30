@@ -21,7 +21,7 @@ export class TinTucPage implements OnInit {
   t: string = "tinmoi";
   isAndroid: boolean = false;
   listFilter: string = "";
-  public start: number = 2;
+  public start: number = 6;
   rootchitiet: any = ChiTietTinPage;
   tinOffLine: INews[] = [];
   new: INews[];
@@ -58,7 +58,7 @@ export class TinTucPage implements OnInit {
             for (let x of res)
               this.new.push(x);
             // this.webs1.concat(res);
-            this.start += 2;
+            this.start += 6;
           }
         })
         .catch(errorMessage => {
@@ -103,6 +103,15 @@ export class TinTucPage implements OnInit {
         alert('Loi' + error.message);
       })
   }
+  // phuchoi = (news: INews) => {
+  //   this._newservice.phuchoi(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+  //     .then(result => {
+  //       console.log('Da phuc hoi')
+  //     })
+  //     .catch(error => {
+  //       alert('Loi' + error.message);
+  //     })
+  // }
   qt = (news: INews) => {
     this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {

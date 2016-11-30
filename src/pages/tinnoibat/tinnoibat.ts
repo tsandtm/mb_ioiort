@@ -14,27 +14,46 @@ import {INews} from  '../shared/news.model'
 })
 export class TinnoibatPage {
     new: INews[];
-    public start: number = 2;
+    public start: number = 6;
   constructor(public navCtrl: NavController,private _newservice: NewsService,private toastCtrl: ToastController) {}
 
   ngOnInit(): void {
-    this._newservice.tinnoibat()
+    this._newservice.tinnoibat(0)
       .then(nw => this.new = nw)
       .catch(errorMessage => {
         console.error(errorMessage.message)
       })
   }
-
- del=(news: INews,i) => {
-    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-      .then(result => {
-        console.log('Da xoa')
-        this.new.splice(i,1)
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
-      })
-  }
+  doInfinite(infiniteScroll) {
+      console.log('Begin async operation');
+      setTimeout(() => {
+        this._newservice.tinnoibat(this.start)
+          .then(
+          (res) => {
+            if (res.length !== 0) {
+              for (let x of res)
+                this.new.push(x);
+              // this.webs1.concat(res);
+              this.start += 6;
+            }
+          })
+          .catch(errorMessage => {
+            console.error(errorMessage.message)
+          });
+        console.log('Async operation has ended');
+        infiniteScroll.complete();
+      }, 2000);
+    }
+    del=(news: INews,i) => {
+      this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+        .then(result => {
+          console.log('Da xoa')
+          this.new.splice(i,1)
+        })
+        .catch(error => {
+          alert('Loi' + error.message);
+        })
+    }
     qt = (news: INews) => {
     this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
@@ -43,24 +62,6 @@ export class TinnoibatPage {
       .catch(error => {
         alert('Loi' + error.message);
       })
-  }
-  
-   Xoa(n: INews,index) {
-    this.expandAction(n, 'downloading', 'Login was downloaded.');
-  }
-
-   expandAction(n: INews, action: string, text: string) {
-    // TODO item.setElementClass(action, true);
-
-    setTimeout(() => {
-      const toast = this.toastCtrl.create({
-        message: text
-      });
-      toast.present();
-      // TODO item.setElementClass(action, false)
-
-      setTimeout(() => toast.dismiss(), 2000);
-    }, 1500);
   }
 
   ionViewDidLoad() {

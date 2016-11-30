@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
-
-import { NavController, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, LoadingController, Nav, } from 'ionic-angular';
 import { TinTucPage } from '../tintuc/tintuc';
 import { WebsService } from '../shared/website.service';
 import { UserWebService } from '../shared/user_website.service';
 import { IWeb } from '../shared/website.model';
-import { HomeFilterPipe } from './homepage-filter.pipe'
-
+import { ChuyenMucPage } from '../chuyenmuc/chuyenmuc';
 
 @Component({
     selector: 'page-home',
     templateUrl: 'homepage.html'
 })
 export class HomePage {
+    @ViewChild(Nav) nav: Nav;
+
     // webs: IWeb[];
     webs1: IWeb[];
     webs2: IWeb[];
@@ -21,8 +21,13 @@ export class HomePage {
     public start: number = 12;
     public click: boolean = false;
     index: number;
-
+    pages: Array<{ title: string, component: any }>;
     constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController, private userWebSite: UserWebService) {
+        this.pages = [
+            { title: 'Trang Chủ', component: HomePage },
+            { title: 'Chuyên mục', component: ChuyenMucPage },
+            { title: 'Tin Tức', component: TinTucPage }
+        ];
     }
     ngOnInit(): void {
         // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
@@ -147,6 +152,11 @@ export class HomePage {
         }
     }
 
+    openPage(page) {
+        // Reset the content nav to have just this page
+        // we wouldn't want the back button to show in this scenario
+        this.nav.setRoot(page.component);
+    }
     // chon(id: number, index) {
 
     //     let web = this.webs1[index]; // web mặc định là false

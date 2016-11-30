@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component,  } from '@angular/core';
+import {  NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-chuyemuc',
@@ -7,7 +7,9 @@ import { NavController } from 'ionic-angular';
 })
 export class ChuyenMucPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {
     
   }
+  
+}
 

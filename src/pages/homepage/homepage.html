@@ -1,10 +1,26 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
 <ion-header>
-  <ion-navbar color="main" class="header">
+  <ion-navbar color="main" class="header" hideBackButton = true>
     <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter' ></ion-searchbar>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="card-background-page" >
+<ion-content class="card-background-page" #content>
   <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
     <div [class.opi]="web.chontin" (click)="chon(web.IDDanhMucSite,i);chontin =! chontin">
       <ion-card>

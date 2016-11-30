@@ -22,12 +22,9 @@ export class ChiTietTinPage implements OnInit {
     index : number;
 
     constructor(private _newsService: NewsService, public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
-        
-        this.dnew = this.navParams.get('url');
-     
-        console.log("news: ",  this.navParams.get('url'));
-        
-        
+        this.dnew = this.navParams.get('news');
+        this.index = this.navParams.get('index');
+        console.log("news: ", this.navParams.get('news'));
     }
     ngOnInit() {
         // this._route.params.forEach((params: Params) => {
@@ -48,15 +45,7 @@ export class ChiTietTinPage implements OnInit {
     // }
 
     ionViewDidLoad() {
-       
-        console.log("url: ", this.navParams.get('url'));
-       
-        
-        // for(var i=0; i < this.navCtrl.length() ;i++){
-        //     this.str += i+1;
-        // }
-
-        this.url = this.navParams.get('url');
+        this.url = this.dnew[this.index].URLNews;
     }
     Back() {
         window.history.back(1)
@@ -73,6 +62,11 @@ export class ChiTietTinPage implements OnInit {
             duration: 3000,
             position: 'middle'
         }).present();
+    }
+
+    Next(event){
+        console.log(event)
+        // this.url = this.dnew[this.index+1].URLNews;
     }
 
     onLoad(event) {

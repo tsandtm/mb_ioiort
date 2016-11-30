@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response,URLSearchParams,Headers } from '@angular/http';
+import { Http, Response, URLSearchParams, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs'
 import 'rxjs/add/operator/toPromise';
@@ -10,19 +10,17 @@ import { IWeb } from './website.model';
 export class WebsService {
     // private _newsUrl = 'api/json/news.json';
     webs: IWeb[];
-    private limit : number = 12;
+    private limit: number = 12;
     constructor(private _http: Http) { }
 
-    getWebs(start:number): Promise<IWeb[]> {
-          return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/website?limit='+this.limit+'&skip='+start)
-        .map(res => res.json())
-        .subscribe(data => {
-
-          resolve(data);
-
+    getWebs(start: number): Promise<IWeb[]> {
+        return new Promise(resolve => {
+            this._http.get('http://localhost:8080/api/website?limit=' + this.limit + '&skip=' + start)
+                .map(res => res.json())
+                .subscribe(data => {
+                    resolve(data);
+                });
         });
-    });
     }
 
     getList_user(): Promise<IWeb[]> {
@@ -43,7 +41,7 @@ export class WebsService {
 
     // //Them website duyet tin
     // updateShow_add(id: number): Promise<IWeb> {
-       
+
     //     return this._http.put('http://localhost:8080/api/website?id=' + id, { show: true })
     //         .toPromise()
     //         .then(response => response.json() as IWeb)

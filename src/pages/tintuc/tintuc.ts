@@ -1,46 +1,136 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import { Platform } from 'ionic-angular';
 
-import {ChiTietTinPage} from '../chitiettin/chitiettin';
-
-import{ChuyenMucPage} from '../chuyenmuc/chuyenmuc';
-import{NewsService} from '../shared/news.service';
-import {INews} from  '../shared/news.model'
+import { ChiTietTinPage } from '../chitiettin/chitiettin';
+import { TinnoibatPage } from '../tinnoibat/tinnoibat';
+import { HomePage } from '../homepage/homepage';
+import { ChuyenMucPage } from '../chuyenmuc/chuyenmuc';
+import { NewsService } from '../shared/news.service';
+import { INews } from '../shared/news.model'
 
 
 @Component({
   selector: 'page-tintuc',
   templateUrl: 'tintuc.html'
 })
-export class TinTucPage implements OnInit{
+export class TinTucPage implements OnInit {
 
-    t: string = "tinmoi";
-    isAndroid: boolean = false;
-    rootchitiet: any = ChiTietTinPage;
-    news: INews[];
+  t: string = "tinmoi";
+  isAndroid: boolean = false;
+  listFilter: string = "";
+  public start: number = 2;
+  rootchitiet: any = ChiTietTinPage;
+  tinOffLine: INews[] = [];
+  new: INews[];
 
-    constructor(private _newsService: NewsService,platform:Platform , public navCtrl: NavController) {
-        this.isAndroid=platform.is('android');
-    }
+  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController) {
+    this.isAndroid = platform.is('android', );
+  }
+  page3 = ($event, n) => {
+    this.presentLoadingDefault()
+    setTimeout(() => {
+      this.navCtrl.push(ChiTietTinPage, n)
 
-      ngOnInit(): void {
-           this._newsService.getNews()
-                .then(nw => this.news = nw)
-                .catch(errorMessage => {
-                    console.error(errorMessage.message)
-                });
-            
-    }
+    }, 500);
+  }
+  trove = () => {
+    this.navCtrl.push(HomePage)
+  }
 
-    goDetail($event,dnew ){
-        this.navCtrl.push(ChiTietTinPage,dnew);
-    }
+  ngOnInit(): void {
+    this._newservice.getWebs(0)
+      .then(nw => this.new = nw)
+      .catch(errorMessage => {
+        console.error(errorMessage.message)
+      })
+  }
 
-    chuyenmuc(){
-        this.navCtrl.push(ChuyenMucPage);
-    }
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+    setTimeout(() => {
+      this._newservice.getWebs(this.start)
+        .then(
+        (res) => {
+          if (res.length !== 0) {
+            for (let x of res)
+              this.new.push(x);
+            // this.webs1.concat(res);
+            this.start += 2;
+          }
+        })
+        .catch(errorMessage => {
+          console.error(errorMessage.message)
+        });
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 2000);
+  }
 
+  presentLoadingDefault() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: true
+    });
+
+    loading.present();
+  }
+  // xoa(id: number) {
+  //   this._newservice.xoaTinTuc(id)
+  //     .then(t => {
+  //       if (t) {
+  //         return this.navCtrl.push(AboutPage)
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error: ', error);
+  //     });
+  // }
+
+  // quanTam = (news: INews) => {
+  //   this.tinOffLine.push(news);
+  // }
+
+  del = (news: INews, i) => {
+    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+      .then(result => {
+        console.log('Da xoa')
+        this.new.splice(i, 1)
+      })
+      .catch(error => {
+        alert('Loi' + error.message);
+      })
+  }
+  qt = (news: INews) => {
+    this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+      .then(result => {
+        alert("Da them");
+        this.tinOffLine.push(news);
+      })
+      .catch(error => {
+        alert('Loi' + error.message);
+      })
+  }
+
+  daxem = (news: INews) => {
+    this._newservice.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+      .then(result => {
+        alert("Da xem");
+      })
+      .catch(error => {
+        alert('Loi' + error.message);
+      })
+
+  }
+
+  //  this._newservice.updateTinTuc(news.id,idUser).
+  //             then(result => {
+  //               this.tinOffLine.push(news);
+  //             })
+  //             .catch(error => {
+  //               alert('Loi: ' + error.mesage)
+  //             })
+  //   }
 }

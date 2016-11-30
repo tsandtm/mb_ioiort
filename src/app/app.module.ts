@@ -10,7 +10,7 @@ import {WebsService} from '../pages/shared/website.service';
 import {NewsService} from '../pages/shared/news.service';
 import {HomeFilterPipe} from '../pages/homepage/homepage-filter.pipe';
 import {UserWebService} from '../pages/shared/user_website.service';
-
+import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import {UserWebService} from '../pages/shared/user_website.service';
     TinTucPage,
     ChiTietTinPage,
     ChuyenMucPage,
-    HomeFilterPipe
+    HomeFilterPipe,
+    TinnoibatPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -30,7 +31,8 @@ import {UserWebService} from '../pages/shared/user_website.service';
     HomePage,
     TinTucPage,
     ChiTietTinPage,
-    ChuyenMucPage
+    ChuyenMucPage,
+    TinnoibatPage
   ],
   providers: [WebsService,NewsService,UserWebService]
 })

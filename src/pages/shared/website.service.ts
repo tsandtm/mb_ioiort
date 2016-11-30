@@ -15,10 +15,9 @@ export class WebsService {
 
     getWebs(start:number): Promise<IWeb[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/website?limit='+this.limit+'&skip='+start)
+        this._http.get('http://localhost:8080/api/danhmuc?limit='+this.limit+'&skip='+start)
         .map(res => res.json())
         .subscribe(data => {
-
           resolve(data);
 
         });

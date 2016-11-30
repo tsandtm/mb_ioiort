@@ -1,11 +1,11 @@
 <ion-header class="body">
-    <ion-navbar color="main">
-        <!--<button ion-button menuToggle right>
+    <!--<ion-navbar color="main">
+        <button ion-button menuToggle right>
         <div right class="menu1">
             <ion-icon name='menu'></ion-icon>                        
         </div>
-      </button>-->
-    </ion-navbar>
+      </button>
+    </ion-navbar>-->
     <ion-toolbar no-border-top>
         <ion-segment [(ngModel)]="t">
             <ion-segment-button value="tinmoi">
@@ -14,100 +14,63 @@
             <ion-segment-button value="tinnoibat">
                 Tin nổi bật
             </ion-segment-button>
-            <ion-segment-button value="tinoffline">
-                Tin offline
-            </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content class="body">
+    
     <div [ngSwitch]="t">
-        <ion-list *ngSwitchCase="'tinmoi'" class="card-tin">
-            <div *ngFor='let dnew of news'>
-                <ion-card>
-                    <img [src]='dnew.URLThumbImage' (click)="goDetail($event,dnew)" class="img" [title]='dnew.TieuDe | uppercase'>
-                    <ion-card-title class="tin-thumb">
-                        <h3>{{dnew.TieuDe}}</h3>
-                        <!--<p>{{dnew.ThoiGianDangTin | date : "dd-MM-y"}}</p>-->
-                    </ion-card-title>
-                    <ion-card-content class='tin'>
-                        <p>{{dnew.MoTa}}.</p>
-                    </ion-card-content>
-                    <ion-row class='icons'>
-                        <ion-col>
-                            <div>
-                                <p>
-                                    <ion-icon name="bookmark"></ion-icon>
-                                </p>
-                            </div>
-                        </ion-col>
-                        <ion-col>
-                            <div>
-                                <p>
-                                    <ion-icon name="share"></ion-icon>
-                                </p>
-                            </div>
-                        </ion-col>
-                        <ion-col>
-                            <div>
-                                <p>
-                                    <ion-icon name="trash"></ion-icon>
-                                </p>
-                            </div>
-                        </ion-col>
-                    </ion-row>
-                </ion-card>
-            </div>
-        </ion-list>
+        <ion-list *ngSwitchCase="'tinmoi'">
+			<ion-card *ngFor="let n of new,let i = index">
+				<ion-item-sliding >
+					<ion-item (click)="daxem(n)" (click)="page3(n)">
+						<ion-title  style="text-align:center"><strong>{{n.TieuDe}}</strong></ion-title>
+						<img [src]=n.URLThumbImage class="img" >
+						<p>{{n.ThoiGianDangTin}}</p>
+					</ion-item>
+
+					<ion-item-options>  
+						<button ion-button color="danger" expandable (click)="del(n,i)">
+							<ion-icon name="trash"></ion-icon>
+								Xóa 
+						</button>
+					</ion-item-options>
+					<ion-item-options side="left" >
+						<button ion-button color="primary" expandable (click)="qt(n)">
+						<ion-icon name="heart"></ion-icon>
+						<div>Yêu Thích</div>
+						</button>
+					</ion-item-options>
+				</ion-item-sliding>
+		    </ion-card>
+    	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    		<ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
+    		</ion-infinite-scroll-content>
+  		</ion-infinite-scroll>
+	</ion-list>
 
         <ion-list *ngSwitchCase="'tinnoibat'"  class="card-tin">
-            <div *ngFor='let dnew of news'>
-                <ion-card>
-                    <img [src]='dnew.URLThumbImage' (click)="goDetail($event,dnew)" class="img" [title]='dnew.TieuDe | uppercase'>
-
-                    <ion-card-title class="tin-thumb">
-                        <h3>{{dnew.TieuDe}}</h3>
-                        
-
-                    </ion-card-title>
-                    <ion-card-content class='tin'>
-                        <p>{{dnew.MoTa}}.</p>
-                    </ion-card-content>
-                    <ion-row class='icons'>
-                        <ion-col>
-                            <div>
-                                <p>
-                                    <ion-icon name="bookmark"></ion-icon>
-                                </p>
-                            </div>
-                        </ion-col>
-                        <ion-col>
-                            <div>
-                                <p>
-                                    <ion-icon name="share"></ion-icon>
-                                </p>
-                            </div>
-                        </ion-col>
-                        <ion-col>
-                            <div>
-                                <p>
-                                    <ion-icon name="trash"></ion-icon>
-                                </p>
-                            </div>
-                        </ion-col>
-                    </ion-row>
-                </ion-card>
-            </div>
+                <page-tinnoibat></page-tinnoibat>
         </ion-list>
 
-        <ion-list *ngSwitchCase="'tinoffline'"  class="card-tin">
-
-        </ion-list>
     </div>
+    <ion-fab bottom left edge>
+    <button ion-fab mini> <ion-icon name="cog"></ion-icon></button>
+            <ion-fab-list side="top">
+            <button ion-fab color="primary"> <ion-icon name="log-out"></ion-icon></button>
+            <button ion-fab color="light" (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
+            </ion-fab-list>
+            <ion-fab-list side="right">
+            <button ion-fab color="dark"><ion-icon ios="ios-share" md="md-share"></ion-icon></button>
+            </ion-fab-list>
+      </ion-fab>
 </ion-content>
-
+<ion-footer>
+  <ion-toolbar no-border class="tool-home">
+  </ion-toolbar>
+</ion-footer>
 
 
 <style>

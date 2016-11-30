@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController, LoadingController } from 'ionic-angular';
 import { TinTucPage } from '../tintuc/tintuc';
+import { TinnoibatPage } from '../tinnoibat/tinnoibat';
 import { WebsService } from '../shared/website.service';
 import { UserWebService } from '../shared/user_website.service';
 import { IWeb } from '../shared/website.model';

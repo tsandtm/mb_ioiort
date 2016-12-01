@@ -14,6 +14,8 @@ import { UserWebService } from '../pages/shared/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
 import {LoginService} from '../pages/login-page/login-page.service'
 import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
+import{LktinxoaPage} from '../pages/lktinxoa/lktinxoa';
+import{TinquantamPage} from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { Safe } from '../pages/chitiettin/safe'
     HomeFilterPipe,
     LoginPage,
     TinnoibatPage,
-    Safe
+    Safe,
+    LktinxoaPage,
+    TinquantamPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -38,7 +42,9 @@ import { Safe } from '../pages/chitiettin/safe'
     ChiTietTinPage,
     ChuyenMucPage,
     LoginPage,
-    TinnoibatPage
+    TinnoibatPage,
+    LktinxoaPage,
+    TinquantamPage
   ],
   providers: [WebsService, NewsService, UserWebService,LoginService,Storage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

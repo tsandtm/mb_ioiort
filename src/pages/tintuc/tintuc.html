@@ -29,7 +29,10 @@
                     </ion-item>
 
                     <ion-item-options (ionSwipe)="del(n,i)" side="right">
-
+                        <button ion-button color="primary" expandable (click)="del(n,i)">
+						<ion-icon name="heart"></ion-icon>
+						<div>Xoa</div>
+						</button>
                     </ion-item-options>
 
                     <ion-item-options side="left">
@@ -59,8 +62,9 @@
             <button ion-fab color="primary" (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
             <button ion-fab color="light" (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
         </ion-fab-list>
-        <ion-fab-list side="right">
-            <button ion-fab color="dark" (click)='phuchoi()'><ion-icon ios="ios-share" md="md-share"></ion-icon></button>
+        <ion-fab-list side="right" style="<width:1000></width:1000>px">
+            <button ion-fab color="dark" (click)='lktindaxoa()'><ion-icon ios="ios-share" md="md-share"></ion-icon></button>Xoa Tin
+            <button ion-fab color="light" (click)='lktinquantam()'> <ion-icon name="heart"></ion-icon></button>
         </ion-fab-list>
     </ion-fab>
 </ion-content>

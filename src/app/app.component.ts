@@ -12,6 +12,7 @@ import { LoginPage } from '../pages/login-page/login-page'
 })
 export class MyApp {
   rootPage = LoginPage;
+
   constructor(platform: Platform) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -20,5 +21,6 @@ export class MyApp {
       // Splashscreen.hide();
     });
   }
+
 
 }

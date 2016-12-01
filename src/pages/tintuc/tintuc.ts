@@ -5,14 +5,16 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
+
 import { HomePage } from '../homepage/homepage';
 import { NewsService } from '../shared/news.service';
 import { INews } from '../shared/news.model'
-import{LoginPage} from '../login-page/login-page';
+import { LoginPage } from '../login-page/login-page';
+import { Storage } from '@ionic/storage';
 
 @Component({
-    selector: 'page-tintuc',
-    templateUrl: 'tintuc.html'
+  selector: 'page-tintuc',
+  templateUrl: 'tintuc.html'
 })
 export class TinTucPage implements OnInit {
   t: string = "tinmoi";
@@ -22,21 +24,19 @@ export class TinTucPage implements OnInit {
   rootchitiet: any = ChiTietTinPage;
   tinOffLine: INews[] = [];
   new: INews[];
-
-  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController) {
+  arr: any[];
+  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController,private storage: Storage) {
     this.isAndroid = platform.is('android', );
   }
-  page3 = ($event, n) => {
-    this.presentLoadingDefault()
-    setTimeout(() => {
-      this.navCtrl.push(ChiTietTinPage, n)
 
-    }, 500);
-  }
+
   trove = () => {
     this.navCtrl.push(HomePage)
   }
-  dangxuat=()=>{
+  dangxuat = () => {
+
+
+    this.storage.clear()
     this.navCtrl.push(LoginPage)
   }
   ngOnInit(): void {
@@ -103,6 +103,19 @@ export class TinTucPage implements OnInit {
       .catch(error => {
         alert('Loi' + error.message);
       })
-
   }
+
+  goDetail($event, index) {
+    this._newservice.getNew(0)
+      .then(nw => {
+        this.arr = nw;
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
+      })
+      .catch(errorMessage => {
+        console.error(errorMessage.message)
+      });
+    // this.navCtrl.push(ChiTietTinPage,dnew);
+  }
+  
+
 }

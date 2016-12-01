@@ -29,6 +29,16 @@ export class HomePage {
             { title: 'Tin Tức', component: TinTucPage }
         ];
     }
+
+
+
+    ionViewDidLoad (){
+        // this.userWebSite.selectuser(1).then(result=>{
+        //     if(result)
+        //         console.log(result)
+        //         this.navCtrl.push(TinTucPage);
+        // })
+    }
     ngOnInit(): void {
         // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
         //     .then(web => this.webs = web)

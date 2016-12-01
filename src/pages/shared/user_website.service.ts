@@ -43,4 +43,20 @@ export class UserWebService {
             });
     }
 
+
+    public selectuser(id: any): Promise<boolean> {
+        return this.http.get('http://localhost:8080/api/userwebsite?idUser=' + id)
+            .toPromise()
+            .then((mess) => {
+                if (mess.status == 200)
+                    return true
+                if (mess.status == 400)
+                    return false
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+                return Promise.reject(error);
+            });
+    }
+
 }

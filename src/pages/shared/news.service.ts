@@ -7,6 +7,7 @@ import { INews } from './news.model';
 @Injectable()
 export class NewsService {
     // private _newsUrl = 'api/json/news.json';
+
 private limit : number= 6;
 
     constructor(private _http: Http,) { }
@@ -64,6 +65,32 @@ private limit : number= 6;
         console.error(error);
         return Promise.reject(error.message || error);
     }
+
+   
+    private limit1: number = 2;
+    
+
+
+    getNew(start:number): Promise<INews[]> {
+        return new Promise(resolve => {
+            this._http.get('http://localhost:8080/api/getNews?limit=' + this.limit1 + '&skip=' + start)
+                .map(res => res.json())
+                .subscribe(data => {
+                    resolve(data);
+                });
+        });
+    }
+    gettinnoibat(start:number): Promise<INews[]> {
+        return new Promise(resolve => {
+            this._http.get('http://localhost:8080/api/gettinnoibat?limit=' + this.limit1 + '&skip=' + start)
+                .map(res => res.json())
+                .subscribe(data => {
+                    resolve(data);
+                });
+        });
+    }
+
+   
 
     
 }

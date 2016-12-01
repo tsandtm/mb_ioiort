@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController ,ToastController } from 'ionic-angular';
 import{NewsService} from '../shared/news.service';
 import {INews} from  '../shared/news.model'
+import { ChiTietTinPage } from '../chitiettin/chitiettin';
+
 /*
   Generated class for the Tinnoibat page.
 
@@ -15,6 +17,8 @@ import {INews} from  '../shared/news.model'
 export class TinnoibatPage {
     new: INews[];
     public start: number = 6;
+     rootchitiet: any = ChiTietTinPage;
+      arr: any[];
   constructor(public navCtrl: NavController,private _newservice: NewsService,private toastCtrl: ToastController) {}
 
   ngOnInit(): void {
@@ -62,7 +66,17 @@ export class TinnoibatPage {
         alert('Loi' + error.message);
       })
   }
-
+  tinnoibat($event, index) {
+     this._newservice.gettinnoibat(0)
+      .then(nw => {
+        this.arr = nw;
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
+      })
+      .catch(errorMessage => {
+        console.error(errorMessage.message)
+      });
+    // this.navCtrl.push(ChiTietTinPage,dnew);
+  }
   ionViewDidLoad() {
     console.log('Hello TinnoibatPage Page');
   }

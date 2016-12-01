@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -14,7 +14,7 @@ import { UserWebService } from '../pages/shared/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
 import {LoginService} from '../pages/login-page/login-page.service'
 import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
-
+import { Safe } from '../pages/chitiettin/safe'
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +24,8 @@ import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
     ChuyenMucPage,
     HomeFilterPipe,
     LoginPage,
-    TinnoibatPage
+    TinnoibatPage,
+    Safe
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -39,6 +40,7 @@ import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
     LoginPage,
     TinnoibatPage
   ],
-  providers: [WebsService, NewsService, UserWebService,LoginService,Storage]
+  providers: [WebsService, NewsService, UserWebService,LoginService,Storage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

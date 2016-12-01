@@ -32,15 +32,24 @@
 </ion-header>
 
 <ion-view>
-  <ion-content class='padding has-subheader' z-index >
-    <iframe #iframe class='webPage' name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
-      id="IDTinTuc" >     
-    </iframe>
-    <!--<ion-footer>
+  <ion-content class='padding has-subheader' z-index>
+
+    <ion-slides pager>
+      <ion-slide (ionWillChange)="nextto()" style="height:98%">
+        <iframe #iframe class='webPage' name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
+          id="IDTinTuc">
+        </iframe>
+      </ion-slide>
+    </ion-slides>
+
+
+
+
+    <ion-footer>
       <ion-toolbar>
         <ion-title>Footer</ion-title>
       </ion-toolbar>
-    </ion-footer>-->
+    </ion-footer>
   </ion-content>
 
 </ion-view>

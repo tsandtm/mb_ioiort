@@ -22,7 +22,7 @@ export class TinTucPage implements OnInit {
     rootchitiet: any = ChiTietTinPage;
     news: INews[];
     public start: number = 4;
-    arr:any[];
+    arr: any[];
 
 
     constructor(private _newsService: NewsService, platform: Platform, public navCtrl: NavController) {
@@ -59,8 +59,14 @@ export class TinTucPage implements OnInit {
 
 
     goDetail($event, index) {
-
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.news })
+        this._newsService.getNew(0)
+            .then(nw => {
+                this.arr = nw;
+                this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
         // this.navCtrl.push(ChiTietTinPage,dnew);
     }
 

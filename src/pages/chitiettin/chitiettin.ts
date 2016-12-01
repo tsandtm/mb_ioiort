@@ -17,36 +17,39 @@ export class ChiTietTinPage implements OnInit {
     url: string;
     link: string;
     spinner: boolean = true;
-    dnew: INews[];
+    dnew: any[];
+    nnew: any[];
     str: string = "";
-    index : number;
+    index: number;
+    start: number = 1;
 
     constructor(private _newsService: NewsService, public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
-        this.dnew = this.navParams.get('news');
+        this.nnew = this.navParams.get('news');
         this.index = this.navParams.get('index');
-        console.log("news: ", this.navParams.get('news'));
+        console.log("news: ", this.nnew );
     }
     ngOnInit() {
-        // this._route.params.forEach((params: Params) => {
-        //     console.log(params["id"])
-        //     let id = +params["id"];
-        //     this.getNew(id);
-        // })
     }
-    //   getNew(id:number){
-    //      this._newsService.getNew(id)
-    //                 .then(news => this.new = news)
-    //                 .catch(errorMessage => {
-    //                     console.error(errorMessage.message)
-    //                 })
-    //   }
-    // goBack() {
-    //     this.navCtrl.pop();
-    // }
 
     ionViewDidLoad() {
-        this.url = this.dnew[this.index].URLNews;
+        this.url = this.nnew[this.index].URLNews ;
     }
+
+    nextto(){
+        console.log("news: ", this.nnew );
+        
+         this._newsService.getNew(this.start)
+            .then(nw => {
+                this.dnew = nw;
+                this.navCtrl.push(ChiTietTinPage, { index: this.index, news: this.dnew});
+                this.start += 1;
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
+        // this.navCtrl.push(ChiTietTinPage, { index: this.index, news: this.dnew })      
+    }
+
     Back() {
         window.history.back(1)
     }
@@ -64,9 +67,9 @@ export class ChiTietTinPage implements OnInit {
         }).present();
     }
 
-    Next(event){
+    Next(event) {
         console.log(event)
-        // this.url = this.dnew[this.index+1].URLNews;
+        this.url = this.dnew[this.index+1].URLNews;
     }
 
     onLoad(event) {

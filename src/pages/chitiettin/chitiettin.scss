@@ -1,9 +1,11 @@
-ion-content .scroll-content {
+div.scroll-content {
     margin-top: 55px;
     margin-left: 0px;
     margin-right: 0px;
 }
-
+.slide-zoom{
+     height: 100%;
+}
 page-webview {
     .body {
         background-color: #cccccc;

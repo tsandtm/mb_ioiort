@@ -13,6 +13,7 @@ import { HomeFilterPipe } from '../pages/homepage/homepage-filter.pipe';
 import { UserWebService } from '../pages/shared/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
 import {LoginService} from '../pages/login-page/login-page.service'
+import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import {LoginService} from '../pages/login-page/login-page.service'
     ChuyenMucPage,
     HomeFilterPipe,
     LoginPage,
-    
+    TinnoibatPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -35,7 +36,8 @@ import {LoginService} from '../pages/login-page/login-page.service'
     TinTucPage,
     ChiTietTinPage,
     ChuyenMucPage,
-    LoginPage
+    LoginPage,
+    TinnoibatPage
   ],
   providers: [WebsService, NewsService, UserWebService,LoginService,Storage]
 })

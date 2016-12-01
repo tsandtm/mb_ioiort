@@ -25,11 +25,15 @@
             padding: 2px;
         }
 }
+.ion-thumbnail{
+    img{
+        max-height:200%;
+    }
+}
 .tin-thumb {
     img {
-        margin-left: 15px;
-        height: 70px;
-        width: 80px;
+        height: 100%;
+        width: 100%;
     }
     h3 {
         font-size: 17px;

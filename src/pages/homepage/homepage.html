@@ -15,8 +15,8 @@
 </ion-menu>
 
 <ion-header>
-  <ion-navbar color="main" class="header" hideBackButton = true>
-    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter' ></ion-searchbar>
+  <ion-navbar color="main" class="header" hideBackButton= true>
+    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter'></ion-searchbar>
   </ion-navbar>
 </ion-header>
 
@@ -35,25 +35,6 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-  <!--
-
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
-  <ion-content padding>
-    <h5 style="text-align:center;font-weight: bold;">LỰA CHỌN TRANG TIN YÊU THÍCH</h5>
-    <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
-      <div class="polaroid" [class.black]="web.show" (click)="chon(web.id,i)">
-        <img [src]='web.icon' style="width:100%" />
-        <div class="contain">
-          <p>{{web.name}}</p>
-        </div>
-      </div>
-    </div>-->
 </ion-content>
 <ion-footer>
   <ion-toolbar no-border class="tool-home">

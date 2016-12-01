@@ -40,6 +40,7 @@ export class HomePage {
             .catch(errorMessage => {
                 console.error(errorMessage.message)
             });
+
     }
 
     doInfinite(infiniteScroll) {
@@ -74,7 +75,6 @@ export class HomePage {
     chon(id: number, index: number) {
 
         let web = this.webs1[index];
-
         if (!web.chontin) {
             console.log('post :D');
             console.log('id: ' + id);

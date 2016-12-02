@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
-import { LoginPage } from '../pages/login-page/login-page'
-
+import { LoginPage } from '../pages/login-page/login-page';
+import {HomePage} from '../pages/homepage/homepage';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { LoginPage } from '../pages/login-page/login-page'
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage = LoginPage;
+  rootPage = HomePage;
 
   constructor(platform: Platform) {
     platform.ready().then(() => {

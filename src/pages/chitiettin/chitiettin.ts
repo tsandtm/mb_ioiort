@@ -14,7 +14,6 @@ import { Safe } from './chitiettin/safe'
     templateUrl: 'chitiettin.html'
 })
 export class ChiTietTinPage implements OnInit {
-
     @ViewChild('iframe') iframe: ElementRef
     url: string;
     link: string;
@@ -35,6 +34,7 @@ export class ChiTietTinPage implements OnInit {
 
     ionViewDidLoad() {
         this.url = this.nnew[this.index].URLNews ;
+        
     }
 
     nextto(){
@@ -75,12 +75,13 @@ export class ChiTietTinPage implements OnInit {
     }
 
     onLoad(event) {
-
         this.link = event
         if (!event)
-            this.spinner = true
+            this.spinner = true;
         else
-            this.spinner = false
+            this.spinner = false;
+         let b= document.getElementById("IDTinTuc");
+        console.log(b);
     }
 
 

@@ -47,25 +47,7 @@ export class HomePage {
             .catch(errorMessage => {
                 console.error(errorMessage.message)
             });
-        this._webService.getWebs(0) //lấy danh sách web ban đầu
-            .then(web => {
-                this.webs1 = web;
-                console.log("length " + this.webs2.length);
-                for (var i = 0; i < this.webs2.length; i++) {
-
-                    let web2 = this.webs2[i];
-                    for (var j = 0; j < this.webs1.length; j++) {
-                        let web1 = this.webs1[j];
-                        if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
-                            web1.chontin = true;
-                            this.webs1[j] = web1;
-                        }
-                    }
-                }
-            })
-            .catch(errorMessage => {
-                console.error(errorMessage.message)
-            });
+        this.LoadList()
 
     }
 
@@ -132,11 +114,12 @@ export class HomePage {
                     this.count--;
                     let i = this.webs2.findIndex(i=>{
                         if(i.IDDanhMucSite === web.IDDanhMucSite)
-                            return true
+                            return true;
                         else    
-                            return false
+                            return false;
                     })
                     this.webs2.splice(i,1)
+                    debugger;
                     console.log('chon ' + web.chontin);
 
                 })
@@ -161,7 +144,16 @@ export class HomePage {
 
         } else {
             console.log('hien tai 3: ' + this.click);
-            this._webService.getWebs(0)
+           this.LoadList()
+
+
+
+        }
+    }
+
+
+    LoadList () {
+         this._webService.getWebs(0)
                 .then(web => {
                     this.webs1 = web;
                     for (var i = 0; i < this.webs2.length; i++) {
@@ -170,6 +162,7 @@ export class HomePage {
                             let web1 = this.webs1[j];
                             if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
                                 web1.chontin = true;
+                                web2.chontin = true;
                                 this.webs1[j] = web1;
                             }
                         }
@@ -178,51 +171,13 @@ export class HomePage {
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
                 });
-
-
-
-        }
     }
-
+    
     openPage(page) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
         this.nav.setRoot(page.component);
     }
-    // chon(id: number, index) {
-
-    //     let web = this.webs1[index]; // web mặc định là false
-    //     if (web.show) {
-    //         console.log('Show: ' + web.show);
-    //         this.count--;
-    //         web.show = false;
-    //         this.webs1[index] = web;
-    //         this._webService.updateShow_delete(id)
-    //             .then(t => {
-    //                 if (t) {
-    //                     console.log('Show: ' + web.show);
-    //                 }
-    //             })
-    //             .catch(errorMessage => {
-    //                 console.error(errorMessage.message)
-    //             });
-    //     } else {
-    //         console.log('Show: ' + web.show);
-    //         this.count++;
-    //         web.show = true;
-    //         this.webs1[index] = web;
-
-    //         this._webService.updateShow_add(id)
-    //             .then(t => {
-    //                 if (t.show) {
-    //                     console.log('Show: ' + t.show);
-    //                 }
-    //             })
-    //             .catch(errorMessage => {
-    //                 console.error(errorMessage.message)
-    //             });
-    //     }
-
-    //}
+   
 
 }

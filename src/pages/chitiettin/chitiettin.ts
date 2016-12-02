@@ -115,7 +115,7 @@ export class ChiTietTinPage implements OnInit {
                 this.url = this.nnew[this.index - 1].URLNews
                 this.index--
                 console.log(this.index)
-                
+
             } else {
                 this.url = this.nnew[this.index].URLNews
                 console.log(this.index)
@@ -127,4 +127,5 @@ export class ChiTietTinPage implements OnInit {
         // // console.log(`LEFT`)
 
     }
+    
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController,ModalController ,ToastController } from 'ionic-angular';
 
 import { Platform } from 'ionic-angular';
 
@@ -10,32 +10,41 @@ import { HomePage } from '../homepage/homepage';
 import { NewsService } from '../shared/news.service';
 import { INews } from '../shared/news.model'
 import { LoginPage } from '../login-page/login-page';
+import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { Storage } from '@ionic/storage';
-
+import { TinquantamPage } from '../tinquantam/tinquantam';
 @Component({
   selector: 'page-tintuc',
   templateUrl: 'tintuc.html'
 })
 export class TinTucPage implements OnInit {
   t: string = "tinmoi";
-  isAndroid: boolean = false;
   listFilter: string = "";
   public start: number = 6;
   rootchitiet: any = ChiTietTinPage;
   tinOffLine: INews[] = [];
   new: INews[];
   arr: any[];
-  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage) {
-    this.isAndroid = platform.is('android', );
+  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController,private storage: Storage,public modalCtrl: ModalController,public toastCtrl: ToastController) {
   }
 
 
   trove = () => {
     this.navCtrl.push(HomePage)
   }
+  // lktindaxoa=()=>{
+  //   this.navCtrl.push(LktinxoaPage)
+  // }
+  lktindaxoa(characterNum) {
+
+    let modal = this.modalCtrl.create(LktinxoaPage, characterNum);
+    modal.present();
+  }
+  lktinquantam() {
+
+    this.navCtrl.push(TinquantamPage);
+  }
   dangxuat = () => {
-
-
     this.storage.clear()
     this.navCtrl.push(LoginPage)
   }
@@ -77,22 +86,33 @@ export class TinTucPage implements OnInit {
     loading.present();
   }
   del = (news: INews, i) => {
+    const toast = this.toastCtrl.create({
+      message: 'Xóa xong rồi ^^!',
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
     this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
-        console.log('Da xoa')
         this.new.splice(i, 1)
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
+      toast.present();
   }
   qt = (news: INews) => {
+    const toast = this.toastCtrl.create({
+      message: 'Them roi do!!',
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
     this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
+      toast.present();
   }
 
   daxem = (news: INews) => {

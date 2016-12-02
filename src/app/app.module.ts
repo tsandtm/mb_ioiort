@@ -14,6 +14,8 @@ import { UserWebService } from '../pages/shared/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
 import { LoginService } from '../pages/login-page/login-page.service'
 import { TinnoibatPage } from '../pages/tinnoibat/tinnoibat';
+import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
+import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
@@ -23,6 +25,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   }
 
 }
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,7 +36,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomeFilterPipe,
     LoginPage,
     TinnoibatPage,
-    Safe
+    Safe,
+    LktinxoaPage,
+    TinquantamPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -46,7 +51,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     ChiTietTinPage,
     ChuyenMucPage,
     LoginPage,
-    TinnoibatPage
+    TinnoibatPage,
+    LktinxoaPage,
+    TinquantamPage
   ],
   providers: [
     WebsService,

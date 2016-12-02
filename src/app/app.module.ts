@@ -12,9 +12,17 @@ import { NewsService } from '../pages/shared/news.service';
 import { HomeFilterPipe } from '../pages/homepage/homepage-filter.pipe';
 import { UserWebService } from '../pages/shared/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
-import {LoginService} from '../pages/login-page/login-page.service'
-import{TinnoibatPage} from '../pages/tinnoibat/tinnoibat';
+import { LoginService } from '../pages/login-page/login-page.service'
+import { TinnoibatPage } from '../pages/tinnoibat/tinnoibat';
 import { Safe } from '../pages/chitiettin/safe'
+
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any>{
+    'swipe': { velocity: 0.4, threshold: 20 } // override default settings
+  }
+
+}
 @NgModule({
   declarations: [
     MyApp,
@@ -40,7 +48,17 @@ import { Safe } from '../pages/chitiettin/safe'
     LoginPage,
     TinnoibatPage
   ],
-  providers: [WebsService, NewsService, UserWebService,LoginService,Storage],
+  providers: [
+    WebsService,
+    NewsService,
+    UserWebService,
+    LoginService,
+    Storage,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
+    }
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

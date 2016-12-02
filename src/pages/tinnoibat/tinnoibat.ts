@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController ,ToastController } from 'ionic-angular';
-import{NewsService} from '../shared/news.service';
-import {INews} from  '../shared/news.model'
+import { NavController, ToastController } from 'ionic-angular';
+import { NewsService } from '../shared/news.service';
+import { INews } from '../shared/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
@@ -15,11 +15,11 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
   templateUrl: 'tinnoibat.html'
 })
 export class TinnoibatPage {
-    new: INews[];
-    public start: number = 6;
-     rootchitiet: any = ChiTietTinPage;
-      arr: any[];
-  constructor(public navCtrl: NavController,private _newservice: NewsService,private toastCtrl: ToastController) {}
+  new: INews[];
+  public start: number = 6;
+  rootchitiet: any = ChiTietTinPage;
+  arr: any[];
+  constructor(public navCtrl: NavController, private _newservice: NewsService, private toastCtrl: ToastController) { }
 
   ngOnInit(): void {
     this._newservice.tinnoibat(0)
@@ -29,36 +29,36 @@ export class TinnoibatPage {
       })
   }
   doInfinite(infiniteScroll) {
-      console.log('Begin async operation');
-      setTimeout(() => {
-        this._newservice.tinnoibat(this.start)
-          .then(
-          (res) => {
-            if (res.length !== 0) {
-              for (let x of res)
-                this.new.push(x);
-              // this.webs1.concat(res);
-              this.start += 6;
-            }
-          })
-          .catch(errorMessage => {
-            console.error(errorMessage.message)
-          });
-        console.log('Async operation has ended');
-        infiniteScroll.complete();
-      }, 2000);
-    }
-    del=(news: INews,i) => {
-      this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-        .then(result => {
-          console.log('Da xoa')
-          this.new.splice(i,1)
+    console.log('Begin async operation');
+    setTimeout(() => {
+      this._newservice.tinnoibat(this.start)
+        .then(
+        (res) => {
+          if (res.length !== 0) {
+            for (let x of res)
+              this.new.push(x);
+            // this.webs1.concat(res);
+            this.start += 6;
+          }
         })
-        .catch(error => {
-          alert('Loi' + error.message);
-        })
-    }
-    qt = (news: INews) => {
+        .catch(errorMessage => {
+          console.error(errorMessage.message)
+        });
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 2000);
+  }
+  del = (news: INews, i) => {
+    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+      .then(result => {
+        console.log('Da xoa')
+        this.new.splice(i, 1)
+      })
+      .catch(error => {
+        alert('Loi' + error.message);
+      })
+  }
+  qt = (news: INews) => {
     this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
       })
@@ -67,7 +67,7 @@ export class TinnoibatPage {
       })
   }
   tinnoibat($event, index) {
-     this._newservice.gettinnoibat(0)
+    this._newservice.gettinnoibat(0)
       .then(nw => {
         this.arr = nw;
         this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })

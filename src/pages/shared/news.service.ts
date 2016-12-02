@@ -70,7 +70,9 @@ private limit : number= 6;
     private limit1: number = 2;
     
 
-
+    /**
+     * Limit = 2
+     */
     getNew(start:number): Promise<INews[]> {
         return new Promise(resolve => {
             this._http.get('http://localhost:8080/api/getNews?limit=' + this.limit1 + '&skip=' + start)

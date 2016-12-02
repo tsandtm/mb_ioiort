@@ -25,7 +25,7 @@ export class TinTucPage implements OnInit {
   tinOffLine: INews[] = [];
   new: INews[];
   arr: any[];
-  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController,private storage: Storage) {
+  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage) {
     this.isAndroid = platform.is('android', );
   }
 
@@ -98,7 +98,7 @@ export class TinTucPage implements OnInit {
   daxem = (news: INews) => {
     this._newservice.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
-        alert("Da xem");
+
       })
       .catch(error => {
         alert('Loi' + error.message);
@@ -106,16 +106,17 @@ export class TinTucPage implements OnInit {
   }
 
   goDetail($event, index) {
-    this._newservice.getNew(0)
-      .then(nw => {
-        this.arr = nw;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
-      })
-      .catch(errorMessage => {
-        console.error(errorMessage.message)
-      });
+    this.navCtrl.push(ChiTietTinPage, { index: index, news: this.new })
+
+    // this._newservice.getNew(index)
+    //   .then(nw => {
+    //     this.arr = nw;
+    //   })
+    //   .catch(errorMessage => {
+    //     console.error(errorMessage.message)
+    //   });
     // this.navCtrl.push(ChiTietTinPage,dnew);
   }
-  
+
 
 }

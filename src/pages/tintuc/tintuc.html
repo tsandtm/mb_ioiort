@@ -53,22 +53,15 @@
         </ion-list>
 
     </div>
-    <ion-fab bottom left edge>
-        <button ion-fab mini> <ion-icon name="cog"></ion-icon></button>
-        <ion-fab-list side="top">
-            <button ion-fab color="primary" (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
-            <button ion-fab color="light" (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
-        </ion-fab-list>
-        <ion-fab-list side="right">
-            <button ion-fab color="dark" (click)='phuchoi()'><ion-icon ios="ios-share" md="md-share"></ion-icon></button>
-        </ion-fab-list>
-    </ion-fab>
+    <ion-fab bottom left #fab4>
+    <button ion-fab color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
+      <button ion-fab (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
+      <button ion-fab (click)="openSocial('googleplus', fab4)"><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
-<ion-footer>
-    <ion-toolbar no-border class="tool-home">
-    </ion-toolbar>
-</ion-footer>
-
 
 <style>
     .backgroundimg {
@@ -76,4 +69,4 @@
         height: 500px;
         margin-right: 10px;
     }
-</style>
+</style>  

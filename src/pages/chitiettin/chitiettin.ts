@@ -34,7 +34,7 @@ export class ChiTietTinPage implements OnInit {
     }
 
     ionViewDidLoad() {
-        this.url = this.nnew[this.index].URLNews ;
+        this.url = this.nnew[0].URLNews ;
     }
 
     nextto(){

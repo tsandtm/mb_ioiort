@@ -19,16 +19,15 @@ import { Storage } from '@ionic/storage';
 export class TinTucPage implements OnInit {
   t: string = "tinmoi";
   isAndroid: boolean = false;
-  listFilter: string = "";
-  public start: number = 6;
   rootchitiet: any = ChiTietTinPage;
-  tinOffLine: INews[] = [];
-  new: INews[];
+  news: INews[];
+  public start: number = 6;
   arr: any[];
-  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController,private storage: Storage) {
-    this.isAndroid = platform.is('android', );
-  }
 
+
+  constructor(private _newsService: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage) {
+    this.isAndroid = platform.is('android');
+  }
 
   trove = () => {
     this.navCtrl.push(HomePage)
@@ -40,30 +39,27 @@ export class TinTucPage implements OnInit {
     this.navCtrl.push(LoginPage)
   }
   ngOnInit(): void {
-    this._newservice.getWebs(0)
-      .then(nw => this.new = nw)
+    this._newsService.getWebs(0)
+      .then(nw => this.news = nw)
       .catch(errorMessage => {
         console.error(errorMessage.message)
       })
   }
 
   doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
     setTimeout(() => {
-      this._newservice.getWebs(this.start)
+      this._newsService.getWebs(this.start)
         .then(
         (res) => {
           if (res.length !== 0) {
             for (let x of res)
-              this.new.push(x);
-            // this.webs1.concat(res);
+              this.news.push(x);
             this.start += 6;
           }
         })
         .catch(errorMessage => {
           console.error(errorMessage.message)
         });
-      console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 2000);
   }
@@ -77,17 +73,17 @@ export class TinTucPage implements OnInit {
     loading.present();
   }
   del = (news: INews, i) => {
-    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newsService.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
         console.log('Da xoa')
-        this.new.splice(i, 1)
+        this.news.splice(i, 1)
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
   }
   qt = (news: INews) => {
-    this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newsService.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
       })
       .catch(error => {
@@ -96,7 +92,7 @@ export class TinTucPage implements OnInit {
   }
 
   daxem = (news: INews) => {
-    this._newservice.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newsService.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
         alert("Da xem");
       })
@@ -106,16 +102,16 @@ export class TinTucPage implements OnInit {
   }
 
   goDetail($event, index) {
-    this._newservice.getNew(0)
+    console.log("index " + index);
+    this._newsService.getNew(index)
       .then(nw => {
         this.arr = nw;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
       })
       .catch(errorMessage => {
         console.error(errorMessage.message)
       });
     // this.navCtrl.push(ChiTietTinPage,dnew);
   }
-  
 
 }

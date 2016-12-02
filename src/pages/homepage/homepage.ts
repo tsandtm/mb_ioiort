@@ -30,14 +30,8 @@ export class HomePage {
         ];
     }
 
+    ionViewDidLoad() {
 
-
-    ionViewDidLoad (){
-        // this.userWebSite.selectuser(1).then(result=>{
-        //     if(result)
-        //         console.log(result)
-        //         this.navCtrl.push(TinTucPage);
-        // })
     }
     ngOnInit(): void {
         // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
@@ -45,8 +39,30 @@ export class HomePage {
         //     .catch(errorMessage => {
         //         console.error(errorMessage.message)
         //     });
+        this._webService.getList_user() //danh sach site user da chon
+            .then(web => {
+                this.webs2 = web;
+                this.count = this.webs2.length;
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
         this._webService.getWebs(0) //lấy danh sách web ban đầu
-            .then(web => this.webs1 = web)
+            .then(web => {
+                this.webs1 = web;
+                console.log("length " + this.webs2.length);
+                for (var i = 0; i < this.webs2.length; i++) {
+
+                    let web2 = this.webs2[i];
+                    for (var j = 0; j < this.webs1.length; j++) {
+                        let web1 = this.webs1[j];
+                        if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
+                            web1.chontin = true;
+                            this.webs1[j] = web1;
+                        }
+                    }
+                }
+            })
             .catch(errorMessage => {
                 console.error(errorMessage.message)
             });
@@ -83,11 +99,14 @@ export class HomePage {
     }
 
     chon(id: number, index: number) {
-
         let web = this.webs1[index];
+        console.log('tin dang chon: ' + web.chontin);
+
         if (!web.chontin) {
             console.log('post :D');
             console.log('id: ' + id);
+            console.log('index: ' + index);
+
             this.userWebSite.createUserWebSite(1, id, new Date())
                 .then(() => {
                     console.log('da them');
@@ -95,6 +114,7 @@ export class HomePage {
                     this.webs1[index] = web;
                     this.count++;
                     console.log('chon ' + web.chontin);
+                    this.webs2.push(web);
                 })
                 .catch(error => {
                     console.error('Error: ', error);
@@ -102,6 +122,7 @@ export class HomePage {
         } else {
             console.log('delete :D');
             console.log('id: ' + id);
+            console.log('index: ' + index);
 
             this.userWebSite.deleteUserWebSite(1, id)
                 .then(() => {
@@ -109,6 +130,13 @@ export class HomePage {
                     web.chontin = false;
                     this.webs1[index] = web;
                     this.count--;
+                    let i = this.webs2.findIndex(i=>{
+                        if(i.IDDanhMucSite === web.IDDanhMucSite)
+                            return true
+                        else    
+                            return false
+                    })
+                    this.webs2.splice(i,1)
                     console.log('chon ' + web.chontin);
 
                 })
@@ -116,6 +144,11 @@ export class HomePage {
                     console.error('Error: ', error);
                 })
         }
+        //  this._webService.getList_user() //danh sach site user da chon
+        //     .then(web => {
+        //         this.webs2 = web;
+        //         this.count = this.webs2.length;
+        //     })
     }
 
     dschon(): void {
@@ -124,29 +157,18 @@ export class HomePage {
 
         if (this.click) {
             console.log('hien tai 2: ' + this.click);
-            this._webService.getList_user()
-                .then(web => {
-                    this.webs1 = web;
-                    this.webs2 = this.webs1;
-                })
-                .catch(errorMessage => {
-                    console.error(errorMessage.message)
-                });
+            this.webs1 = this.webs2;
 
         } else {
             console.log('hien tai 3: ' + this.click);
             this._webService.getWebs(0)
                 .then(web => {
                     this.webs1 = web;
-                    // console.log("chieu dai webs1 " + this.webs1.length);
                     for (var i = 0; i < this.webs2.length; i++) {
                         let web2 = this.webs2[i];
                         for (var j = 0; j < this.webs1.length; j++) {
                             let web1 = this.webs1[j];
                             if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
-                                // console.log("web1.IDDanhMucSite " + web1.IDDanhMucSite);
-                                // console.log("web2.IDDanhMucSite " + web2.IDDanhMucSite);
-                                // console.log("mảng thứ " + j + "bị đổi");
                                 web1.chontin = true;
                                 this.webs1[j] = web1;
                             }

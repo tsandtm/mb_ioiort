@@ -29,7 +29,6 @@ export class TinnoibatPage {
       })
   }
   doInfinite(infiniteScroll) {
-      console.log('Begin async operation');
       setTimeout(() => {
         this._newservice.tinnoibat(this.start)
           .then(
@@ -44,7 +43,6 @@ export class TinnoibatPage {
           .catch(errorMessage => {
             console.error(errorMessage.message)
           });
-        console.log('Async operation has ended');
         infiniteScroll.complete();
       }, 2000);
     }
@@ -67,7 +65,7 @@ export class TinnoibatPage {
       })
   }
   tinnoibat($event, index) {
-     this._newservice.gettinnoibat(0)
+     this._newservice.gettinnoibat(index)
       .then(nw => {
         this.arr = nw;
         this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })

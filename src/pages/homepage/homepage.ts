@@ -32,7 +32,7 @@ export class HomePage {
 
 
 
-    ionViewDidLoad (){
+    ionViewDidLoad() {
         // this.userWebSite.selectuser(1).then(result=>{
         //     if(result)
         //         console.log(result)

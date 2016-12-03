@@ -40,21 +40,10 @@ export class ChiTietTinPage implements OnInit {
 
     ionViewDidLoad() {
         this.url = this.nnew[this.index].URLNews;
+
     }
 
-    nextto() {
-
-        this._newsService.getNew(this.start)
-            .then(nw => {
-                this.dnew = nw;
-                this.navCtrl.push(ChiTietTinPage, { index: this.index, news: this.dnew });
-                this.start += 1;
-            })
-            .catch(errorMessage => {
-                console.error(errorMessage.message)
-            });
-        // this.navCtrl.push(ChiTietTinPage, { index: this.index, news: this.dnew })      
-    }
+  
 
     Back() {
         window.history.back(1)
@@ -73,10 +62,7 @@ export class ChiTietTinPage implements OnInit {
         }).present();
     }
 
-    Next(event) {
-        console.log(event)
-        this.url = this.dnew[this.index + 1].URLNews;
-    }
+   
 
     onLoad(event) {
         this.link = event

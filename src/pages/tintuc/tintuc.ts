@@ -19,11 +19,10 @@ import { TinquantamPage } from '../tinquantam/tinquantam';
 })
 export class TinTucPage implements OnInit {
   t: string = "tinmoi";
-  listFilter: string = "";
-  public start: number = 6;
+
   rootchitiet: any = ChiTietTinPage;
-  tinOffLine: INews[] = [];
-  new: INews[];
+  news: INews[];
+  public start: number = 6;
   arr: any[];
   constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController,private storage: Storage,public modalCtrl: ModalController,public toastCtrl: ToastController) {
   }
@@ -50,29 +49,26 @@ export class TinTucPage implements OnInit {
   }
   ngOnInit(): void {
     this._newservice.getWebs(0)
-      .then(nw => this.new = nw)
+      .then(nw => this.news = nw)
       .catch(errorMessage => {
         console.error(errorMessage.message)
       })
   }
 
   doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
     setTimeout(() => {
       this._newservice.getWebs(this.start)
         .then(
         (res) => {
           if (res.length !== 0) {
             for (let x of res)
-              this.new.push(x);
-            // this.webs1.concat(res);
+              this.news.push(x);
             this.start += 6;
           }
         })
         .catch(errorMessage => {
           console.error(errorMessage.message)
         });
-      console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 2000);
   }
@@ -86,20 +82,24 @@ export class TinTucPage implements OnInit {
     loading.present();
   }
   del = (news: INews, i) => {
-    const toast = this.toastCtrl.create({
-      message: 'Xóa xong rồi ^^!',
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
+    // const toast = this.toastCtrl.create({
+    //   message: 'Xóa xong rồi ^^!',
+    //   showCloseButton: true,
+    //   closeButtonText: 'Ok'
+    // });
+    
     this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
-        this.new.splice(i, 1)
+        console.log('Da xoa')
+        this.news.splice(i, 1)
+        // toast.present();
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
-      toast.present();
+      
   }
+
   qt = (news: INews) => {
     const toast = this.toastCtrl.create({
       message: 'Them roi do!!',
@@ -126,17 +126,16 @@ export class TinTucPage implements OnInit {
   }
 
   goDetail($event, index) {
-    this.navCtrl.push(ChiTietTinPage, { index: index, news: this.new })
-
-    // this._newservice.getNew(index)
-    //   .then(nw => {
-    //     this.arr = nw;
-    //   })
-    //   .catch(errorMessage => {
-    //     console.error(errorMessage.message)
-    //   });
+    console.log("index " + index);
+    this._newservice.getNew(index)
+      .then(nw => {
+        this.arr = nw;
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
+      })
+      .catch(errorMessage => {
+        console.error(errorMessage.message)
+      });
     // this.navCtrl.push(ChiTietTinPage,dnew);
   }
-
 
 }

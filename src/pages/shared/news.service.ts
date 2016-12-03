@@ -15,7 +15,7 @@ private limit : number= 6;
     /**api load tat ca cac tin moi tru nhung tin minh da xoa */
     getWebs(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/tintuc?limit='+this.limit+'&offset='+start)
+        this._http.get('http://localhost:8080/api/news?limit='+this.limit+'&skip='+start)
         .map(res => res.json())
         .subscribe(data => {
 
@@ -50,10 +50,9 @@ private limit : number= 6;
     //load api tin noi bat 
     tinnoibat(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/tinnoibat?limit='+this.limit+'&offset='+start)
+        this._http.get('http://localhost:8080/api/tinnoibat?limit='+this.limit+'&skip='+start)
         .map(res => res.json())
         .subscribe(data => {
-
           resolve(data);
 
         });
@@ -71,7 +70,7 @@ private limit : number= 6;
     //api liet ke nhung tin minh moi xoa xong
     lktindaxoa(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/tindaxoa?limit='+this.limit+'&offset='+start)
+        this._http.get('http://localhost:8080/api/tindaxoa?limit='+this.limit+'&skip='+start)
         .map(res => res.json())
         .subscribe(data => {
 
@@ -113,11 +112,7 @@ private limit : number= 6;
 
    
     private limit1: number = 2;
-    
 
-    /**
-     * Limit = 2
-     */
     getNew(start:number): Promise<INews[]> {
         return new Promise(resolve => {
             this._http.get('http://localhost:8080/api/getNews?limit=' + this.limit1 + '&skip=' + start)

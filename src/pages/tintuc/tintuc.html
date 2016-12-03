@@ -17,7 +17,7 @@
 
     <div [ngSwitch]="t">
         <ion-list *ngSwitchCase="'tinmoi'">
-            <ion-card *ngFor="let n of new,let i = index">
+            <ion-card *ngFor="let n of news,let i = index">
                 <ion-item-sliding>
 
                     <ion-item (click)="daxem(n)" (click)="goDetail($event,i)">
@@ -53,6 +53,10 @@
 
         <ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">
             <page-tinnoibat></page-tinnoibat>
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
+                </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
         </ion-list>
         
     </div>

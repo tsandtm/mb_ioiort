@@ -6,7 +6,6 @@
 
 
 <ion-header class="body" no-shadow>
-
   <ion-toolbar no-border-bottom>
     <button ion-button menuToggle icon-only (click)="Back()"> 
        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
@@ -28,15 +27,23 @@
       </button>
     </ion-buttons>
   </ion-toolbar>
-
 </ion-header>
-
-
-<ion-content>
-
-
-  <iframe #iframe class='webPage' frameborder="0" name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
-    id="IDTinTuc" allowfullscreen (swipeleft)="swipe(idx, $event.type)" (swiperight)="swipe(idx, $event.type)">
-  </iframe>
-  
-</ion-content>
+<ion-view>
+  <ion-content class='padding has-subheader' z-index>
+    <ion-slides pager>
+      <ion-slide (ionWillChange)="nextto()" style="height:98%">
+        <iframe #iframe class='webPage' style="height:100%;" name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
+          id="IDTinTuc" (swipeleft)="swipe(idx, $event.type)" (swiperight)="swipe(idx, $event.type)" frameborder="0" allowfullscreen >
+        </iframe>
+        <ion-fab left bottom edge style="margin-bottom:10%;">
+          <button ion-fab mini><ion-icon name="add"></ion-icon></button>
+          <ion-fab-list side="right">
+            <!-- day la 2 link de shared len facebook va google-->
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url}}"><button ion-fab class="fb-like"><ion-icon name="logo-facebook"></ion-icon></button></a>
+            <a href="https://plus.google.com/share?url={{url}}" target="_blank"><button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button></a>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-slide>
+    </ion-slides>
+  </ion-content>
+</ion-view>

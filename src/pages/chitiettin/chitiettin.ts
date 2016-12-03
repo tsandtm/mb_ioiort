@@ -13,7 +13,6 @@ export class ChiTietTinPage implements OnInit {
 
     @ViewChild('iframe') iframe: ElementRef;
     @ViewChild('mySlider') slider: Slides;
-
     url: string;
     link: string;
     spinner: boolean = true;
@@ -80,12 +79,13 @@ export class ChiTietTinPage implements OnInit {
     }
 
     onLoad(event) {
-
         this.link = event
         if (!event)
-            this.spinner = true
+            this.spinner = true;
         else
-            this.spinner = false
+            this.spinner = false;
+         let b= document.getElementById("IDTinTuc");
+        console.log(b);
     }
 
     swipe = (currentIndex: number, action = this.SWIPE_ACTION.RIGHT) => {

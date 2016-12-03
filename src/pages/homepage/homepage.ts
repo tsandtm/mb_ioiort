@@ -81,22 +81,30 @@ export class HomePage {
     }
 
     chon(id: number, index: number) {
-        let web = this.webs1[index];
+        let i = this.webs1.findIndex(i => {
+            if (i.IDDanhMucSite === id)
+                return true;
+            else
+                return false;
+        })
+        let web = this.webs1[i];
+        
         console.log('tin dang chon: ' + web.chontin);
 
         if (!web.chontin) {
             console.log('post :D');
             console.log('id: ' + id);
-            console.log('index: ' + index);
+            console.log('index: ' + i);
 
             this.userWebSite.createUserWebSite(1, id, new Date())
                 .then(() => {
                     console.log('da them');
                     web.chontin = true;
-                    this.webs1[index] = web;
+                    this.webs1[i] = web;
                     this.count++;
                     console.log('chon ' + web.chontin);
                     this.webs2.push(web);
+                    
                 })
                 .catch(error => {
                     console.error('Error: ', error);
@@ -112,14 +120,13 @@ export class HomePage {
                     web.chontin = false;
                     this.webs1[index] = web;
                     this.count--;
-                    let i = this.webs2.findIndex(i=>{
-                        if(i.IDDanhMucSite === web.IDDanhMucSite)
+                    let i = this.webs2.findIndex(i => {
+                        if (i.IDDanhMucSite === web.IDDanhMucSite)
                             return true;
-                        else    
+                        else
                             return false;
                     })
-                    this.webs2.splice(i,1)
-                    debugger;
+                    this.webs2.splice(i, 1)
                     console.log('chon ' + web.chontin);
 
                 })
@@ -144,7 +151,7 @@ export class HomePage {
 
         } else {
             console.log('hien tai 3: ' + this.click);
-           this.LoadList()
+            this.LoadList()
 
 
 
@@ -152,32 +159,32 @@ export class HomePage {
     }
 
 
-    LoadList () {
-         this._webService.getWebs(0)
-                .then(web => {
-                    this.webs1 = web;
-                    for (var i = 0; i < this.webs2.length; i++) {
-                        let web2 = this.webs2[i];
-                        for (var j = 0; j < this.webs1.length; j++) {
-                            let web1 = this.webs1[j];
-                            if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
-                                web1.chontin = true;
-                                web2.chontin = true;
-                                this.webs1[j] = web1;
-                            }
+    LoadList() {
+        this._webService.getWebs(0)
+            .then(web => {
+                this.webs1 = web;
+                for (var i = 0; i < this.webs2.length; i++) {
+                    let web2 = this.webs2[i];
+                    for (var j = 0; j < this.webs1.length; j++) {
+                        let web1 = this.webs1[j];
+                        if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
+                            web1.chontin = true;
+                            web2.chontin = true;
+                            this.webs1[j] = web1;
                         }
                     }
-                })
-                .catch(errorMessage => {
-                    console.error(errorMessage.message)
-                });
+                }
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
     }
-    
+
     openPage(page) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
         this.nav.setRoot(page.component);
     }
-   
+
 
 }

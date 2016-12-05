@@ -18,7 +18,7 @@ export class TinnoibatPage {
   new: INews[];
   public start: number = 6;
   rootchitiet: any = ChiTietTinPage;
-  arr: any[];
+ 
   constructor(public navCtrl: NavController, private _newservice: NewsService, private toastCtrl: ToastController) { }
 
   ngOnInit(): void {
@@ -65,15 +65,15 @@ export class TinnoibatPage {
       })
   }
   tinnoibat($event, index) {
-     this._newservice.gettinnoibat(index)
-      .then(nw => {
-        this.arr = nw;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
-      })
-      .catch(errorMessage => {
-        console.error(errorMessage.message)
-      });
-    // this.navCtrl.push(ChiTietTinPage,dnew);
+    //  this._newservice.gettinnoibat(index)
+    //   .then(nw => {
+    //     this.arr = nw;
+    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
+    //   })
+    //   .catch(errorMessage => {
+    //     console.error(errorMessage.message)
+    //   });
+     this.navCtrl.push(ChiTietTinPage,{ index, news: this.new });
   }
   ionViewDidLoad() {
     console.log('Hello TinnoibatPage Page');

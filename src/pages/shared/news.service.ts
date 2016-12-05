@@ -15,7 +15,7 @@ private limit : number= 6;
     /**api load tat ca cac tin moi tru nhung tin minh da xoa */
     getWebs(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/news?limit='+this.limit+'&skip='+start)
+        this._http.get('http://localhost:8080/api/tintuc?limit='+this.limit+'&offset='+start)
         .map(res => res.json())
         .subscribe(data => {
 

@@ -129,7 +129,7 @@ export class HomePage {
                     })
                     this.webs2.splice(i, 1)
                     console.log('chon ' + web.chontin);
-
+                    
                 })
                 .catch(error => {
                     console.error('Error: ', error);

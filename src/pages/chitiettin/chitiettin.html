@@ -29,11 +29,12 @@
   </ion-toolbar>
 </ion-header>
 <ion-view>
+  
   <ion-content class='padding has-subheader' z-index>
     <ion-slides pager>
-      <ion-slide style="height:98%">
+      <ion-slide style="height:98%" (swipeleft)="swipe(idx, $event.type)" (swiperight)="swipe(idx, $event.type)" >
         <iframe #iframe class='webPage' style="height:100%;" name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
-          id="IDTinTuc" (swipeleft)="swipe(idx, $event.type)" (swiperight)="swipe(idx, $event.type)" frameborder="0" allowfullscreen >
+          id="IDTinTuc" frameborder="0" allowfullscreen >
         </iframe>
         <ion-fab left bottom edge style="margin-bottom:10%;">
           <button ion-fab mini><ion-icon name="add"></ion-icon></button>

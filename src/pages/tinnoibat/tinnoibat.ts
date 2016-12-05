@@ -28,29 +28,21 @@ export class TinnoibatPage {
         console.error(errorMessage.message)
       })
   }
-  doInfinite(infiniteScroll) {
-    setTimeout(() => {
-      this._newservice.tinnoibat(this.start)
-        .then(
-        (res) => {
-          if (res.length !== 0) {
-            for (let x of res)
-              this.new.push(x);
-            // this.webs1.concat(res);
-            this.start += 6;
-          }
-        })
-        .catch(errorMessage => {
-          console.error(errorMessage.message)
-        });
-      infiniteScroll.complete();
-    }, 2000);
-  }
+
   del = (news: INews, i) => {
+    const toast = this.toastCtrl.create({
+      message: 'Đã xóa',
+      duration: 200,
+      // showCloseButton: true,
+      // closeButtonText: 'Ok'
+    });
+
     this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
-        console.log('Da xoa')
-        this.new.splice(i, 1)
+        console.log('Da xoa');
+        this.new.splice(i, 1);
+        toast.present();
+
       })
       .catch(error => {
         alert('Loi' + error.message);
@@ -65,16 +57,18 @@ export class TinnoibatPage {
       })
   }
   tinnoibat($event, index) {
-     this._newservice.gettinnoibat(index)
-      .then(nw => {
-        this.arr = nw;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
-      })
-      .catch(errorMessage => {
-        console.error(errorMessage.message)
-      });
-    // this.navCtrl.push(ChiTietTinPage,dnew);
+    // this._newservice.gettinnoibat(index)
+    //   .then(nw => {
+    //     this.arr = nw;
+    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
+    //   })
+    //   .catch(errorMessage => {
+    //     console.error(errorMessage.message)
+    //   });
+    this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
   }
+
+
   ionViewDidLoad() {
     console.log('Hello TinnoibatPage Page');
   }

@@ -57,12 +57,10 @@ export class ChiTietTinPage implements OnInit {
     Like() {
         this.toastCtrl.create({
             message: 'Đã Like',
-            duration: 3000,
-            position: 'middle'
+            duration: 1000,
+            position: 'bottom'
         }).present();
     }
-
-   
 
     onLoad(event) {
         this.link = event

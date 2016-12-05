@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { NewsService } from '../shared/news.service';
 import { INews } from '../shared/news.model'
-import{TinTucPage} from '../tintuc/tintuc'
+import { TinTucPage } from '../tintuc/tintuc'
 /*
   Generated class for the Lktindaxoa page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -13,18 +13,18 @@ import{TinTucPage} from '../tintuc/tintuc'
   templateUrl: 'lktinxoa.html'
 })
 export class LktinxoaPage {
- new:INews[];
-public start: number = 6;
-  constructor(public navCtrl: NavController,private _newservice: NewsService) {}
+  new: INews[];
+  public start: number = 6;
+  constructor(public navCtrl: NavController, private _newservice: NewsService, public toastCtrl: ToastController) { }
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this._newservice.lktindaxoa(0)
-      .then(news=>this.new=news)
-      .catch(errorMessage=>{
+      .then(news => this.new = news)
+      .catch(errorMessage => {
         console.log(errorMessage.message)
       })
   }
-    doInfinite(infiniteScroll) {
+  doInfinite(infiniteScroll) {
     console.log('Begin async operation');
     setTimeout(() => {
       this._newservice.getWebs(this.start)
@@ -45,16 +45,24 @@ public start: number = 6;
     }, 2000);
   }
   boxoa = (news: INews, i) => {
+    const toast = this.toastCtrl.create({
+      message: 'Đã loại bỏ khỏi danh sách',
+      duration: 200,
+      // showCloseButton: true,
+      // closeButtonText: 'Ok'
+    });
+
     this._newservice.boxoa(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
-        console.log('Da xoa')
-        this.new.splice(i, 1)
+        console.log('Da xoa');
+        this.new.splice(i, 1);
+        toast.present();
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
   }
-  trove=()=>{
+  trove = () => {
     this.navCtrl.push(TinTucPage)
   }
   ionViewDidLoad() {

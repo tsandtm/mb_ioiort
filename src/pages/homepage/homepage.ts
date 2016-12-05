@@ -31,8 +31,6 @@ export class HomePage {
     }
 
     ionViewDidLoad() {
-
-
     }
     ngOnInit(): void {
         // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
@@ -145,20 +143,14 @@ export class HomePage {
     dschon(): void {
         this.click = !this.click;
         console.log('hien tai 1: ' + this.click);
-
         if (this.click) {
             console.log('hien tai 2: ' + this.click);
             this.webs1 = this.webs2;
-
         } else {
             console.log('hien tai 3: ' + this.click);
             this.LoadList()
-
-
-
         }
     }
-
 
     LoadList() {
         this._webService.getWebs(0)

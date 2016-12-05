@@ -15,26 +15,22 @@ private limit : number= 6;
     /**api load tat ca cac tin moi tru nhung tin minh da xoa */
     getWebs(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/news?limit='+this.limit+'&skip='+start)
+        this._http.get('http://localhost:8080/api/tintuc?limit='+this.limit+'&offset='+start)
         .map(res => res.json())
         .subscribe(data => {
-
           resolve(data);
-
         });
     });
     }
 
 
     /**key api cua tin quan tam lay tu server */
-    tinquantam(): Promise<INews[]> {
+    tinquantam(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/tinquantam')
+        this._http.get('http://localhost:8080/api/tinquantam?limit='+this.limit+'&offset='+start)
         .map(res => res.json())
         .subscribe(data => {
-
           resolve(data);
-
         });
     });
     }
@@ -50,7 +46,7 @@ private limit : number= 6;
     //load api tin noi bat 
     tinnoibat(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/tinnoibat?limit='+this.limit+'&skip='+start)
+        this._http.get('http://localhost:8080/api/tinnoibat?limit='+this.limit+'&offset='+start)
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -70,12 +66,10 @@ private limit : number= 6;
     //api liet ke nhung tin minh moi xoa xong
     lktindaxoa(start:number): Promise<INews[]> {
           return new Promise(resolve => {
-        this._http.get('http://localhost:8080/api/tindaxoa?limit='+this.limit+'&skip='+start)
+        this._http.get('http://localhost:8080/api/tindaxoa?limit='+this.limit+'&offset='+start)
         .map(res => res.json())
         .subscribe(data => {
-
           resolve(data);
-
         });
     });
     }

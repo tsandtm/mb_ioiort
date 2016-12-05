@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavController, LoadingController,ModalController ,ToastController } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, ToastController } from 'ionic-angular';
 
 import { Platform } from 'ionic-angular';
 
@@ -24,7 +24,7 @@ export class TinTucPage implements OnInit {
   news: INews[];
   public start: number = 6;
   arr: any[];
-  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController,private storage: Storage,public modalCtrl: ModalController,public toastCtrl: ToastController) {
+  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
   }
 
 
@@ -73,6 +73,25 @@ export class TinTucPage implements OnInit {
     }, 2000);
   }
 
+  doInfinite1(infiniteScroll) {
+    setTimeout(() => {
+      this._newservice.tinnoibat(this.start)
+        .then(
+        (res) => {
+          if (res.length !== 0) {
+            for (let x of res)
+              this.news.push(x);
+            // this.webs1.concat(res);
+            this.start += 6;
+          }
+        })
+        .catch(errorMessage => {
+          console.error(errorMessage.message)
+        });
+      infiniteScroll.complete();
+    }, 2000);
+  }
+
   presentLoadingDefault() {
     let loading = this.loadingCtrl.create({
       content: 'Please wait...',
@@ -82,22 +101,23 @@ export class TinTucPage implements OnInit {
     loading.present();
   }
   del = (news: INews, i) => {
-    // const toast = this.toastCtrl.create({
-    //   message: 'Xóa xong rồi ^^!',
-    //   showCloseButton: true,
-    //   closeButtonText: 'Ok'
-    // });
-    
+    const toast = this.toastCtrl.create({
+      message: 'Đã xóa',
+      duration: 200,
+      // showCloseButton: true,
+      // closeButtonText: 'Ok'
+    });
+
     this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
-        console.log('Da xoa')
-        this.news.splice(i, 1)
-        // toast.present();
+        console.log('Da xoa');
+        this.news.splice(i, 1);
+        toast.present();
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
-      
+
   }
 
   qt = (news: INews) => {
@@ -112,7 +132,7 @@ export class TinTucPage implements OnInit {
       .catch(error => {
         alert('Loi' + error.message);
       })
-      toast.present();
+    toast.present();
   }
 
   daxem = (news: INews) => {
@@ -126,16 +146,16 @@ export class TinTucPage implements OnInit {
   }
 
   goDetail($event, index) {
-    console.log("index " + index);
-    this._newservice.getNew(index)
-      .then(nw => {
-        this.arr = nw;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
-      })
-      .catch(errorMessage => {
-        console.error(errorMessage.message)
-      });
-    // this.navCtrl.push(ChiTietTinPage,dnew);
+    // console.log("index " + index);
+    // this._newservice.getNew(index)
+    //   .then(nw => {
+    //     this.arr = nw;
+    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
+    //   })
+    //   .catch(errorMessage => {
+    //     console.error(errorMessage.message)
+    //   });
+    this.navCtrl.push(ChiTietTinPage, { index, news: this.news });
   }
 
 }

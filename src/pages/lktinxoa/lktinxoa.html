@@ -5,42 +5,38 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>lktinxoa</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <ion-title>Tin đã xóa</ion-title>
+    </ion-navbar>
 </ion-header>
-
-
 <ion-content padding>
- <ion-list>
-      <ion-card *ngFor="let n of new,let i = index">
-                <ion-item-sliding>
+    <ion-list>
+        <ion-card *ngFor="let n of new,let i = index">
+            <ion-item-sliding>
 
-                    <ion-item (click)="daxem(n)" (click)="page3(n)">
-                        <ion-thumbnail item-left>
-                            <img [src]=n.URLThumbImage class="img">
-                        </ion-thumbnail>
-                        <strong>{{n.TieuDe}}</strong>
-                        <br/> {{n.ThoiGianDangTin}}
-                    </ion-item>
+                <ion-item (click)="daxem(n)" (click)="page3(n)">
+                    <ion-thumbnail item-left>
+                        <img [src]=n.URLThumbImage class="img">
+                    </ion-thumbnail>
+                    <strong>{{n.TieuDe}}</strong>
+                    <br/> {{n.ThoiGianDangTin | date: 'dd/MM/yyyy HH:mm'}}
+                </ion-item>
 
-                    <ion-item-options side="right">
-                        <button ion-button color="primary" expandable (click)="boxoa(n,i)">
+                <ion-item-options (ionSwipe)="boxoa(n,i)" side="right">
+                    <button ion-button color="primary" expandable (click)="boxoa(n,i)">
 						<ion-icon name="heart"></ion-icon>
-						<div>Xoa</div>
+						<div>Bỏ Xóa</div>
 						</button>
-                    </ion-item-options>
-
+                </ion-item-options>
+                <!--
                     <ion-item-options side="left">
                         <button ion-button color="primary" expandable (click)="qt(n)">
 						<ion-icon name="heart"></ion-icon>
 						<div>Yêu Thích</div>
 						</button>
-                    </ion-item-options>
-                </ion-item-sliding>
-          </ion-card>
-  </ion-list>
-  <button ion-button color="primary" expandable (click)="trove()"></button>
+                    </ion-item-options>-->
+            </ion-item-sliding>
+        </ion-card>
+    </ion-list>
+    <button ion-button color="primary" expandable (click)="trove()">Quay Lại</button>
 </ion-content>

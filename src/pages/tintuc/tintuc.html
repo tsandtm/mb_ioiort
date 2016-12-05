@@ -1,5 +1,4 @@
 <ion-header class="body">
-
     <ion-toolbar no-border-top>
         <ion-segment [(ngModel)]="t">
             <ion-segment-button value="tinmoi">
@@ -25,20 +24,20 @@
                             <img [src]=n.URLThumbImage class="img">
                         </ion-thumbnail>
                         <strong>{{n.TieuDe}}</strong>
-                        <br/> {{n.ThoiGianDangTin}}
+                        <br/> {{n.ThoiGianDangTin | date: 'dd/MM/yyyy - HH:mm'}}
                     </ion-item>
 
                     <ion-item-options (ionSwipe)="del(n,i)" side="right">
                         <button ion-button color="danger" expandable (click)="del(n,i)">
-						<ion-icon name="heart"></ion-icon>
-						<div>Xoa</div>
+						<ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+						<div>Xóa</div>
 						</button>
                     </ion-item-options>
 
-                    <ion-item-options side="left">
-                        <button ion-button color="primary" expandable (click)="qt(n)">
-						<ion-icon name="heart"></ion-icon>
-						<div>Yêu Thích</div>
+                    <ion-item-options (ionSwipe)="del(n,i) " side="left">
+                        <button ion-button color="danger" expandable (click)="del(n,i)">
+						<ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+						<div>Xóa</div>
 						</button>
                     </ion-item-options>
                 </ion-item-sliding>
@@ -53,19 +52,19 @@
 
         <ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">
             <page-tinnoibat></page-tinnoibat>
-            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll (ionInfinite)="doInfinite1($event)">
                 <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
                 </ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>
-        
+
     </div>
     <ion-fab bottom left #fab4>
         <button ion-fab color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
         <ion-fab-list side="top">
             <button ion-fab (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
             <button ion-fab (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
-            <button ion-fab (click)='lktindaxoa()'><ion-icon ios="ios-share" md="md-share"></ion-icon></button>
+            <button ion-fab (click)='lktindaxoa()'><ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>
             <button ion-fab color="light" (click)='lktinquantam()'> <ion-icon name="heart"></ion-icon></button>
         </ion-fab-list>
     </ion-fab>

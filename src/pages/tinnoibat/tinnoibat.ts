@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 import { NewsService } from '../shared/news.service';
 import { INews } from '../shared/news.model'
@@ -15,37 +15,17 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
   templateUrl: 'tinnoibat.html'
 })
 export class TinnoibatPage {
+  @Input()
   new: INews[];
   public start: number = 6;
   rootchitiet: any = ChiTietTinPage;
- 
+
   constructor(public navCtrl: NavController, private _newservice: NewsService, private toastCtrl: ToastController) { }
 
   ngOnInit(): void {
-    this._newservice.tinnoibat(0)
-      .then(nw => this.new = nw)
-      .catch(errorMessage => {
-        console.error(errorMessage.message)
-      })
+    //
   }
-  doInfinite(infiniteScroll) {
-    setTimeout(() => {
-      this._newservice.tinnoibat(this.start)
-        .then(
-        (res) => {
-          if (res.length !== 0) {
-            for (let x of res)
-              this.new.push(x);
-            // this.webs1.concat(res);
-            this.start += 6;
-          }
-        })
-        .catch(errorMessage => {
-          console.error(errorMessage.message)
-        });
-      infiniteScroll.complete();
-    }, 2000);
-  }
+
   del = (news: INews, i) => {
     this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
       .then(result => {
@@ -73,7 +53,7 @@ export class TinnoibatPage {
     //   .catch(errorMessage => {
     //     console.error(errorMessage.message)
     //   });
-     this.navCtrl.push(ChiTietTinPage,{ index, news: this.new });
+    this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
   }
   ionViewDidLoad() {
     console.log('Hello TinnoibatPage Page');

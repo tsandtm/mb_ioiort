@@ -21,7 +21,7 @@ export class ChiTietTinPage implements OnInit {
     str: string = "";
     index: number;
     start: number = 1;
-
+    like: boolean;
     SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
 
     mySlideOptions = {
@@ -40,10 +40,8 @@ export class ChiTietTinPage implements OnInit {
 
     ionViewDidLoad() {
         this.url = this.nnew[this.index].URLNews;
-
     }
 
-  
 
     Back() {
         window.history.back(1)
@@ -55,22 +53,58 @@ export class ChiTietTinPage implements OnInit {
         this.navCtrl.pop()
     }
     Like() {
-        this.toastCtrl.create({
-            message: 'Đã Like',
-            duration: 3000,
-            position: 'middle'
-        }).present();
+        this.like = !this.like
+        if (this.like) {
+            this.toastCtrl.create({
+                message: 'Đã Like',
+                duration: 3000,
+                position: 'middle'
+            }).present();
+
+            this._newsService.themtin(this.nnew[this.index].id)
+                .then(result => {
+                })
+                .catch(error => {
+                    alert('Loi' + error.message);
+                })
+
+        } else {
+            this.toastCtrl.create({
+                message: 'Khong like',
+                duration: 3000,
+                position: 'middle'
+            }).present();
+
+            this._newsService.xoatinquantam(this.nnew[this.index].id)
+                .then(result => {
+                    console.log('Da xoa')
+                })
+                .catch(error => {
+                    alert('Loi' + error.message);
+                })
+        }
+
     }
 
-   
+
 
     onLoad(event) {
         this.link = event
+
         if (!event)
             this.spinner = true;
         else
             this.spinner = false;
-      
+
+        this._newsService.tinquantam(this.nnew[this.index].id)
+            .then(nw => {
+
+                nw.length > 0 ? this.like = !this.like : this.like
+
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            })
     }
 
     swipe = (currentIndex: number, action = this.SWIPE_ACTION.RIGHT) => {
@@ -82,7 +116,7 @@ export class ChiTietTinPage implements OnInit {
         // }
 
         if (action === this.SWIPE_ACTION.LEFT) {
-
+            this.like = false
             if ((this.index + 1) < this.nnew.length) {
                 console.log(this.index + 1)
                 this.url = this.nnew[this.index + 1].URLNews;
@@ -96,6 +130,7 @@ export class ChiTietTinPage implements OnInit {
         }
 
         if (action === this.SWIPE_ACTION.RIGHT) {
+            this.like = false
             if ((this.index - 1) >= 0) {
                 this.url = this.nnew[this.index - 1].URLNews
                 this.index--
@@ -112,5 +147,5 @@ export class ChiTietTinPage implements OnInit {
         // // console.log(`LEFT`)
 
     }
-    
+
 }

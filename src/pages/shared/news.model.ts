@@ -11,4 +11,5 @@ export interface INews {
         ArrayDaXem?:number;
         ArrayDaXoa?:number;
         ArrayQuanTam?:number;
+        ChuaXem?:boolean;
 }

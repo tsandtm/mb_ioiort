@@ -18,7 +18,7 @@
     </ion-title>
     <ion-buttons right>
       <button ion-button icon-only (click)="Like()">
-        <ion-icon ios="ios-heart" md="md-heart" color="danger"></ion-icon>
+        <ion-icon ios="ios-heart" md="md-heart" [color]="like? 'danger': 'default'"></ion-icon>
       </button>
 
       <button ion-button icon-only icon-right (click)="Close()">

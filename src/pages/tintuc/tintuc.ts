@@ -19,10 +19,11 @@ import { TinquantamPage } from '../tinquantam/tinquantam';
 })
 export class TinTucPage implements OnInit {
   t: string = "tinmoi";
-
   rootchitiet: any = ChiTietTinPage;
   news: INews[];
+  newstinnoibat: INews[] = [];
   public start: number = 6;
+  public start2: number = 6;
   arr: any[];
   constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
   }
@@ -48,8 +49,24 @@ export class TinTucPage implements OnInit {
     this.navCtrl.push(LoginPage)
   }
   ngOnInit(): void {
+    //Tin Mới hiện thông tin nhưng trang chưa xem
     this._newservice.getWebs(0)
-      .then(nw => this.news = nw)
+      .then(nw => {
+        nw.forEach(value =>{
+            value.ChuaXem = true;
+        })
+        return this.news = nw;
+      })
+      .catch(errorMessage => {
+        console.error(errorMessage.message)
+      })
+    
+    // Tin nổi bật
+    this._newservice.tinnoibat(0)
+      .then(nw => {
+        console.log(nw)
+        return this.newstinnoibat = nw
+      })
       .catch(errorMessage => {
         console.error(errorMessage.message)
       })
@@ -61,9 +78,31 @@ export class TinTucPage implements OnInit {
         .then(
         (res) => {
           if (res.length !== 0) {
-            for (let x of res)
+            for (let x of res){
               this.news.push(x);
+              x.ChuaXem = true
+            }
             this.start += 6;
+          }
+        })
+        .catch(errorMessage => {
+          console.error(errorMessage.message)
+        });
+      infiniteScroll.complete();
+    }, 2000);
+  }
+
+  doInfinite2 = (infiniteScroll) => {
+    setTimeout(() => {
+      this._newservice.tinnoibat(this.start2)
+        .then(
+        (res) => {
+          console.log(res)
+          if (res.length !== 0) {
+            for (let x of res)
+              this.newstinnoibat.push(x);
+            this.start2 += 6;
+
           }
         })
         .catch(errorMessage => {
@@ -127,6 +166,7 @@ export class TinTucPage implements OnInit {
 
   goDetail($event, index) {
     console.log("index " + index);
+    this.news[index].ChuaXem = false;
     // this._newservice.getNew(index)
     //   .then(nw => {
     //     this.arr = nw;

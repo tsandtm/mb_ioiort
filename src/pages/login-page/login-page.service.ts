@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { Http,Headers} from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 
@@ -27,6 +27,29 @@ export class LoginService extends ServiceBase {
       })
       .catch(this.handleError)
   }
+
+  // login bebinh nay` nua ne 
+    public GetLogin(user: any, pass: any):Promise<any>
+    {
+
+      let U = new User()
+      U.TaiKhoan = user;
+      U.Password = pass;
+
+      return this._http.post(`http://localhost:8080/tintuc/login`, U)
+      .toPromise()
+      .then(respone => {
+        let id=respone.json().id;
+        return id;
+      })
+      .catch(this.handleError)
+    }
+    public GetCount(id:number):Promise<any>
+    {   
+        return this._http.post(`http://localhost:8080/api/getCountNews`,{id}).toPromise().then(res=>{return res.json()}).catch(err=>{return 0});
+    }
+    //login bebinh
+    
 }
 
 /**

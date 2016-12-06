@@ -57,8 +57,7 @@ export class HomePage {
             this._webService.getWebs(this.start)
                 .then(
                 (res) => {
-                    if (res.length !== 0) {
-                        for (let x of res)
+                    if (res.length !== 0) {                        for (let x of res)
                             this.webs1.push(x);
                         // this.webs1.concat(res);
                         this.start += 12;

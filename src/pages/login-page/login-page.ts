@@ -3,10 +3,16 @@ import { Component, trigger, state, style, transition, animate, keyframes } from
 import { NavController, LoadingController, Loading } from 'ionic-angular';
 
 import { LoginService } from './login-page.service';
-
+import { WebsService } from '../shared/website.service';
 import { Storage } from '@ionic/storage';
-
+import { IWeb } from '../shared/website.model';
 import { HomePage } from '../homepage/homepage';
+import { TinnoibatPage } from '../tinnoibat/tinnoibat';
+import { Facebook_Login } from './login.facebook';
+import { passport, User } from 'passport';
+import { FacebookStrategy, Strategy } from 'passport-facebook';
+import * as express from 'express';
+// var app=express(); sai file này
 /*
   Generated class for the LoginPage page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -74,11 +80,10 @@ export class LoginPage {
   username: string;
   password: string;
   save: boolean = false;
+  //login facebook
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private service: LoginService, private storage: Storage) {
   }
-
-
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.storage.forEach((value, key) => {
       switch (key) {
         case "TaiKhoan": this.username = value; break;
@@ -87,14 +92,26 @@ export class LoginPage {
         default: break;
       }
       console.log(`${this.username}${this.password}`)
-      
-      if (this.username && this.password)
+
+      if (this.username && this.password) {
         this.service.LoginToSever(this.username, this.password)
           .then(result => {
             if (result == 'OK') {
               console.log(result)
-              this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
-              this.navCtrl.push(HomePage);
+              this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' });
+
+              //login bebinh kiem tra nay dum nha
+            this.service.GetLogin(this.username, this.password).then(res=>{this.service.GetCount(res).then(data=>{
+            if(data==0)
+            {
+              this.navCtrl.setRoot(HomePage);
+            }
+            else{
+                this.navCtrl.setRoot(TinnoibatPage);
+            }
+
+          })});
+          //login bebinh
             }
             else {
               console.log(result)
@@ -104,6 +121,7 @@ export class LoginPage {
           })
           .catch(err => {
           })
+      }
     })
   }
 
@@ -112,15 +130,37 @@ export class LoginPage {
     this.service.LoginToSever(this.username, this.password)
       .then(result => {
         if (result == 'OK') {
-          console.log(result)
+          console.log(result);
+   
           this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
           if (this.save) {
             this.storage.set("TaiKhoan", this.username);
             this.storage.set("Password", this.password);
             this.storage.set("Checkbox", this.save);
-            this.navCtrl.push(HomePage);
+
+          //Login Bebinh tu day
+          this.service.GetLogin(this.username, this.password).then(res=>{this.service.GetCount(res).then(data=>{
+            if(data==0)
+            {
+              this.navCtrl.setRoot(HomePage);
+            }
+            else{
+                this.navCtrl.setRoot(TinnoibatPage);
+            }
+
+          })});
           } else {
-            this.navCtrl.push(HomePage);
+            this.service.GetLogin(this.username, this.password).then(res=>{this.service.GetCount(res).then(data=>{
+            if(data==0)
+            {
+              this.navCtrl.setRoot(HomePage);
+            }
+            else{
+                this.navCtrl.setRoot(TinnoibatPage);
+            }
+
+          })});
+          //Login Bebinh toi day
           }
         }
 

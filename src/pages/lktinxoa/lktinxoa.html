@@ -23,20 +23,22 @@
                 </ion-item>
 
                 <ion-item-options (ionSwipe)="boxoa(n,i)" side="right">
-                    <button ion-button color="primary" expandable (click)="boxoa(n,i)">
+                    <button ion-button color="danger" expandable (click)="boxoa(n,i)">
 						<ion-icon name="heart"></ion-icon>
 						<div>Bỏ Xóa</div>
 						</button>
                 </ion-item-options>
-                <!--
-                    <ion-item-options side="left">
-                        <button ion-button color="primary" expandable (click)="qt(n)">
+                 <ion-item-options (ionSwipe)="boxoa(n,i)" side="left">
+                    <button ion-button color="danger" expandable (click)="boxoa(n,i)">
 						<ion-icon name="heart"></ion-icon>
-						<div>Yêu Thích</div>
+						<div>Bỏ Xóa</div>
 						</button>
-                    </ion-item-options>-->
+                </ion-item-options>
             </ion-item-sliding>
         </ion-card>
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
     </ion-list>
-    <button ion-button color="primary" expandable (click)="trove()">Quay Lại</button>
 </ion-content>

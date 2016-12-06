@@ -68,8 +68,7 @@ export class ChiTietTinPage implements OnInit {
             this.spinner = true;
         else
             this.spinner = false;
-         let b= document.getElementById("IDTinTuc");
-        console.log(b);
+      
     }
 
     swipe = (currentIndex: number, action = this.SWIPE_ACTION.RIGHT) => {

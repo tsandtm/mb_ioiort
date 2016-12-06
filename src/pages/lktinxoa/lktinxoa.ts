@@ -25,9 +25,8 @@ export class LktinxoaPage {
       })
   }
   doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
     setTimeout(() => {
-      this._newservice.getWebs(this.start)
+      this._newservice.lktindaxoa(this.start)
         .then(
         (res) => {
           if (res.length !== 0) {
@@ -40,10 +39,10 @@ export class LktinxoaPage {
         .catch(errorMessage => {
           console.error(errorMessage.message)
         });
-      console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 2000);
   }
+
   boxoa = (news: INews, i) => {
     const toast = this.toastCtrl.create({
       message: 'Đã loại bỏ khỏi danh sách',

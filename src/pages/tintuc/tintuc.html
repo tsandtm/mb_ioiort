@@ -51,11 +51,13 @@
 
 
         <ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">
-            <page-tinnoibat></page-tinnoibat>
-            <ion-infinite-scroll (ionInfinite)="doInfinite1($event)">
-                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
-                </ion-infinite-scroll-content>
-            </ion-infinite-scroll>
+            <page-tinnoibat>
+                <ion-infinite-scroll (ionInfinite)="doInfinite1($event)">
+                    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
+                    </ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </page-tinnoibat>
+
         </ion-list>
 
     </div>

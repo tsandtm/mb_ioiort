@@ -29,16 +29,12 @@ export class TinquantamPage {
     const toast = this.toastCtrl.create({
       message: 'Đã xóa',
       duration: 200,
-      // showCloseButton: true,
-      // closeButtonText: 'Ok'
     });
-
     this._newsService.xoatinquantam(news.id)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
         toast.present();
-
       })
       .catch(error => {
         alert('Loi' + error.message);

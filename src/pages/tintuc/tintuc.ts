@@ -14,148 +14,142 @@ import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { Storage } from '@ionic/storage';
 import { TinquantamPage } from '../tinquantam/tinquantam';
 @Component({
-  selector: 'page-tintuc',
-  templateUrl: 'tintuc.html'
+    selector: 'page-tintuc',
+    templateUrl: 'tintuc.html'
 })
 export class TinTucPage implements OnInit {
-  t: string = "tinmoi";
+    t: string = "tinmoi";
 
-  rootchitiet: any = ChiTietTinPage;
-  news: INews[];
-  public start: number = 6;
-  arr: any[];
-  constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
-  }
+    rootchitiet: any = ChiTietTinPage;
+    news: INews[];
+    public start: number = 6;
+    arr: any[];
+    constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
+    }
 
 
-  trove = () => {
-    this.navCtrl.push(HomePage)
-  }
-  // lktindaxoa=()=>{
-  //   this.navCtrl.push(LktinxoaPage)
-  // }
-  lktindaxoa(characterNum) {
+    trove = () => {
+        this.navCtrl.push(HomePage)
+    }
+    // lktindaxoa=()=>{
+    //   this.navCtrl.push(LktinxoaPage)
+    // }
+    lktindaxoa=()=>{
+        this.navCtrl.push(LktinxoaPage);
+    }
+    lktinquantam() {
+        this.navCtrl.push(TinquantamPage);
+    }
+    dangxuat = () => {
+        this.storage.clear()
+        this.navCtrl.push(LoginPage)
+    }
+    ngOnInit(): void {
+        this._newservice.getWebs(0)
+            .then(nw => this.news = nw)
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            })
+    }
 
-    let modal = this.modalCtrl.create(LktinxoaPage, characterNum);
-    modal.present();
-  }
-  lktinquantam() {
+    doInfinite(infiniteScroll) {
+        setTimeout(() => {
+            this._newservice.getWebs(this.start)
+                .then(
+                (res) => {
+                    if (res.length !== 0) {
+                        for (let x of res)
+                            this.news.push(x);
+                        this.start += 6;
+                    }
+                })
+                .catch(errorMessage => {
+                    console.error(errorMessage.message)
+                });
+            infiniteScroll.complete();
+        }, 2000);
+    }
 
-    this.navCtrl.push(TinquantamPage);
-  }
-  dangxuat = () => {
-    this.storage.clear()
-    this.navCtrl.push(LoginPage)
-  }
-  ngOnInit(): void {
-    this._newservice.getWebs(0)
-      .then(nw => this.news = nw)
-      .catch(errorMessage => {
-        console.error(errorMessage.message)
-      })
-  }
+    doInfinite1(infiniteScroll) {
+        setTimeout(() => {
+            this._newservice.tinnoibat(this.start)
+                .then(
+                (res) => {
+                    if (res.length !== 0) {
+                        for (let x of res)
+                            this.news.push(x);
+                        // this.webs1.concat(res);
+                        this.start += 6;
+                    }
+                })
+                .catch(errorMessage => {
+                    console.error(errorMessage.message)
+                });
+            infiniteScroll.complete();
+        }, 2000);
+    }
 
-  doInfinite(infiniteScroll) {
-    setTimeout(() => {
-      this._newservice.getWebs(this.start)
-        .then(
-        (res) => {
-          if (res.length !== 0) {
-            for (let x of res)
-              this.news.push(x);
-            this.start += 6;
-          }
-        })
-        .catch(errorMessage => {
-          console.error(errorMessage.message)
+    presentLoadingDefault() {
+        let loading = this.loadingCtrl.create({
+            content: 'Please wait...',
+            dismissOnPageChange: true
         });
-      infiniteScroll.complete();
-    }, 2000);
-  }
 
-  doInfinite1(infiniteScroll) {
-    setTimeout(() => {
-      this._newservice.tinnoibat(this.start)
-        .then(
-        (res) => {
-          if (res.length !== 0) {
-            for (let x of res)
-              this.news.push(x);
-            // this.webs1.concat(res);
-            this.start += 6;
-          }
-        })
-        .catch(errorMessage => {
-          console.error(errorMessage.message)
+        loading.present();
+    }
+    del = (news: INews, i) => {
+        const toast = this.toastCtrl.create({
+            message: 'Đã xóa',
+            duration: 200,
         });
-      infiniteScroll.complete();
-    }, 2000);
-  }
+        this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+            .then(result => {
+                console.log('Da xoa');
+                this.news.splice(i, 1);
+                toast.present();
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
 
-  presentLoadingDefault() {
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    });
+    }
 
-    loading.present();
-  }
-  del = (news: INews, i) => {
-    const toast = this.toastCtrl.create({
-      message: 'Đã xóa',
-      duration: 200,
-      // showCloseButton: true,
-      // closeButtonText: 'Ok'
-    });
-
-    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-      .then(result => {
-        console.log('Da xoa');
-        this.news.splice(i, 1);
+    qt = (news: INews) => {
+        const toast = this.toastCtrl.create({
+            message: 'Them roi do!!',
+            showCloseButton: true,
+            closeButtonText: 'Ok'
+        });
+        this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+            .then(result => {
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
         toast.present();
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
-      })
+    }
 
-  }
+    daxem = (news: INews) => {
+        this._newservice.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+            .then(result => {
 
-  qt = (news: INews) => {
-    const toast = this.toastCtrl.create({
-      message: 'Them roi do!!',
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
-    this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-      .then(result => {
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
-      })
-    toast.present();
-  }
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
+    }
 
-  daxem = (news: INews) => {
-    this._newservice.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-      .then(result => {
-
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
-      })
-  }
-
-  goDetail($event, index) {
-    // console.log("index " + index);
-    // this._newservice.getNew(index)
-    //   .then(nw => {
-    //     this.arr = nw;
-    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
-    //   })
-    //   .catch(errorMessage => {
-    //     console.error(errorMessage.message)
-    //   });
-    this.navCtrl.push(ChiTietTinPage, { index, news: this.news });
-  }
+    goDetail($event, index) {
+        console.log("index " + index);
+        // this._newservice.getNew(index)
+        //   .then(nw => {
+        //     this.arr = nw;
+        //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
+        //   })
+        //   .catch(errorMessage => {
+        //     console.error(errorMessage.message)
+        //   });
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.news });
+    }
 
 }

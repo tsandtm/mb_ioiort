@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController,ToastController } from 'ionic-angular';
-import { NewsService } from '../shared/news.service'
-import { INews } from '../shared/news.model'
+import { NavController,ToastController,NavParams } from 'ionic-angular';
+
+import { NewsService } from '../shared/services/news.service'
+import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
@@ -17,9 +18,12 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
 export class TinquantamPage {
   new: INews[];
   public start: number = 6;
-  constructor(public navCtrl: NavController, private _newsService: NewsService, private toastCtrl: ToastController) { }
+  IDuser:number;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private _newsService: NewsService, private toastCtrl: ToastController) { 
+      this.IDuser = this.navParams.get('id');
+  }
   ngOnInit(): void {
-    this._newsService.tinquantam(0)
+    this._newsService.tinquantam(this.IDuser,0)
       .then(nw => this.new = nw)
       .catch(errorMessage => {
         console.error(errorMessage.message)
@@ -35,6 +39,7 @@ export class TinquantamPage {
         console.log('Da xoa');
         this.new.splice(i, 1);
         toast.present();
+
       })
       .catch(error => {
         alert('Loi' + error.message);
@@ -43,10 +48,9 @@ export class TinquantamPage {
   ionViewDidLoad() {
     console.log('Hello TinquantamPage Page');
   }
-
   doInfinite(infiniteScroll) {
     setTimeout(() => {
-      this._newsService.tinquantam(this.start)
+      this._newsService.tinquantam(this.IDuser,this.start)
         .then(
         (res) => {
           if (res.length !== 0) {
@@ -64,6 +68,7 @@ export class TinquantamPage {
 
 
   goDetail($event, index) {
+    console.log("index " + index);
     this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
   }
 

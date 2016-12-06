@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavController, LoadingController, ModalController, ToastController } from 'ionic-angular';
-
-import { Platform } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, ToastController ,NavParams, Platform } from 'ionic-angular';
 
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 import { HomePage } from '../homepage/homepage';
-import { NewsService } from '../shared/news.service';
-import { INews } from '../shared/news.model'
+import { NewsService } from '../shared/services/news.service';
+import { INews } from '../shared/models/news.model'
 import { LoginPage } from '../login-page/login-page';
 import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { Storage } from '@ionic/storage';
@@ -24,28 +22,32 @@ export class TinTucPage implements OnInit {
     news: INews[];
     public start: number = 6;
     arr: any[];
-    constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
-    }
+    IDuser: number;
+    constructor(private _newservice: NewsService,public navParams: NavParams ,platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
+        this.IDuser = this.navParams.get('id');        
+        console.log("id tin tuc: "+ this.IDuser);
+
+     }
 
 
     trove = () => {
-        this.navCtrl.push(HomePage)
+        this.navCtrl.push(HomePage,{id:this.IDuser})
     }
     // lktindaxoa=()=>{
     //   this.navCtrl.push(LktinxoaPage)
     // }
     lktindaxoa=()=>{
-        this.navCtrl.push(LktinxoaPage);
+        this.navCtrl.push(LktinxoaPage,{id:this.IDuser});
     }
     lktinquantam() {
-        this.navCtrl.push(TinquantamPage);
+        this.navCtrl.push(TinquantamPage,{id:this.IDuser});
     }
     dangxuat = () => {
         this.storage.clear()
         this.navCtrl.push(LoginPage)
     }
     ngOnInit(): void {
-        this._newservice.getWebs(0)
+        this._newservice.getWebs(this.IDuser,0)
             .then(nw => this.news = nw)
             .catch(errorMessage => {
                 console.error(errorMessage.message)
@@ -54,31 +56,12 @@ export class TinTucPage implements OnInit {
 
     doInfinite(infiniteScroll) {
         setTimeout(() => {
-            this._newservice.getWebs(this.start)
+            this._newservice.getWebs(this.IDuser,this.start)
                 .then(
                 (res) => {
                     if (res.length !== 0) {
                         for (let x of res)
                             this.news.push(x);
-                        this.start += 6;
-                    }
-                })
-                .catch(errorMessage => {
-                    console.error(errorMessage.message)
-                });
-            infiniteScroll.complete();
-        }, 2000);
-    }
-
-    doInfinite1(infiniteScroll) {
-        setTimeout(() => {
-            this._newservice.tinnoibat(this.start)
-                .then(
-                (res) => {
-                    if (res.length !== 0) {
-                        for (let x of res)
-                            this.news.push(x);
-                        // this.webs1.concat(res);
                         this.start += 6;
                     }
                 })
@@ -102,7 +85,7 @@ export class TinTucPage implements OnInit {
             message: 'Đã xóa',
             duration: 200,
         });
-        this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+        this._newservice.xoatin(this.IDuser, news.ArrayQuanTam, news.ArrayDaXoa)
             .then(result => {
                 console.log('Da xoa');
                 this.news.splice(i, 1);
@@ -120,7 +103,7 @@ export class TinTucPage implements OnInit {
             showCloseButton: true,
             closeButtonText: 'Ok'
         });
-        this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+        this._newservice.themtin(this.IDuser, news.ArrayQuanTam, news.ArrayDaXoa)
             .then(result => {
             })
             .catch(error => {
@@ -130,7 +113,7 @@ export class TinTucPage implements OnInit {
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+        this._newservice.daxem(this.IDuser, news.ArrayQuanTam, news.ArrayDaXoa)
             .then(result => {
 
             })
@@ -151,5 +134,6 @@ export class TinTucPage implements OnInit {
         //   });
         this.navCtrl.push(ChiTietTinPage, { index, news: this.news });
     }
-
+ 
+  
 }

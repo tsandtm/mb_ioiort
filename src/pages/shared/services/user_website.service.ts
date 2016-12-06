@@ -3,20 +3,23 @@ import { Http } from '@angular/http';
 import 'rxjs'
 import 'rxjs/add/operator/toPromise';
 
-import { User_Web } from './user_website.model';
-
+import { User_Web } from '../models/user_website.model';
+import { ServiceBase } from './service.base';
+import { url } from '../variables';
 @Injectable()
-export class UserWebService {
+export class UserWebService extends ServiceBase  {
     user_webs: User_Web[];
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        super();
+     }
 
     public createUserWebSite(idUser: number, idDanhMuc: number, createdDate: Date): Promise<User_Web> {
         let user_web = new User_Web();
         user_web.IDUser = idUser;
         user_web.IDDanhMucSite = idDanhMuc;
         user_web.CreatedDate = createdDate;
-        return this.http.post('http://localhost:8080/api/userwebsite', user_web)
+        return this.http.post(`${url}/userwebsite`, user_web)
             .toPromise()
             .then(result => user_web)
             .catch(error => {
@@ -34,7 +37,7 @@ export class UserWebService {
         // let body = new URLSearchParams();
         // body.set(`IDUser`,idUser);
         // body.set('IDDanhMucSite',idDanhMuc);
-        return this.http.delete('http://localhost:8080/api/userwebsite?idUser=' + idUser + '&idDanhMuc=' + idDanhMuc)
+        return this.http.delete(`${url}/userwebsite?idUser=${idUser}&idDanhMuc=${idDanhMuc}`)
             .toPromise()
             .then(() => true)
             .catch(error => {
@@ -45,7 +48,7 @@ export class UserWebService {
 
 
     public selectuser(id: any): Promise<boolean> {
-        return this.http.get('http://localhost:8080/api/userwebsite?idUser=' + id)
+        return this.http.get(`${url}/userwebsite?idUser=`+ id)
             .toPromise()
             .then((mess) => {
                 if (mess.status == 200)

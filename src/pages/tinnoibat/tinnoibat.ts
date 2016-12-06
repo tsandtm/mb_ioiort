@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import { NewsService } from '../shared/news.service';
-import { INews } from '../shared/news.model'
+import { NavController, ToastController, NavParams } from 'ionic-angular';
+import { NewsService } from '../shared/services/news.service';
+import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
@@ -18,11 +18,14 @@ export class TinnoibatPage {
   new: INews[];
   public start: number = 6;
   rootchitiet: any = ChiTietTinPage;
- 
-  constructor(public navCtrl: NavController, private _newservice: NewsService, private toastCtrl: ToastController) { }
+  IDuser:number;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _newservice: NewsService, private toastCtrl: ToastController) {
+    this.IDuser = this.navParams.get('id');
+  }
 
   ngOnInit(): void {
-    this._newservice.tinnoibat(0)
+    this._newservice.tinnoibat(this.IDuser,0)
       .then(nw => this.new = nw)
       .catch(errorMessage => {
         console.error(errorMessage.message)

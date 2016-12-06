@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { IWeb } from '../shared/website.model';
+import { IWeb } from '../shared/models/website.model';
 
 @Pipe({
     name: 'homeFilter'

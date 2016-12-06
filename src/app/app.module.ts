@@ -6,17 +6,17 @@ import { MyApp } from './app.component';
 import { TinTucPage } from '../pages/tintuc/tintuc';
 import { ChiTietTinPage } from '../pages/chitiettin/chitiettin';
 import { HomePage } from '../pages/homepage/homepage';
-import { ChuyenMucPage } from '../pages/chuyenmuc/chuyenmuc';
-import { WebsService } from '../pages/shared/website.service';
-import { NewsService } from '../pages/shared/news.service';
+import { WebsService } from '../pages/shared/services/website.service';
+import { NewsService } from '../pages/shared/services/news.service';
 import { HomeFilterPipe } from '../pages/homepage/homepage-filter.pipe';
-import { UserWebService } from '../pages/shared/user_website.service';
+import { UserWebService } from '../pages/shared/services/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
-import { LoginService } from '../pages/login-page/login-page.service'
+import { LoginService } from '../pages/shared/services/login-page.service'
 import { TinnoibatPage } from '../pages/tinnoibat/tinnoibat';
 import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
-import { Safe } from '../pages/chitiettin/safe'
+import { Safe } from '../pages/chitiettin/safe';
+import { url } from '../pages/shared/variables';
 
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 export class MyHammerConfig extends HammerGestureConfig {
@@ -32,7 +32,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomePage,
     TinTucPage,
     ChiTietTinPage,
-    ChuyenMucPage,
     HomeFilterPipe,
     LoginPage,
     TinnoibatPage,
@@ -49,7 +48,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomePage,
     TinTucPage,
     ChiTietTinPage,
-    ChuyenMucPage,
     LoginPage,
     TinnoibatPage,
     LktinxoaPage,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import { NewsService } from '../shared/news.service';
-import { INews } from '../shared/news.model'
+import { NavController, ToastController,NavParams } from 'ionic-angular';
+import { NewsService } from '../shared/services/news.service';
+import { INews } from '../shared/models/news.model'
 import { TinTucPage } from '../tintuc/tintuc'
 /*
   Generated class for the Lktindaxoa page.
@@ -15,10 +15,14 @@ import { TinTucPage } from '../tintuc/tintuc'
 export class LktinxoaPage {
   new: INews[];
   public start: number = 6;
-  constructor(public navCtrl: NavController, private _newservice: NewsService, public toastCtrl: ToastController) { }
+  IDuser:number;
+  constructor(public navCtrl: NavController,public navParams: NavParams , private _newservice: NewsService, public toastCtrl: ToastController) { 
+            this.IDuser = this.navParams.get('id');        
+
+  }
 
   ngOnInit(): void {
-    this._newservice.lktindaxoa(0)
+    this._newservice.lktindaxoa(this.IDuser,0)
       .then(news => this.new = news)
       .catch(errorMessage => {
         console.log(errorMessage.message)
@@ -26,7 +30,7 @@ export class LktinxoaPage {
   }
   doInfinite(infiniteScroll) {
     setTimeout(() => {
-      this._newservice.lktindaxoa(this.start)
+      this._newservice.lktindaxoa(this.IDuser,this.start)
         .then(
         (res) => {
           if (res.length !== 0) {

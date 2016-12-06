@@ -1,9 +1,9 @@
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { NewsService } from '../shared/news.service';
+import { NewsService } from '../shared/services/news.service';
 import { NavController, NavParams, ToastController, Slides } from 'ionic-angular';
 
-import { INews } from '../shared/news.model';
+import { INews } from '../shared/models/news.model';
 
 @Component({
     selector: 'page-chitiettin',

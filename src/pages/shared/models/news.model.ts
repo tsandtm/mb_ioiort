@@ -8,8 +8,8 @@ export interface INews {
         URLNews?:string;
         URLThumbImage?:string;
         URLImage?:string;
-        ArrayDaXem?:number;
-        ArrayDaXoa?:number;
+        ArrayDaXem?:[number];
+        ArrayDaXoa?:[number];
         ArrayQuanTam?:number;
         ChuaXem?:boolean;
 }

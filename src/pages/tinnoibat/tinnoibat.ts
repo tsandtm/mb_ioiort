@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
-import { NewsService } from '../shared/news.service';
-import { INews } from '../shared/news.model'
+import { NavController } from 'ionic-angular';
+import { NewsService } from '../shared/services/news.service';
+import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
@@ -11,52 +11,56 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-tinnoibat',
-  templateUrl: 'tinnoibat.html'
+    selector: 'page-tinnoibat',
+    templateUrl: 'tinnoibat.html'
 })
 export class TinnoibatPage {
-  @Input()
-  new: INews[];
-  public start: number = 6;
-  rootchitiet: any = ChiTietTinPage;
+    @Input()
+    new: INews[];
+    public start: number = 6;
+    rootchitiet: any = ChiTietTinPage;
 
-  constructor(public navCtrl: NavController, private _newservice: NewsService, private toastCtrl: ToastController) { }
+    constructor(public navCtrl: NavController, private _newservice: NewsService) { }
 
-  ngOnInit(): void {
-    //
-  }
+    ngOnInit(): void {
+        //
+    }
 
-  del = (news: INews, i) => {
-    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-      .then(result => {
-        console.log('Da xoa')
-        this.new.splice(i, 1)
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
-      })
-  }
-  qt = (news: INews) => {
-    this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
-      .then(result => {
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
-      })
-  }
-  tinnoibat($event, index) {
-    //  this._newservice.gettinnoibat(index)
-    //   .then(nw => {
-    //     this.arr = nw;
-    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr })
-    //   })
-    //   .catch(errorMessage => {
-    //     console.error(errorMessage.message)
-    //   });
-    this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
-  }
-  ionViewDidLoad() {
-    console.log('Hello TinnoibatPage Page');
-  }
+    del = (news: INews, i) => {
+        this._newservice.xoatin(news.id)
+            .then(result => {
+                console.log('Da xoa')
+                this.new.splice(i, 1)
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
+    }
+    qt = (news: INews) => {
+        this._newservice.themtin(news.id)
+            .then(result => {
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
+    }
+    tinnoibat($event, index) {
+        this.new[index].ChuaXem = false;
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
+    }
+
+    daxem = (news: INews) => {
+        this._newservice.daxem(news.id)
+            .then(result => {
+
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
+    }
+
+    ionViewDidLoad() {
+        console.log('Hello TinnoibatPage Page');
+    }
 
 }

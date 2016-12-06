@@ -1,9 +1,9 @@
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { NewsService } from '../shared/news.service';
-import { NavController, NavParams, ToastController, Slides } from 'ionic-angular';
+import { NewsService } from '../shared/services/news.service';
+import { NavController, NavParams, Slides } from 'ionic-angular';
 
-import { INews } from '../shared/news.model';
+import { INews } from '../shared/models/news.model';
 
 @Component({
     selector: 'page-chitiettin',
@@ -12,7 +12,6 @@ import { INews } from '../shared/news.model';
 export class ChiTietTinPage implements OnInit {
 
     @ViewChild('iframe') iframe: ElementRef;
-    @ViewChild('mySlider') slider: Slides;
     url: string;
     link: string;
     spinner: boolean = true;
@@ -29,7 +28,7 @@ export class ChiTietTinPage implements OnInit {
         loop: true
     };
 
-    constructor(private _newsService: NewsService, public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
+    constructor(private _newsService: NewsService, public navCtrl: NavController, public navParams: NavParams) {
         this.nnew = this.navParams.get('news');
         this.index = this.navParams.get('index');
         console.log("news: ", this.nnew);
@@ -55,12 +54,7 @@ export class ChiTietTinPage implements OnInit {
     Like() {
         this.like = !this.like
         if (this.like) {
-            this.toastCtrl.create({
-                message: 'Đã Like',
-                duration: 3000,
-                position: 'middle'
-            }).present();
-
+            this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
             this._newsService.themtin(this.nnew[this.index].id)
                 .then(result => {
                 })
@@ -69,12 +63,7 @@ export class ChiTietTinPage implements OnInit {
                 })
 
         } else {
-            this.toastCtrl.create({
-                message: 'Khong like',
-                duration: 3000,
-                position: 'middle'
-            }).present();
-
+            this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
             this._newsService.xoatinquantam(this.nnew[this.index].id)
                 .then(result => {
                     console.log('Da xoa')
@@ -119,8 +108,9 @@ export class ChiTietTinPage implements OnInit {
             this.like = false
             if ((this.index + 1) < this.nnew.length) {
                 console.log(this.index + 1)
-                this.url = this.nnew[this.index + 1].URLNews;
                 this.index++
+                this.url = this.nnew[this.index].URLNews;
+                this.nnew[this.index].ChuaXem = false;
             }
             else {
                 console.log(this.index + 1)
@@ -132,9 +122,10 @@ export class ChiTietTinPage implements OnInit {
         if (action === this.SWIPE_ACTION.RIGHT) {
             this.like = false
             if ((this.index - 1) >= 0) {
-                this.url = this.nnew[this.index - 1].URLNews
                 this.index--
+                this.url = this.nnew[this.index].URLNews
                 console.log(this.index)
+                this.nnew[this.index].ChuaXem = false;
 
             } else {
                 this.url = this.nnew[this.index].URLNews

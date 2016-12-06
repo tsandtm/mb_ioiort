@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { NewsService } from '../shared/news.service';
-import { INews } from '../shared/news.model'
-import{TinTucPage} from '../tintuc/tintuc'
+import { NewsService } from '../shared/services/news.service';
+import { INews } from '../shared/models/news.model'
+import { TinTucPage } from '../tintuc/tintuc'
 /*
   Generated class for the Lktindaxoa page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -13,18 +13,18 @@ import{TinTucPage} from '../tintuc/tintuc'
   templateUrl: 'lktinxoa.html'
 })
 export class LktinxoaPage {
- new:INews[];
-public start: number = 6;
-  constructor(public navCtrl: NavController,private _newservice: NewsService) {}
+  new: INews[];
+  public start: number = 6;
+  constructor(public navCtrl: NavController, private _newservice: NewsService) { }
 
-  ngOnInit():void{
+  ngOnInit(): void {
     this._newservice.lktindaxoa(0)
-      .then(news=>this.new=news)
-      .catch(errorMessage=>{
+      .then(news => this.new = news)
+      .catch(errorMessage => {
         console.log(errorMessage.message)
       })
   }
-    doInfinite(infiniteScroll) {
+  doInfinite(infiniteScroll) {
     console.log('Begin async operation');
     setTimeout(() => {
       this._newservice.getWebs(this.start)
@@ -45,7 +45,7 @@ public start: number = 6;
     }, 2000);
   }
   boxoa = (news: INews, i) => {
-    this._newservice.boxoa(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newservice.boxoa(news.id)
       .then(result => {
         console.log('Da xoa')
         this.new.splice(i, 1)
@@ -54,7 +54,7 @@ public start: number = 6;
         alert('Loi' + error.message);
       })
   }
-  trove=()=>{
+  trove = () => {
     this.navCtrl.push(TinTucPage)
   }
   ionViewDidLoad() {

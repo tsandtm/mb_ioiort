@@ -1,11 +1,7 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-
 import { NavController, LoadingController, Loading } from 'ionic-angular';
-
-import { LoginService } from './login-page.service';
-
+import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
-
 import { HomePage } from '../homepage/homepage';
 /*
   Generated class for the LoginPage page.
@@ -74,7 +70,7 @@ export class LoginPage {
   username: string;
   password: string;
   save: boolean = false;
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private service: LoginService, private storage: Storage) {
+  constructor(public navCtrl: NavController, private service: LoginService, private storage: Storage) {
   }
 
 

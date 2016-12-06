@@ -1,8 +1,8 @@
-import { ToastController } from 'ionic-angular';
+import { ToastController, LoadingController } from 'ionic-angular';
 
 export abstract class ServiceBase {
 
-  constructor(private _toast?: ToastController) {
+  constructor(private _toast?: ToastController, private _loadingCtrl?: LoadingController) {
 
   }
 
@@ -14,9 +14,9 @@ export abstract class ServiceBase {
 
   }
 
-/**
- * hiện thông báo nhỏ
- */
+  /**
+   * hiện thông báo nhỏ
+   */
   public ShowToastOK = (mess: string,
     option: { position?: string, duration?: number } = {}) => {
     let position = option.position || 'bottom';
@@ -27,5 +27,16 @@ export abstract class ServiceBase {
       message: mess
     })
     toast.present()
+  }
+
+  /**
+   * dismissOnPageChange: true
+   */
+  public ShowLoading = (mess: string) => {
+    let load = this._loadingCtrl.create({
+      content: mess,
+      dismissOnPageChange: true
+    });
+    load.present();
   }
 }

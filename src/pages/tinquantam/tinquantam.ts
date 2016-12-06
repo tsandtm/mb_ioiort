@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { NewsService } from '../shared/news.service'
-import { INews } from '../shared/news.model'
+import { NewsService } from '../shared/services/news.service'
+import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
@@ -40,14 +40,6 @@ export class TinquantamPage {
 
   goDetail($event, index) {
     console.log("index " + index);
-    // this._newservice.getNew(index)
-    //   .then(nw => {
-    //     this.arr = nw;
-    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
-    //   })
-    //   .catch(errorMessage => {
-    //     console.error(errorMessage.message)
-    //   });
     this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
   }
 }

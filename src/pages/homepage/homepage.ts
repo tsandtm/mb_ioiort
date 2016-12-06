@@ -1,10 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, LoadingController, Nav, } from 'ionic-angular';
 import { TinTucPage } from '../tintuc/tintuc';
-import { WebsService } from '../shared/website.service';
-import { UserWebService } from '../shared/user_website.service';
-import { IWeb } from '../shared/website.model';
-import { ChuyenMucPage } from '../chuyenmuc/chuyenmuc';
+import { WebsService } from '../shared/services/website.service';
+import { UserWebService } from '../shared/services/user_website.service';
+import { IWeb } from '../shared/models/website.model';
 
 @Component({
     selector: 'page-home',
@@ -21,13 +20,8 @@ export class HomePage {
     public start: number = 12;
     public click: boolean = false;
     index: number;
-    pages: Array<{ title: string, component: any }>;
     constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController, private userWebSite: UserWebService) {
-        this.pages = [
-            { title: 'Trang Chủ', component: HomePage },
-            { title: 'Chuyên mục', component: ChuyenMucPage },
-            { title: 'Tin Tức', component: TinTucPage }
-        ];
+        
     }
 
     ionViewDidLoad() {
@@ -35,12 +29,7 @@ export class HomePage {
 
     }
     ngOnInit(): void {
-        // this._webService.getListWebs() //lấy danh sách web dùng duyệt tin
-        //     .then(web => this.webs = web)
-        //     .catch(errorMessage => {
-        //         console.error(errorMessage.message)
-        //     });
-        this._webService.getList_user() //danh sach site user da chon
+              this._webService.getList_user() //danh sach site user da chon
             .then(web => {
                 this.webs2 = web;
                 this.count = this.webs2.length;
@@ -73,21 +62,14 @@ export class HomePage {
 
 
     nextToPage() {
-        let loader = this.loadingCtrl.create({
-            content: "Vui lòng chờ...",
-            duration: 500
-        })
-        loader.present();
+        this._webService.ShowLoading("Vui lòng chờ")
         this.navCtrl.push(TinTucPage);
     }
 
     chon(id: number, index: number) {
-        let i = this.webs1.findIndex(i => {
-            if (i.IDDanhMucSite === id)
-                return true;
-            else
-                return false;
-        })
+        let i = this.webs1.findIndex(i => 
+            (i.IDDanhMucSite === id)? true:  false
+        )
         let web = this.webs1[i];
         
         console.log('tin dang chon: ' + web.chontin);
@@ -135,11 +117,6 @@ export class HomePage {
                     console.error('Error: ', error);
                 })
         }
-        //  this._webService.getList_user() //danh sach site user da chon
-        //     .then(web => {
-        //         this.webs2 = web;
-        //         this.count = this.webs2.length;
-        //     })
     }
 
     dschon(): void {
@@ -153,12 +130,8 @@ export class HomePage {
         } else {
             console.log('hien tai 3: ' + this.click);
             this.LoadList()
-
-
-
         }
     }
-
 
     LoadList() {
         this._webService.getWebs(0)
@@ -186,6 +159,4 @@ export class HomePage {
         // we wouldn't want the back button to show in this scenario
         this.nav.setRoot(page.component);
     }
-
-
 }

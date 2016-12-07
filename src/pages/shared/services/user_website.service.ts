@@ -4,12 +4,16 @@ import 'rxjs'
 import 'rxjs/add/operator/toPromise';
 
 import { User_Web } from '../models/user_website.model';
+
+import { ServiceBase } from './service.base';
 import { url } from '../variables';
 @Injectable()
-export class UserWebService {
+export class UserWebService extends ServiceBase  {
     user_webs: User_Web[];
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+        super();
+     }
 
     public createUserWebSite(idUser: number, idDanhMuc: number, createdDate: Date): Promise<User_Web> {
         let user_web = new User_Web();
@@ -26,6 +30,8 @@ export class UserWebService {
     }
 
     public deleteUserWebSite(idUser: any, idDanhMuc: any): Promise<boolean> {
+
+   
         return this.http.delete(`${url}/userwebsite?idUser=${idUser}&idDanhMuc=${idDanhMuc}`)
             .toPromise()
             .then(() => true)

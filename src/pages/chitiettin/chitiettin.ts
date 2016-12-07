@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NewsService } from '../shared/services/news.service';
 import { NavController, NavParams } from 'ionic-angular';
 
+
 import { INews } from '../shared/models/news.model';
 
 @Component({
@@ -22,7 +23,7 @@ export class ChiTietTinPage implements OnInit {
     start: number = 1;
     like: boolean;
     SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
-
+    IDuser:number
     mySlideOptions = {
         initialSlide: 1,
         loop: true
@@ -31,6 +32,7 @@ export class ChiTietTinPage implements OnInit {
     constructor(private _newsService: NewsService, public navCtrl: NavController, public navParams: NavParams) {
         this.nnew = this.navParams.get('news');
         this.index = this.navParams.get('index');
+        this.IDuser = this.navParams.get('IDuser');
         console.log("news: ", this.nnew);
         console.log("index: ", this.index);
     }
@@ -55,27 +57,25 @@ export class ChiTietTinPage implements OnInit {
         this.like = !this.like
         if (this.like) {
             this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
-            this._newsService.themtin(this.nnew[this.index].id)
+            this._newsService.themtin(this.nnew[this.index].id,this.IDuser)
                 .then(result => {
                 })
                 .catch(error => {
-                    alert('Loi' + error.message);
+                    console.log('Loi' + error.message);
                 })
 
         } else {
             this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
-            this._newsService.xoatinquantam(this.nnew[this.index].id)
+            this._newsService.xoatinquantam(this.nnew[this.index].id,this.IDuser)
                 .then(result => {
                     console.log('Da xoa')
                 })
                 .catch(error => {
-                    alert('Loi' + error.message);
+                     console.log('Loi' + error.message);
                 })
         }
 
     }
-
-
 
     onLoad(event) {
         this.link = event
@@ -85,7 +85,7 @@ export class ChiTietTinPage implements OnInit {
         else
             this.spinner = false;
 
-        this._newsService.tinquantam(this.nnew[this.index].id)
+        this._newsService.tinquantam(this.IDuser,0,this.nnew[this.index].id)
             .then(nw => {
 
                 nw.length > 0 ? this.like = !this.like : this.like

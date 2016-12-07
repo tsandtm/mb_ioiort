@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavController, LoadingController, ModalController, ToastController } from 'ionic-angular';
-
-import { Platform } from 'ionic-angular';
+import { NavController, LoadingController, ModalController, ToastController ,NavParams, Platform } from 'ionic-angular';
 
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
@@ -22,31 +20,37 @@ export class TinTucPage implements OnInit {
     rootchitiet: any = ChiTietTinPage;
     newstinmoi: INews[];
     newstinnoibat: INews[] = [];
+    news: INews[];
     public start: number = 6;
     public start2: number = 6;
-    constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
-    }
+    arr: any[];
+    IDuser: number;
+    constructor(private _newservice: NewsService,public navParams: NavParams ,platform: Platform, public navCtrl: NavController, private storage: Storage) {
+        this.IDuser = this.navParams.get('id');        
+        console.log("id tin tuc: "+ this.IDuser);
+
+
+     }
 
 
     trove = () => {
-        this.navCtrl.push(HomePage)
+        this.navCtrl.push(HomePage,{id:this.IDuser})
     }
- 
-    lktindaxoa(characterNum) {
-
-        let modal = this.modalCtrl.create(LktinxoaPage, characterNum);
-        modal.present();
+    // lktindaxoa=()=>{
+    //   this.navCtrl.push(LktinxoaPage)
+    // }
+    lktindaxoa=()=>{
+        this.navCtrl.push(LktinxoaPage,{id:this.IDuser});
     }
     lktinquantam() {
-
-        this.navCtrl.push(TinquantamPage);
+        this.navCtrl.push(TinquantamPage,{id:this.IDuser});
     }
     dangxuat = () => {
         this.storage.clear()
         this.navCtrl.push(LoginPage)
     }
     ngOnInit(): void {
-        this._newservice.getWebs(0)
+        this._newservice.getWebs(this.IDuser,0)
             .then(nw => {
                 nw.forEach(value => {
                     value.ChuaXem = true;
@@ -61,7 +65,7 @@ export class TinTucPage implements OnInit {
 
     doInfinite(infiniteScroll) {
         setTimeout(() => {
-            this._newservice.getWebs(this.start)
+            this._newservice.getWebs(this.IDuser,this.start)
                 .then(
                 (res) => {
                     if (res.length !== 0) {
@@ -70,6 +74,7 @@ export class TinTucPage implements OnInit {
                             x.Undo = false;
                             this.newstinmoi.push(x);
                         }
+
                         this.start += 6;
                     }
                 })
@@ -82,7 +87,7 @@ export class TinTucPage implements OnInit {
 
     doInfinite2 = (infiniteScroll) => {
         setTimeout(() => {
-            this._newservice.tinnoibat(this.start2)
+            this._newservice.tinnoibat(this.IDuser,this.start2)
                 .then(
                 (res) => {
                     console.log(res)
@@ -108,7 +113,7 @@ export class TinTucPage implements OnInit {
 
     LoadTinMoi() {
         //Tin Mới hiện thông tin nhưng trang chưa xem
-        this._newservice.getWebs(0)
+        this._newservice.getWebs(this.IDuser,0)
             .then(nw => {
                 nw.forEach(value => {
                     value.ChuaXem = true;
@@ -123,7 +128,7 @@ export class TinTucPage implements OnInit {
 
     LoadTinNoiBat() {
         // Tin nổi bật hiện tất cả các tin từ tin đã xóa xếp theo thứ tự số lượng xem
-        this._newservice.tinnoibat(0)
+        this._newservice.tinnoibat(this.IDuser,0)
             .then(nw => {
                 console.log(nw)
                 nw.forEach(value => {
@@ -136,4 +141,5 @@ export class TinTucPage implements OnInit {
                 console.error(errorMessage.message)
             })
     }
+
 }

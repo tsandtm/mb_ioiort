@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,NavParams } from 'ionic-angular';
+
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
@@ -59,5 +60,6 @@ export class TinnoibatPage {
     ionViewDidLoad() {
         console.log('Hello TinnoibatPage Page');
     }
+
 
 }

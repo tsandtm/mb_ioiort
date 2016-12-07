@@ -1,6 +1,7 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController, Loading } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
+
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
 /*
@@ -62,7 +63,6 @@ import { HomePage } from '../homepage/homepage';
   ]
 })
 export class LoginPage {
-  loader: Loading
   logoState: any = "in";
   cloudState: any = "in";
   loginState: any = "in";
@@ -70,7 +70,10 @@ export class LoginPage {
   username: string;
   password: string;
   save: boolean = false;
+  IDuser: number;
+  
   constructor(public navCtrl: NavController, private service: LoginService, private storage: Storage) {
+ 
   }
 
 
@@ -83,14 +86,15 @@ export class LoginPage {
         default: 
       }
       console.log(`${this.username}${this.password}`)
-      
+
       if (this.username && this.password)
         this.service.LoginToSever(this.username, this.password)
           .then(result => {
-            if (result == 'OK') {
-              console.log(result)
+            if (result !== 'Khong Co') {
               this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
-              this.navCtrl.push(HomePage);
+              this.IDuser = result._body;
+              console.log("id user:" + this.IDuser);
+              this.navCtrl.push(HomePage, {id:this.IDuser});
             }
             else {
               console.log(result)
@@ -107,16 +111,18 @@ export class LoginPage {
   Login = () => {
     this.service.LoginToSever(this.username, this.password)
       .then(result => {
-        if (result == 'OK') {
-          console.log(result)
-          this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
+        if (result !== 'Khong Co') {
+          console.log("id " + result._body);
+          this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' });
+          this.IDuser = result._body;
+          console.log("id user:" + this.IDuser);
           if (this.save) {
             this.storage.set("TaiKhoan", this.username);
             this.storage.set("Password", this.password);
             this.storage.set("Checkbox", this.save);
-            this.navCtrl.push(HomePage);
+            this.navCtrl.push(HomePage,{id:this.IDuser});
           } else {
-            this.navCtrl.push(HomePage);
+            this.navCtrl.push(HomePage, {id:this.IDuser});
           }
         }
 

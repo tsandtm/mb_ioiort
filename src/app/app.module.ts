@@ -17,6 +17,7 @@ import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 import { TinmoiPage } from '../pages/tinmoi/tinmoi'
+import { url } from '../pages/shared/variables';
 
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 export class MyHammerConfig extends HammerGestureConfig {

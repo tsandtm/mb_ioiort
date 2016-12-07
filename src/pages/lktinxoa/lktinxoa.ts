@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
+
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
 import { TinTucPage } from '../tintuc/tintuc'
@@ -15,10 +16,15 @@ import { TinTucPage } from '../tintuc/tintuc'
 export class LktinxoaPage {
   new: INews[];
   public start: number = 6;
-  constructor(public navCtrl: NavController, private _newservice: NewsService) { }
+
+  IDuser: number;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _newservice: NewsService) {
+    this.IDuser = this.navParams.get('id');
+
+  }
 
   ngOnInit(): void {
-    this._newservice.lktindaxoa(0)
+    this._newservice.lktindaxoa(this.IDuser, 0)
       .then(news => this.new = news)
       .catch(errorMessage => {
         console.log(errorMessage.message)
@@ -27,7 +33,7 @@ export class LktinxoaPage {
   doInfinite(infiniteScroll) {
     console.log('Begin async operation');
     setTimeout(() => {
-      this._newservice.getWebs(this.start)
+      this._newservice.lktindaxoa(this.IDuser, this.start)
         .then(
         (res) => {
           if (res.length !== 0) {
@@ -40,20 +46,22 @@ export class LktinxoaPage {
         .catch(errorMessage => {
           console.error(errorMessage.message)
         });
-      console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 2000);
   }
+
   boxoa = (news: INews, i) => {
-    this._newservice.boxoa(news.id)
+    this._newservice.boxoa(news.id, this.IDuser)
       .then(result => {
-        console.log('Da xoa')
-        this.new.splice(i, 1)
+        console.log('Da xoa');
+        this.new.splice(i, 1);
       })
       .catch(error => {
         alert('Loi' + error.message);
       })
   }
+
+
   trove = () => {
     this.navCtrl.push(TinTucPage)
   }

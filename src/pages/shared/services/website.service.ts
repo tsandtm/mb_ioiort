@@ -13,13 +13,14 @@ import { LoadingController, ToastController } from 'ionic-angular';
 export class WebsService extends ServiceBase {
     webs: IWeb[];
     private limit: number = 12;
-    constructor(private _http: Http,private toast:ToastController,private load:LoadingController) {
-        super(toast,load)
+    constructor(private _http: Http, private toast: ToastController, private load: LoadingController) {
+        super(toast, load)
     }
 
     getWebs(start: number): Promise<IWeb[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/website?limit=${this.limit}&skip=${start}`)
+            this._http.get(`${url}/website?limit=${this.limit}&offset=${start}`)
+
                 .map(res => res.json())
                 .subscribe(data => {
                     resolve(data);
@@ -27,16 +28,13 @@ export class WebsService extends ServiceBase {
         });
     }
 
-    getList_user(): Promise<IWeb[]> {
-        return this._http.get(`${url}/getWebs`)
+
+    getList_user(id): Promise<IWeb[]> {
+        return this._http.get(`${url}/getWebs/`+id)
             .toPromise()
             .then(response => response.json() as IWeb[])
             .catch(this.handleError);
     }
 
-    getWeb(id: number): Promise<IWeb> {
-        return this.getWebs(0)
-            .then(inew => inew.find(p => p.IDDanhMucSite === id))
-            .catch(this.handleError);
-    }
+
 }

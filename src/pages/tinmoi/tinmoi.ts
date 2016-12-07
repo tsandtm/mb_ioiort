@@ -14,16 +14,15 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
     templateUrl: 'tinmoi.html'
 })
 export class TinmoiPage {
-    @Input()
-    news: INews[];
-    @Input()
-    newtinnoibat: INews[];
+    @Input() news: INews[];
+    @Input() newtinnoibat: INews[];
+    @Input() IDuser: number;
     arr: INews[];
     TimeOut: INews[] = [];
     constructor(public navCtrl: NavController, private _newservice: NewsService) { }
 
     ionViewDidLoad() {
-      console.log("Tin tức Pages")
+        console.log("Tin tức Pages")
     }
 
     del = (news: INews, i, arr) => {
@@ -32,7 +31,7 @@ export class TinmoiPage {
         console.log(arr[i].Undo)
 
         this.arr[index].TimeOut = setTimeout(() => {
-            this._newservice.xoatin(news.id)
+            this._newservice.xoatin(this.IDuser, news.id)
                 .then(result => {
                     console.log(`Đã xóa vị trí: ${i} Tin: ${arr[i].TieuDe}`)
                     this.arr.splice(index, 1);
@@ -53,7 +52,7 @@ export class TinmoiPage {
 
     qt = (news: INews) => {
 
-        this._newservice.themtin(news.id)
+        this._newservice.themtin(this.IDuser, news.id)
             .then(result => {
                 this._newservice.ShowToastOK(`Đã thêm`)
             })
@@ -63,7 +62,7 @@ export class TinmoiPage {
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(news.id)
+        this._newservice.daxem(this.IDuser, news.id)
             .then(result => {
             })
             .catch(error => {
@@ -75,7 +74,7 @@ export class TinmoiPage {
         console.log("index " + index);
         this.arr = arr
         this.arr[index].ChuaXem = false;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr });
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr, IDuser: this.IDuser });
     }
 
     Timvitri = (arr: INews[], idcantim) => {

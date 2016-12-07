@@ -16,36 +16,33 @@ export class NewsService extends ServiceBase {
     }
 
     /**api load tat ca cac tin moi tru nhung tin minh da xoa */
-    getWebs(start: number): Promise<INews[]> {
+    getWebs(id, start: number): Promise<INews[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/tintuc?limit=${this.limit}&offset=${start}`)
+            this._http.get(`${url}/tintuc/${id}?limit=${this.limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
-
                     resolve(data);
-
                 });
         });
     }
 
 
     /**key api cua tin quan tam lay tu server */
-    tinquantam(id?: number): Promise<INews[]> {
 
-
+    tinquantam(id, start: number, IDUser?): Promise<INews[]> {
         return new Promise(resolve => {
-            this._http.get(`${(id) ? `${url}/tinquantam/${id}` : `${url}/tinquantam/`}`)
+            this._http.get(`${!IDUser ? ` ${url}/tinquantam/${id}?limit=${this.limit}&offset=${start}` :
+                ` ${url}/tinquantam/${id}/${IDUser}?limit=${this.limit}&offset=${start}`}   `)
                 .map(res => res.json())
                 .subscribe(data => {
-
                     resolve(data);
-
                 });
         });
     }
     //xoa tin quan tam minh` moi them vao
-    public xoatinquantam(id: number): Promise<number> {
-        return this._http.post(`${url}/api/xoa`, { id: id }).toPromise()
+
+    public xoatinquantam(id: number, IDUser): Promise<number> {
+        return this._http.post(`${url}/xoa`, { id: id, IDUser: IDUser }).toPromise()
             .then(result => id)
             .catch(error => {
                 console.error('Error: ', error);
@@ -53,18 +50,21 @@ export class NewsService extends ServiceBase {
             });
     }
     //load api tin noi bat 
-    tinnoibat(start: number): Promise<INews[]> {
+
+    tinnoibat(id, start: number): Promise<INews[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/tinnoibat?limit=${this.limit}&offset=${start}`)
+            this._http.get(`${url}/tinnoibat/${id}?limit=${this.limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
                     resolve(data);
+
                 });
         });
     }
     //bo xoa nhung tin minh moi xoa luu trong lich su xoa
-    public boxoa(id: number): Promise<number> {
-        return this._http.post(`${url}/boxoa`, { id: id }).toPromise()
+
+    public boxoa(id: number, IDUser): Promise<number> {
+        return this._http.post(`${url}/boxoa`, { id: id, IDUser: IDUser }).toPromise()
             .then(result => id)
             .catch(error => {
                 console.error('Error: ', error);
@@ -72,42 +72,36 @@ export class NewsService extends ServiceBase {
             });
     }
     //api liet ke nhung tin minh moi xoa xong
-    lktindaxoa(start: number): Promise<INews[]> {
+
+    lktindaxoa(id, start: number): Promise<INews[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/tindaxoa?limit=${this.limit}&offset=${start}`)
+            this._http.get(`${url}/tindaxoa/${id}?limit=${this.limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
-
                     resolve(data);
-
                 });
         });
     }
-    /**
-     * Xóa array đã xem
-     */
-    public daxem(id: number): Promise<number> {
-        return this._http.post(`${url}/daxem`, { id: id }).toPromise()
+    public daxem(id: number, IDUser): Promise<number> {
+        return this._http.post(`${url}/daxem`, { id: id, IDUser: IDUser }).toPromise()
             .then(result => id)
             .catch(error => {
                 console.error('Error: ', error);
                 return Promise.reject(error);
             });
     }
-    /**
-     * Xóa array đã xem
-     */
-    public themtin(id: number): Promise<number> {
 
-        return this._http.post(`${url}/tintuc`, { id: id }).toPromise()
+    public themtin(id: number, IDUser): Promise<number> {
+        return this._http.post(`${url}/tintuc`, { id: id, IDUser: IDUser }).toPromise()
             .then(result => id)
             .catch(error => {
                 console.error('Error: ', error);
                 return Promise.reject(error);
             });
     }
-    public xoatin(id: number): Promise<number> {
-        return this._http.post(`${url}/xoatin`, { id: id }).toPromise()
+
+    public xoatin(id: number, IDUser): Promise<number> {
+        return this._http.post(`${url}/xoatin`, { id: id, IDUser: IDUser }).toPromise()
             .then(result => id)
             .catch(error => {
                 console.error('Error: ', error);

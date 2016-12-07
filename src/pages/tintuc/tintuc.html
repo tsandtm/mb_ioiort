@@ -1,8 +1,7 @@
 <ion-header class="body">
-
     <ion-toolbar no-border-top>
         <ion-segment [(ngModel)]="t">
-            <ion-segment-button value="tinmoi" (ionSelect) ="LoadTinMoi()">
+            <ion-segment-button value="tinmoi" (ionSelect)="LoadTinMoi()">
                 Tin mới
             </ion-segment-button>
             <ion-segment-button value="tinnoibat" (ionSelect)="LoadTinNoiBat()">
@@ -12,13 +11,10 @@
     </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="body">
-
     <div [ngSwitch]="t">
         <ion-list *ngSwitchCase="'tinmoi'">
-            <page-tinmoi [news] = "newstinmoi"></page-tinmoi>
-
+            <page-tinmoi [news]="newstinmoi" [IDuser]="IDuser"></page-tinmoi>
             <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
                 <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
                 </ion-infinite-scroll-content>
@@ -29,16 +25,17 @@
         <ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">
 
             <!--<page-tinnoibat [new]="newstinnoibat"></page-tinnoibat>-->
-            <page-tinmoi [newtinnoibat] = "newstinnoibat"></page-tinmoi>
+            <page-tinmoi [newtinnoibat]="newstinnoibat" [IDuser]="IDuser"></page-tinmoi>
             <ion-infinite-scroll (ionInfinite)="doInfinite2($event)">
                 <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
                 </ion-infinite-scroll-content>
             </ion-infinite-scroll>
+
         </ion-list>
 
     </div>
     <ion-fab bottom left #fab4>
-        <button ion-fab color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
+        <button ion-fab color="primary" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
         <ion-fab-list side="top">
             <button ion-fab (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
             <button ion-fab (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
@@ -46,7 +43,6 @@
             <button ion-fab color="light" (click)='lktinquantam()'> <ion-icon name="heart"></ion-icon></button>
         </ion-fab-list>
     </ion-fab>
-
 </ion-content>
 
 <style>

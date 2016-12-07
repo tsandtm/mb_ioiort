@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, LoadingController, Nav, } from 'ionic-angular';
+import { NavController, Nav, NavParams } from 'ionic-angular';
 import { TinTucPage } from '../tintuc/tintuc';
 import { WebsService } from '../shared/services/website.service';
 import { UserWebService } from '../shared/services/user_website.service';
@@ -20,16 +20,17 @@ export class HomePage {
     public start: number = 12;
     public click: boolean = false;
     index: number;
-    constructor(private _webService: WebsService, public navCtrl: NavController, public loadingCtrl: LoadingController, private userWebSite: UserWebService) {
-        
+
+    IDuser: number;
+    constructor(private _webService: WebsService, public navParams: NavParams, public navCtrl: NavController, private userWebSite: UserWebService) {
+        this.IDuser = this.navParams.get('id');
     }
 
     ionViewDidLoad() {
-
-
     }
     ngOnInit(): void {
-              this._webService.getList_user() //danh sach site user da chon
+
+        this._webService.getList_user(this.IDuser) //danh sach site user da chon
             .then(web => {
                 this.webs2 = web;
                 this.count = this.webs2.length;
@@ -37,8 +38,12 @@ export class HomePage {
             .catch(errorMessage => {
                 console.error(errorMessage.message)
             });
-        this.LoadList()
-
+        if (this.count > 0) {
+            this.navCtrl.push(TinTucPage, { id: this.IDuser });
+            
+        } else {
+            this.LoadList()
+        }
     }
 
     doInfinite(infiniteScroll) {
@@ -47,8 +52,17 @@ export class HomePage {
                 .then(
                 (res) => {
                     if (res.length !== 0) {
-                        for (let x of res)
+                        for (var j = 0; j < res.length; j++) {
+                            var x = res[j];
+                            for (var i = 0; i < this.webs2.length; i++) {
+                                let web2 = this.webs2[i];
+                                if (x.IDDanhMucSite == web2.IDDanhMucSite) {
+                                    web2.chontin = true;
+                                    x.chontin = true;
+                                }
+                            }
                             this.webs1.push(x);
+                        }
                         // this.webs1.concat(res);
                         this.start += 12;
                     }
@@ -63,7 +77,8 @@ export class HomePage {
 
     nextToPage() {
         this._webService.ShowLoading("Vui lòng chờ")
-        this.navCtrl.push(TinTucPage);
+     
+        this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
 
     chon(id: number, index: number) {
@@ -71,7 +86,7 @@ export class HomePage {
             (i.IDDanhMucSite === id)? true:  false
         )
         let web = this.webs1[i];
-        
+
         console.log('tin dang chon: ' + web.chontin);
 
         if (!web.chontin) {
@@ -79,7 +94,7 @@ export class HomePage {
             console.log('id: ' + id);
             console.log('index: ' + i);
 
-            this.userWebSite.createUserWebSite(1, id, new Date())
+            this.userWebSite.createUserWebSite(this.IDuser, id, new Date())
                 .then(() => {
                     console.log('da them');
                     web.chontin = true;
@@ -87,7 +102,7 @@ export class HomePage {
                     this.count++;
                     console.log('chon ' + web.chontin);
                     this.webs2.push(web);
-                    
+
                 })
                 .catch(error => {
                     console.error('Error: ', error);
@@ -97,7 +112,7 @@ export class HomePage {
             console.log('id: ' + id);
             console.log('index: ' + index);
 
-            this.userWebSite.deleteUserWebSite(1, id)
+            this.userWebSite.deleteUserWebSite(this.IDuser, id)
                 .then(() => {
                     console.log('da xoa');
                     web.chontin = false;
@@ -111,7 +126,7 @@ export class HomePage {
                     })
                     this.webs2.splice(i, 1)
                     console.log('chon ' + web.chontin);
-                    
+
                 })
                 .catch(error => {
                     console.error('Error: ', error);
@@ -122,11 +137,9 @@ export class HomePage {
     dschon(): void {
         this.click = !this.click;
         console.log('hien tai 1: ' + this.click);
-
         if (this.click) {
             console.log('hien tai 2: ' + this.click);
             this.webs1 = this.webs2;
-
         } else {
             console.log('hien tai 3: ' + this.click);
             this.LoadList()
@@ -137,14 +150,17 @@ export class HomePage {
         this._webService.getWebs(0)
             .then(web => {
                 this.webs1 = web;
-                for (var i = 0; i < this.webs2.length; i++) {
-                    let web2 = this.webs2[i];
-                    for (var j = 0; j < this.webs1.length; j++) {
-                        let web1 = this.webs1[j];
-                        if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
-                            web1.chontin = true;
-                            web2.chontin = true;
-                            this.webs1[j] = web1;
+                
+                if (this.webs2 != null) {
+                    for (var i = 0; i < this.webs2.length; i++) {
+                        let web2 = this.webs2[i];
+                        for (var j = 0; j < this.webs1.length; j++) {
+                            let web1 = this.webs1[j];
+                            if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
+                                web1.chontin = true;
+                                web2.chontin = true;
+                                this.webs1[j] = web1;
+                            }
                         }
                     }
                 }

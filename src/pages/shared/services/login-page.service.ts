@@ -14,13 +14,14 @@ export class LoginService extends ServiceBase {
     let U: IUser = {
       TaiKhoan : user,
       Password : pass
+
     }
     return this._http.post(`http://localhost:8080/tintuc/login`, U)
       .toPromise()
       .then(respone => {
         if (respone.status == 200) {
-          console.log();
-          return `OK`;
+          console.log("id "+ respone);
+          return respone;
         }
         if (respone.status == 400)
           return `Khong Co`

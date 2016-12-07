@@ -1,10 +1,4 @@
 <ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar>
-      
-    </ion-toolbar>
-  </ion-header>
-
   <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
@@ -15,8 +9,7 @@
 </ion-menu>
 
 <ion-header>
-
-  <ion-navbar color="primary" class="header" hideBackButton= true>
+  <ion-navbar color="primary" class="header" hideBackButton=true>
     <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter'></ion-searchbar>
   </ion-navbar>
 </ion-header>
@@ -37,6 +30,7 @@
   </ion-infinite-scroll>
 
 </ion-content>
+
 <ion-footer>
   <ion-toolbar no-border class="tool-home">
     <div style="background-color: #387ef5;
@@ -47,7 +41,6 @@
       </div>
       <ion-buttons>
         <button ion-button (click)='nextToPage()'>Tiếp Theo <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
-
 </button>
       </ion-buttons>
     </div>

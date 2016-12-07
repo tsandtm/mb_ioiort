@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
-import { LoginPage } from '../pages/login-page/login-page';
-import {HomePage} from '../pages/homepage/homepage';
+import { HomePage } from '../pages/homepage/homepage';
 
 
 @Component({

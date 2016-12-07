@@ -20,12 +20,16 @@
             <div *ngFor="let n of news,let i = index" [class.opi]="n.ChuaXem">
                 <ion-card>
                     <ion-item-sliding>
-                        <ion-item (click)="daxem(n)" (click)="goDetail($event,i)">
+                        <ion-item (click)="daxem(n)" (click)="goDetail($event,i)" *ngIf="!n.Undo">
                             <ion-thumbnail item-left>
                                 <img [src]=n.URLThumbImage class="img">
                             </ion-thumbnail>
                             <strong>{{n.TieuDe}}</strong>
                             <br/> {{n.ThoiGianDangTin}}
+                        </ion-item>
+
+                        <ion-item *ngIf="n.Undo" (click)="Undo(n,i)">
+                            <strong>Undo</strong>
                         </ion-item>
 
                         <ion-item-options (ionSwipe)="del(n,i)" side="right">

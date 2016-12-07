@@ -1,7 +1,7 @@
 
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NewsService } from '../shared/services/news.service';
-import { NavController, NavParams, Slides } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { INews } from '../shared/models/news.model';
 

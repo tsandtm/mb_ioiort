@@ -1,4 +1,4 @@
-export interface INews {
+export interface INews{
         id?:number;
         IDDanhMucSite?:number;
         TieuDe?:string;
@@ -12,4 +12,6 @@ export interface INews {
         ArrayDaXoa?:[number];
         ArrayQuanTam?:number;
         ChuaXem?:boolean;
+        Undo?:boolean;
+        TimeOut:number;
 }

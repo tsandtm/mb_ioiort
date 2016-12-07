@@ -1,5 +1,5 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController, LoadingController, Loading } from 'ionic-angular';
+import { NavController, Loading } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
@@ -80,7 +80,7 @@ export class LoginPage {
         case "TaiKhoan": this.username = value; break;
         case "Password": this.password = value; break;
         case "Checkbox": this.save = value; break
-        default: break;
+        default: 
       }
       console.log(`${this.username}${this.password}`)
       

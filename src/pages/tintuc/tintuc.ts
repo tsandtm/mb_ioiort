@@ -24,7 +24,6 @@ export class TinTucPage implements OnInit {
     newstinnoibat: INews[] = [];
     public start: number = 6;
     public start2: number = 6;
-    arr: any[];
     constructor(private _newservice: NewsService, platform: Platform, public navCtrl: NavController, public loadingCtrl: LoadingController, private storage: Storage, public modalCtrl: ModalController, public toastCtrl: ToastController) {
     }
 
@@ -54,6 +53,7 @@ export class TinTucPage implements OnInit {
             .then(nw => {
                 nw.forEach(value => {
                     value.ChuaXem = true;
+                    value.Undo = false;
                 })
                 return this.news = nw;
             })
@@ -85,6 +85,7 @@ export class TinTucPage implements OnInit {
                         for (let x of res) {
                             this.news.push(x);
                             x.ChuaXem = true
+                            x.Undo = false;
                         }
                         this.start += 6;
                     }
@@ -105,6 +106,7 @@ export class TinTucPage implements OnInit {
                     if (res.length !== 0) {
                         for (let x of res) {
                             (x.ArrayDaXem) ? x.ChuaXem = false : x.ChuaXem = true;
+                            x.Undo = false;
                             this.newstinnoibat.push(x);
                         }
                         this.start2 += 6;
@@ -125,19 +127,36 @@ export class TinTucPage implements OnInit {
      * Xóa
      */
     del = (news: INews, i) => {
-        this._newservice.xoatin(news.id)
-            .then(result => {
-                console.log('Da xoa')
-                this.news.splice(i, 1)
-                this._newservice.ShowToastOK("Đã xóa xong")
-            })
-            .catch(error => {
-                alert('Loi' + error.message);
-            })
+        this.news[i].Undo = true;
+        console.log(this.news[i].Undo)
+
+        this.news[i].TimeOut = setTimeout(() => {
+            this._newservice.xoatin(news.id)
+                .then(result => {
+                    console.log(`Đã xóa vị trí: ${i} Tin: ${this.news[i].TieuDe}`)
+
+                    this.news.splice(this.news.findIndex(value => {
+                        if (value.id === news.id)
+                            return true
+                        return false
+                    }), 1)
+
+                    this._newservice.ShowToastOK("Đã xóa xong")
+                })
+                .catch(error => {
+                    alert('Loi' + error.message);
+                })
+        }, 5000);
+
+    }
+
+    Undo = (news: INews, i: number) => {
+        this.news[i].Undo = false;
+        clearTimeout(this.news[i].TimeOut);
     }
 
     qt = (news: INews) => {
-        
+
         this._newservice.themtin(news.id)
             .then(result => {
                 this._newservice.ShowToastOK(`Đã thêm`)

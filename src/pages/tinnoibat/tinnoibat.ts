@@ -16,48 +16,45 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
 })
 export class TinnoibatPage {
     @Input()
-    new: INews[];
-    public start: number = 6;
-    rootchitiet: any = ChiTietTinPage;
-
+    newtinnoibat: INews[];
     constructor(public navCtrl: NavController, private _newservice: NewsService) { }
 
     ngOnInit(): void {
         //
     }
 
-    del = (news: INews, i) => {
-        this._newservice.xoatin(news.id)
-            .then(result => {
-                console.log('Da xoa')
-                this.new.splice(i, 1)
-            })
-            .catch(error => {
-                alert('Loi' + error.message);
-            })
-    }
-    qt = (news: INews) => {
-        this._newservice.themtin(news.id)
-            .then(result => {
-            })
-            .catch(error => {
-                alert('Loi' + error.message);
-            })
-    }
-    tinnoibat($event, index) {
-        this.new[index].ChuaXem = false;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
-    }
+    // del = (news: INews, i) => {
+    //     this._newservice.xoatin(news.id)
+    //         .then(result => {
+    //             console.log('Da xoa')
+    //             this.newtinnoibat.splice(i, 1)
+    //         })
+    //         .catch(error => {
+    //             alert('Loi' + error.message);
+    //         })
+    // }
+    // qt = (news: INews) => {
+    //     this._newservice.themtin(news.id)
+    //         .then(result => {
+    //         })
+    //         .catch(error => {
+    //             alert('Loi' + error.message);
+    //         })
+    // }
+    // tinnoibat($event, index) {
+    //     this.newtinnoibat[index].ChuaXem = false;
+    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.newtinnoibat });
+    // }
 
-    daxem = (news: INews) => {
-        this._newservice.daxem(news.id)
-            .then(result => {
+    // daxem = (news: INews) => {
+    //     this._newservice.daxem(news.id)
+    //         .then(result => {
 
-            })
-            .catch(error => {
-                alert('Loi' + error.message);
-            })
-    }
+    //         })
+    //         .catch(error => {
+    //             alert('Loi' + error.message);
+    //         })
+    // }
 
     ionViewDidLoad() {
         console.log('Hello TinnoibatPage Page');

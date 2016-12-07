@@ -1,0 +1,77 @@
+.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+        border-color: #248f8f;
+}
+.segment-md .segment-button{
+     color:#145252;
+     font-weight: bold;
+     font-size: 13px;
+}
+
+.body {
+    background-color: #cccccc;
+
+    ion-item {
+        margin-bottom: 3px;
+    }
+    ion-row {
+        background-color: #248f8f;
+        ion-icon{
+            color: white;
+        }
+    }
+}
+.card-tin{
+    ion-card{
+            padding: 2px;
+        }
+}
+.ion-thumbnail{
+    img{
+        max-height:200%;
+    }
+}
+.tin-thumb {
+    img {
+        height: 100%;
+        width: 100%;
+    }
+    h3 {
+        font-size: 17px;
+        padding-left: 10px;
+        font-weight: bold;
+    }
+    p {
+        padding-left: 15px;
+        color: grey
+    }
+}
+
+.icons {
+    padding-left: 60px;
+}
+.card-md ion-card-content{
+    padding-top:0px;
+}
+.tin {
+    
+    p {
+        word-wrap: break-word;
+        color: grey
+    }
+}
+
+.menu1 {
+    height: auto;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.menu1 .searchbar-input {
+    width: 250px;
+}
+.opi {
+    .card-md {
+        border-color: brown;
+        border-style: solid;
+    }
+}

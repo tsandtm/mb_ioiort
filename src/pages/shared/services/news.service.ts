@@ -58,7 +58,6 @@ export class NewsService extends ServiceBase {
             this._http.get(`${url}/tinnoibat?limit=${this.limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
-                    console.log(data)
                     resolve(data);
                 });
         });

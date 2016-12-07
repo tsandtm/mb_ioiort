@@ -20,7 +20,7 @@ import { TinquantamPage } from '../tinquantam/tinquantam';
 export class TinTucPage implements OnInit {
     t: string = "tinmoi";
     rootchitiet: any = ChiTietTinPage;
-    news: INews[];
+    newstinmoi: INews[];
     newstinnoibat: INews[] = [];
     public start: number = 6;
     public start2: number = 6;
@@ -31,9 +31,7 @@ export class TinTucPage implements OnInit {
     trove = () => {
         this.navCtrl.push(HomePage)
     }
-    // lktindaxoa=()=>{
-    //   this.navCtrl.push(LktinxoaPage)
-    // }
+ 
     lktindaxoa(characterNum) {
 
         let modal = this.modalCtrl.create(LktinxoaPage, characterNum);
@@ -48,28 +46,13 @@ export class TinTucPage implements OnInit {
         this.navCtrl.push(LoginPage)
     }
     ngOnInit(): void {
-        //Tin Mới hiện thông tin nhưng trang chưa xem
         this._newservice.getWebs(0)
             .then(nw => {
                 nw.forEach(value => {
                     value.ChuaXem = true;
                     value.Undo = false;
                 })
-                return this.news = nw;
-            })
-            .catch(errorMessage => {
-                console.error(errorMessage.message)
-            })
-
-        // Tin nổi bật hiện tất cả các tin từ tin đã xóa xếp theo thứ tự số lượng xem
-        this._newservice.tinnoibat(0)
-            .then(nw => {
-                console.log(nw)
-                nw.forEach(value => {
-
-                    (value.ArrayDaXem) ? value.ChuaXem = false : value.ChuaXem = true
-                })
-                return this.newstinnoibat = nw;
+                return this.newstinmoi = nw;
             })
             .catch(errorMessage => {
                 console.error(errorMessage.message)
@@ -83,9 +66,9 @@ export class TinTucPage implements OnInit {
                 (res) => {
                     if (res.length !== 0) {
                         for (let x of res) {
-                            this.news.push(x);
                             x.ChuaXem = true
                             x.Undo = false;
+                            this.newstinmoi.push(x);
                         }
                         this.start += 6;
                     }
@@ -123,62 +106,34 @@ export class TinTucPage implements OnInit {
         this._newservice.ShowLoading('Loading...!')
     }
 
-    /**
-     * Xóa
-     */
-    del = (news: INews, i) => {
-        this.news[i].Undo = true;
-        console.log(this.news[i].Undo)
-
-        this.news[i].TimeOut = setTimeout(() => {
-            this._newservice.xoatin(news.id)
-                .then(result => {
-                    console.log(`Đã xóa vị trí: ${i} Tin: ${this.news[i].TieuDe}`)
-
-                    this.news.splice(this.news.findIndex(value => {
-                        if (value.id === news.id)
-                            return true
-                        return false
-                    }), 1)
-
-                    this._newservice.ShowToastOK("Đã xóa xong")
+    LoadTinMoi() {
+        //Tin Mới hiện thông tin nhưng trang chưa xem
+        this._newservice.getWebs(0)
+            .then(nw => {
+                nw.forEach(value => {
+                    value.ChuaXem = true;
+                    value.Undo = false;
                 })
-                .catch(error => {
-                    alert('Loi' + error.message);
+                return this.newstinmoi = nw;
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            })
+    }
+
+    LoadTinNoiBat() {
+        // Tin nổi bật hiện tất cả các tin từ tin đã xóa xếp theo thứ tự số lượng xem
+        this._newservice.tinnoibat(0)
+            .then(nw => {
+                console.log(nw)
+                nw.forEach(value => {
+                    (value.ArrayDaXem) ? value.ChuaXem = false : value.ChuaXem = true
+                    value.Undo = false;
                 })
-        }, 5000);
-
-    }
-
-    Undo = (news: INews, i: number) => {
-        this.news[i].Undo = false;
-        clearTimeout(this.news[i].TimeOut);
-    }
-
-    qt = (news: INews) => {
-
-        this._newservice.themtin(news.id)
-            .then(result => {
-                this._newservice.ShowToastOK(`Đã thêm`)
+                return this.newstinnoibat = nw;
             })
-            .catch(error => {
-                alert('Loi' + error.message);
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
             })
     }
-
-    daxem = (news: INews) => {
-        this._newservice.daxem(news.id)
-            .then(result => {
-            })
-            .catch(error => {
-                alert('Loi' + error.message);
-            })
-    }
-
-    goDetail($event, index) {
-        console.log("index " + index);
-        this.news[index].ChuaXem = false;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.news });
-    }
-
 }

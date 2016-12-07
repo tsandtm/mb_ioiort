@@ -16,6 +16,7 @@ import { TinnoibatPage } from '../pages/tinnoibat/tinnoibat';
 import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
+import { TinmoiPage } from '../pages/tinmoi/tinmoi'
 
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 export class MyHammerConfig extends HammerGestureConfig {
@@ -36,7 +37,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     TinnoibatPage,
     Safe,
     LktinxoaPage,
-    TinquantamPage
+    TinquantamPage,
+    TinmoiPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -50,7 +52,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     LoginPage,
     TinnoibatPage,
     LktinxoaPage,
-    TinquantamPage
+    TinquantamPage,
+    TinmoiPage
   ],
   providers: [
     WebsService,

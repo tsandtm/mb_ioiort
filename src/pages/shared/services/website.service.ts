@@ -10,14 +10,13 @@ import { url } from '../variables';
 export class WebsService extends ServiceBase{
     // private _newsUrl = 'api/json/news.json';
     webs: IWeb[];
-    private limit: number = 12;
     constructor(private _http: Http) { 
         super();
     }
 
-    getWebs(start: number): Promise<IWeb[]> {
+    getWebs(limit,start: number): Promise<IWeb[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/website?limit=${this.limit}&offset=${start}`)
+            this._http.get(`${url}/website?limit=${limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
                     resolve(data);

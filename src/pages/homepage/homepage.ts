@@ -47,12 +47,22 @@ export class HomePage {
 
     doInfinite(infiniteScroll) {
         setTimeout(() => {
-            this._webService.getWebs(this.start)
+            this._webService.getWebs(12, this.start)
                 .then(
                 (res) => {
                     if (res.length !== 0) {
-                        for (let x of res)
+                        for (var j = 0; j < res.length; j++) {
+                            var x = res[j];
+                            for (var i = 0; i < this.webs2.length; i++) {
+                                let web2 = this.webs2[i];
+                                if (x.IDDanhMucSite == web2.IDDanhMucSite) {
+                                    web2.chontin = true;
+                                    x.chontin = true;
+                                }
+                            }
                             this.webs1.push(x);
+                        }
+
                         // this.webs1.concat(res);
                         this.start += 12;
                     }
@@ -148,7 +158,7 @@ export class HomePage {
     }
 
     LoadList() {
-        this._webService.getWebs(0)
+        this._webService.getWebs(12, 0)
             .then(web => {
                 this.webs1 = web;
                 if (this.webs2 != null) {
@@ -164,7 +174,6 @@ export class HomePage {
                         }
                     }
                 }
-
             })
             .catch(errorMessage => {
                 console.error(errorMessage.message)

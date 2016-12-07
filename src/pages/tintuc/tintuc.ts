@@ -113,7 +113,7 @@ export class TinTucPage implements OnInit {
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(news.id)
+        this._newservice.daxem(news.id,this.IDuser)
             .then(result => {
 
             })

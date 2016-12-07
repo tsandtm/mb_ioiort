@@ -34,7 +34,7 @@ export class TinquantamPage {
       message: 'Đã xóa',
       duration: 200,
     });
-    this._newsService.xoatinquantam(news.id)
+    this._newsService.xoatinquantam(news.id,this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);

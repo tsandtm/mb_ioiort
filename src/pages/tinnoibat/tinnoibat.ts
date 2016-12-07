@@ -40,7 +40,7 @@ export class TinnoibatPage {
       // closeButtonText: 'Ok'
     });
 
-    this._newservice.xoatin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newservice.xoatin(news.id,this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
@@ -52,7 +52,7 @@ export class TinnoibatPage {
       })
   }
   qt = (news: INews) => {
-    this._newservice.themtin(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newservice.themtin(news.id,this.IDuser)
       .then(result => {
       })
       .catch(error => {

@@ -21,12 +21,7 @@ export class HomePage {
     public click: boolean = false;
     index: number;
     IDuser: number;
-    pages: Array<{ title: string, component: any }>;
     constructor(private _webService: WebsService, public navParams: NavParams, public navCtrl: NavController, public loadingCtrl: LoadingController, private userWebSite: UserWebService) {
-        this.pages = [
-            { title: 'Trang Chủ', component: HomePage },
-            { title: 'Tin Tức', component: TinTucPage }
-        ];
         this.IDuser = this.navParams.get('id');
     }
 

@@ -55,7 +55,7 @@ export class LktinxoaPage {
       // closeButtonText: 'Ok'
     });
 
-    this._newservice.boxoa(news.id, news.ArrayQuanTam, news.ArrayDaXoa)
+    this._newservice.boxoa(news.id,this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);

@@ -85,7 +85,7 @@ export class TinTucPage implements OnInit {
             message: 'Đã xóa',
             duration: 200,
         });
-        this._newservice.xoatin(this.IDuser, news.ArrayQuanTam, news.ArrayDaXoa)
+        this._newservice.xoatin(news.id,this.IDuser)
             .then(result => {
                 console.log('Da xoa');
                 this.news.splice(i, 1);
@@ -103,7 +103,7 @@ export class TinTucPage implements OnInit {
             showCloseButton: true,
             closeButtonText: 'Ok'
         });
-        this._newservice.themtin(this.IDuser, news.ArrayQuanTam, news.ArrayDaXoa)
+        this._newservice.themtin(news.id,this.IDuser)
             .then(result => {
             })
             .catch(error => {
@@ -113,7 +113,7 @@ export class TinTucPage implements OnInit {
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(this.IDuser, news.ArrayQuanTam, news.ArrayDaXoa)
+        this._newservice.daxem(news.id)
             .then(result => {
 
             })

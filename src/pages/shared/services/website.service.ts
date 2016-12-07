@@ -13,10 +13,10 @@ export class WebsService extends ServiceBase{
     constructor(private _http: Http) { 
         super();
     }
-
-    getWebs(limit,start: number): Promise<IWeb[]> {
+    limit: number = 12;
+    getWebs(start: number): Promise<IWeb[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/website?limit=${limit}&offset=${start}`)
+            this._http.get(`${url}/website?limit=${this.limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
                     resolve(data);

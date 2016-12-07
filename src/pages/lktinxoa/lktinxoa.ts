@@ -65,6 +65,7 @@ export class LktinxoaPage {
         alert('Loi' + error.message);
       })
   }
+  
   trove = () => {
     this.navCtrl.push(TinTucPage)
   }

@@ -59,6 +59,15 @@ export class TinnoibatPage {
         alert('Loi' + error.message);
       })
   }
+   daxem = (news: INews) => {
+        this._newservice.daxem(news.id,this.IDuser)
+            .then(result => {
+
+            })
+            .catch(error => {
+                alert('Loi' + error.message);
+            })
+    }
   tinnoibat($event, index) {
     this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
   }

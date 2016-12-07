@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,ToastController,NavParams } from 'ionic-angular';
+import { NavController, ToastController, NavParams } from 'ionic-angular';
 
 import { NewsService } from '../shared/services/news.service'
 import { INews } from '../shared/models/news.model'
@@ -18,12 +18,12 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
 export class TinquantamPage {
   new: INews[];
   public start: number = 6;
-  IDuser:number;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private _newsService: NewsService, private toastCtrl: ToastController) { 
-      this.IDuser = this.navParams.get('id');
+  IDuser: number;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private _newsService: NewsService, private toastCtrl: ToastController) {
+    this.IDuser = this.navParams.get('id');
   }
   ngOnInit(): void {
-    this._newsService.tinquantam(this.IDuser,0)
+    this._newsService.tinquantam(this.IDuser, 0)
       .then(nw => this.new = nw)
       .catch(errorMessage => {
         console.error(errorMessage.message)
@@ -34,7 +34,7 @@ export class TinquantamPage {
       message: 'Đã xóa',
       duration: 200,
     });
-    this._newsService.xoatinquantam(news.id,this.IDuser)
+    this._newsService.xoatinquantam(news.id, this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
@@ -45,12 +45,23 @@ export class TinquantamPage {
         alert('Loi' + error.message);
       })
   }
+
+  daxem = (news: INews) => {
+    this._newsService.daxem(news.id, this.IDuser)
+      .then(result => {
+
+      })
+      .catch(error => {
+        alert('Loi' + error.message);
+      })
+  }
+
   ionViewDidLoad() {
     console.log('Hello TinquantamPage Page');
   }
   doInfinite(infiniteScroll) {
     setTimeout(() => {
-      this._newsService.tinquantam(this.IDuser,this.start)
+      this._newsService.tinquantam(this.IDuser, this.start)
         .then(
         (res) => {
           if (res.length !== 0) {

@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { NavController,NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
-import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
   Generated class for the Tinnoibat page.
@@ -24,38 +23,6 @@ export class TinnoibatPage {
         //
     }
 
-    // del = (news: INews, i) => {
-    //     this._newservice.xoatin(news.id)
-    //         .then(result => {
-    //             console.log('Da xoa')
-    //             this.newtinnoibat.splice(i, 1)
-    //         })
-    //         .catch(error => {
-    //             alert('Loi' + error.message);
-    //         })
-    // }
-    // qt = (news: INews) => {
-    //     this._newservice.themtin(news.id)
-    //         .then(result => {
-    //         })
-    //         .catch(error => {
-    //             alert('Loi' + error.message);
-    //         })
-    // }
-    // tinnoibat($event, index) {
-    //     this.newtinnoibat[index].ChuaXem = false;
-    //     this.navCtrl.push(ChiTietTinPage, { index, news: this.newtinnoibat });
-    // }
-
-    // daxem = (news: INews) => {
-    //     this._newservice.daxem(news.id)
-    //         .then(result => {
-
-    //         })
-    //         .catch(error => {
-    //             alert('Loi' + error.message);
-    //         })
-    // }
 
     ionViewDidLoad() {
         console.log('Hello TinnoibatPage Page');

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NavController, LoadingController, ModalController, ToastController ,NavParams, Platform } from 'ionic-angular';
+import { NavController ,NavParams, Platform } from 'ionic-angular';
 
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 

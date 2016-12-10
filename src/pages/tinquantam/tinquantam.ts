@@ -68,6 +68,7 @@ export class TinquantamPage {
         })
         .catch(errorMessage => {
           console.error(errorMessage.message)
+
         });
       infiniteScroll.complete();
     }, 2000);

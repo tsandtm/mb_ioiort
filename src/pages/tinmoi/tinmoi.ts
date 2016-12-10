@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
+
 /*
   Generated class for the Tinmoi page.
 
@@ -57,7 +58,8 @@ export class TinmoiPage {
                 this._newservice.ShowToastOK(`Đã thêm`)
             })
             .catch(error => {
-                alert('Loi' + error.message);
+                console.log('Loi' + error.message);
+
             })
     }
 
@@ -67,6 +69,7 @@ export class TinmoiPage {
             })
             .catch(error => {
                 alert('Loi' + error.message);
+
             })
     }
 

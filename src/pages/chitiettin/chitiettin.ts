@@ -2,8 +2,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NewsService } from '../shared/services/news.service';
 import { NavController, NavParams } from 'ionic-angular';
-
-
 import { INews } from '../shared/models/news.model';
 
 @Component({
@@ -23,7 +21,7 @@ export class ChiTietTinPage implements OnInit {
     start: number = 1;
     like: boolean;
     SWIPE_ACTION = { LEFT: 'swipeleft', RIGHT: 'swiperight' };
-    IDuser:number
+    IDuser: number
     mySlideOptions = {
         initialSlide: 1,
         loop: true
@@ -57,7 +55,7 @@ export class ChiTietTinPage implements OnInit {
         this.like = !this.like
         if (this.like) {
             this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
-            this._newsService.themtin(this.nnew[this.index].id,this.IDuser)
+            this._newsService.themtin(this.nnew[this.index].id, this.IDuser)
                 .then(result => {
                 })
                 .catch(error => {
@@ -66,12 +64,13 @@ export class ChiTietTinPage implements OnInit {
 
         } else {
             this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
-            this._newsService.xoatinquantam(this.nnew[this.index].id,this.IDuser)
+            this._newsService.xoatinquantam(this.nnew[this.index].id, this.IDuser)
                 .then(result => {
                     console.log('Da xoa')
                 })
                 .catch(error => {
-                     console.log('Loi' + error.message);
+                    console.log('Loi' + error.message);
+                    
                 })
         }
 
@@ -85,7 +84,7 @@ export class ChiTietTinPage implements OnInit {
         else
             this.spinner = false;
 
-        this._newsService.tinquantam(this.IDuser,0,this.nnew[this.index].id)
+        this._newsService.tinquantam(this.IDuser, 0, this.nnew[this.index].id)
             .then(nw => {
 
                 nw.length > 0 ? this.like = !this.like : this.like
@@ -93,6 +92,7 @@ export class ChiTietTinPage implements OnInit {
             })
             .catch(errorMessage => {
                 console.error(errorMessage.message)
+                
             })
     }
 

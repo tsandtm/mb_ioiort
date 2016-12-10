@@ -4,15 +4,16 @@ import { TinTucPage } from '../tintuc/tintuc';
 import { WebsService } from '../shared/services/website.service';
 import { UserWebService } from '../shared/services/user_website.service';
 import { IWeb } from '../shared/models/website.model';
-
+import { IHomePage,IBienToanCuc } from '../shared/variables'
 @Component({
     selector: 'page-home',
     templateUrl: 'homepage.html'
 })
 export class HomePage {
     @ViewChild(Nav) nav: Nav;
-
-    // webs: IWeb[];
+    lbdachon = IHomePage.Label_Dachon;
+    btnnext = IHomePage.Button_Next;
+    loadtext = IBienToanCuc.Loading_Text;
     webs1: IWeb[];
     webs2: IWeb[];
     count: number = 0;
@@ -22,7 +23,9 @@ export class HomePage {
     index: number;
 
     IDuser: number;
-    constructor(private _webService: WebsService, public navParams: NavParams, public navCtrl: NavController, private userWebSite: UserWebService) {
+    constructor(private _webService: WebsService,
+        public navParams: NavParams, public navCtrl: NavController,
+        private userWebSite: UserWebService) {
         this.IDuser = this.navParams.get('id');
     }
 
@@ -39,8 +42,8 @@ export class HomePage {
                 console.error(errorMessage.message)
             });
         if (this.count > 0) {
-            this.navCtrl.push(TinTucPage, { id: this.IDuser });
-            
+            this.navCtrl.push(TinTucPage, { id: this.IDuser }); //bug flag
+
         } else {
             this.LoadList()
         }
@@ -69,6 +72,7 @@ export class HomePage {
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
+
                 });
             infiniteScroll.complete();
         }, 2000);
@@ -77,13 +81,13 @@ export class HomePage {
 
     nextToPage() {
         this._webService.ShowLoading("Vui lòng chờ")
-     
+
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
 
     chon(id: number, index: number) {
-        let i = this.webs1.findIndex(i => 
-            (i.IDDanhMucSite === id)? true:  false
+        let i = this.webs1.findIndex(i =>
+            (i.IDDanhMucSite === id) ? true : false
         )
         let web = this.webs1[i];
 
@@ -106,6 +110,7 @@ export class HomePage {
                 })
                 .catch(error => {
                     console.error('Error: ', error);
+
                 })
         } else {
             console.log('delete :D');
@@ -130,6 +135,7 @@ export class HomePage {
                 })
                 .catch(error => {
                     console.error('Error: ', error);
+
                 })
         }
     }
@@ -142,7 +148,7 @@ export class HomePage {
             this.webs1 = this.webs2;
         } else {
             console.log('hien tai 3: ' + this.click);
-            this.LoadList()
+            this.LoadList()// h
         }
     }
 
@@ -150,7 +156,7 @@ export class HomePage {
         this._webService.getWebs(0)
             .then(web => {
                 this.webs1 = web;
-                
+
                 if (this.webs2 != null) {
                     for (var i = 0; i < this.webs2.length; i++) {
                         let web2 = this.webs2[i];

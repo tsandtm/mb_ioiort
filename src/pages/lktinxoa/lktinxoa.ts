@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
 import { TinTucPage } from '../tintuc/tintuc'
+
 /*
   Generated class for the Lktindaxoa page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -28,6 +28,7 @@ export class LktinxoaPage {
       .then(news => this.new = news)
       .catch(errorMessage => {
         console.log(errorMessage.message)
+
       })
   }
   doInfinite(infiniteScroll) {
@@ -45,6 +46,7 @@ export class LktinxoaPage {
         })
         .catch(errorMessage => {
           console.error(errorMessage.message)
+
         });
       infiniteScroll.complete();
     }, 2000);
@@ -58,6 +60,7 @@ export class LktinxoaPage {
       })
       .catch(error => {
         alert('Loi' + error.message);
+
       })
   }
 

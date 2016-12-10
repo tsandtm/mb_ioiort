@@ -7,17 +7,8 @@ import { WebsService } from '../shared/website.service';
 import { Storage } from '@ionic/storage';
 import { IWeb } from '../shared/website.model';
 import { HomePage } from '../homepage/homepage';
-import { TinnoibatPage } from '../tinnoibat/tinnoibat';
-import { Facebook_Login } from './login.facebook';
-import { passport, User } from 'passport';
-import { FacebookStrategy, Strategy } from 'passport-facebook';
-import * as express from 'express';
-// var app=express(); sai file này
-/*
-  Generated class for the LoginPage page.
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+import { TinTucPage } from '../tintuc/tintuc';
+import { Facebook } from 'ionic-native';
 @Component({
   selector: 'page-login',
   templateUrl: 'login-page.html',
@@ -80,10 +71,12 @@ export class LoginPage {
   username: string;
   password: string;
   save: boolean = false;
+  IDUser: number;
   //login facebook
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, private service: LoginService, private storage: Storage) {
   }
   ionViewWillEnter() {
+
     this.storage.forEach((value, key) => {
       switch (key) {
         case "TaiKhoan": this.username = value; break;
@@ -92,78 +85,47 @@ export class LoginPage {
         default: break;
       }
       console.log(`${this.username}${this.password}`)
-
-      if (this.username && this.password) {
-        this.service.LoginToSever(this.username, this.password)
-          .then(result => {
-            if (result == 'OK') {
-              console.log(result)
-              this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' });
-
-              //login bebinh kiem tra nay dum nha
-            this.service.GetLogin(this.username, this.password).then(res=>{this.service.GetCount(res).then(data=>{
-            if(data==0)
-            {
-              this.navCtrl.setRoot(HomePage);
-            }
-            else{
-                this.navCtrl.setRoot(TinnoibatPage);
-            }
-
-          })});
-          //login bebinh
-            }
-            else {
-              console.log(result)
-              this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
-              return
-            }
-          })
-          .catch(err => {
-          })
-      }
+      //login bebinh
+      this.LoginRouterPage();
     })
   }
+  //Login dem count>0 vo thang tin tuc, count==0 vo homepage
+  LoginRouterPage = () => {
+    this.service.GetLogin(this.username, this.password).then(res => {
+      this.IDUser = res;
+      this.service.GetCount(res).then(data => {
+        if (data == 0) {
+          this.navCtrl.setRoot(HomePage, this.IDUser);
+        }
+        else {
+          this.navCtrl.setRoot(TinTucPage, this.IDUser);
+        }
 
+      })
+    });
+  }
 
   Login = () => {
     this.service.LoginToSever(this.username, this.password)
       .then(result => {
         if (result == 'OK') {
           console.log(result);
-   
+
           this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
           if (this.save) {
             this.storage.set("TaiKhoan", this.username);
             this.storage.set("Password", this.password);
             this.storage.set("Checkbox", this.save);
 
-          //Login Bebinh tu day
-          this.service.GetLogin(this.username, this.password).then(res=>{this.service.GetCount(res).then(data=>{
-            if(data==0)
-            {
-              this.navCtrl.setRoot(HomePage);
-            }
-            else{
-                this.navCtrl.setRoot(TinnoibatPage);
-            }
+            //Login Bebinh 
+            this.LoginRouterPage();
 
-          })});
           } else {
-            this.service.GetLogin(this.username, this.password).then(res=>{this.service.GetCount(res).then(data=>{
-            if(data==0)
-            {
-              this.navCtrl.setRoot(HomePage);
-            }
-            else{
-                this.navCtrl.setRoot(TinnoibatPage);
-            }
+            //Login Bebinh
+            this.LoginRouterPage();
 
-          })});
-          //Login Bebinh toi day
           }
         }
-
         else {
           console.log(result)
           this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
@@ -175,5 +137,50 @@ export class LoginPage {
   }
   Change = () => {
     console.log(`save: ${this.save}`)
+  }
+  LoginFacebook() {
+    //test
+    Facebook.login(['email']).then((response) => {
+      let token = response.authResponse.accessToken;
+      // alert(JSON.stringify(response));
+      Facebook.api('/' + response.authResponse.userID + '?fields=id,name,email', []).then((result) => {
+        let name = result.name;
+        let email = result.email;
+        let Facebook = response.authResponse.userID;
+        this.service.GetCountFacebook(Facebook).then(resGet => {
+          console.log("resGet:" + resGet);
+          if (resGet > 0) {
+            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+            this.navCtrl.setRoot(HomePage);
+          }
+          else {
+            this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
+              this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+              this.service.GetCountFacebook(Facebook).then(resGetID => {
+                this.IDUser = resGetID;
+                console.log("id moi=" + this.IDUser);
+                this.navCtrl.setRoot(HomePage, this.IDUser);
+              });
+            })
+          }
+        }).catch(err => {
+          this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
+            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+            console.log("id moi:" + this.IDUser);
+            this.service.GetCountFacebook(Facebook).then(resGetID => {
+              this.IDUser = resGetID;
+              console.log("id moi=" + this.IDUser);
+              this.navCtrl.setRoot(HomePage, this.IDUser);
+            });
+          });
+        });
+        // coi thử xem có nên làm ghi nhớ hem
+        this.username=Facebook;
+        this.password=Facebook;
+        this.storage.set("TaiKhoan",this.username);
+        this.storage.set("Password",this.password);
+        // coi thử xem có nên làm ghi nhớ hem
+      }).catch(err => { this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) });
+    }).catch(err => { this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) });
   }
 }

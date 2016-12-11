@@ -21,22 +21,26 @@ export let ILoginPage = {
     "TaiKhoan": "Tài khoản",
     "MatKhau": "Mật khẩu",
     "GhiNho": "Ghi nhớ tài khoản",
-    "Button-DangNhap": "Đăng nhập",
-    "Toast-ThanhCong": "Đăng nhập thành công",
-    "Toast-KhongThanhCong": "Đăng nhập không thành công"
+    "Button_DangNhap": "Đăng nhập",
+    "Toast_ThanhCong": "Đăng nhập thành công",
+    "Toast_KhongThanhCong": "Đăng nhập không thành công"
 }
 export let ITinQuanTam = {
     "Title": "Tin quan tâm",
-    "Button-Dislike": "Không thích"
+    "Button_Dislike": "Không thích"
 }
-export let iTinTuc: {
-    "segment-button": "Tin mới",
-    "Loading-Text": "Loading....!",
-    "ShowLoading": "Loading...!"
+export let ITinTuc: {
+    "segment_button": "Tin mới"
+}
+export let ITinMoi = {
+    "Undo": "Undo",
+    "ShowToast_Xoa": "Đã xóa xong",
+    "ShowToast_Them": "Đã thêm",
 }
 
 export let IBienToanCuc = {
     "Loading_Text": "Loading....!",
     "Start": 6,
     "Button_Undo": "Hoàn tác",
+    "ShowToast_Xoa": "Đã xóa xong",
 }

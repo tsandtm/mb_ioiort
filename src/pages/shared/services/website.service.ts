@@ -18,7 +18,7 @@ export class WebsService extends ServiceBase {
     }
 
     getWebs(start: number): Promise<IWeb[]> {
-        return this._http.get(`${url}/website?limit=${this.limit}&offset=${start}`)
+        return this.http.get(`${url}/website?limit=${this.limit}&offset=${start}`)
             .toPromise()
             .then(res => res.json() as IWeb[])
             .catch(this.handleError)
@@ -26,7 +26,7 @@ export class WebsService extends ServiceBase {
 
 
     getList_user(id): Promise<IWeb[]> {
-        return this._http.get(`${url}/getWebs/` + id)
+        return this.http.get(`${url}/getWebs/` + id)
             .toPromise()
             .then(response => response.json() as IWeb[])
             .catch(this.handleError);

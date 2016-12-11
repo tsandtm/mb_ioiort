@@ -12,7 +12,6 @@ import { HomeFilterPipe } from '../pages/homepage/homepage-filter.pipe';
 import { UserWebService } from '../pages/shared/services/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
 import { LoginService } from '../pages/shared/services/login-page.service'
-import { TinnoibatPage } from '../pages/tinnoibat/tinnoibat';
 import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
@@ -32,7 +31,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     ChiTietTinPage,
     HomeFilterPipe,
     LoginPage,
-    TinnoibatPage,
     Safe,
     LktinxoaPage,
     TinquantamPage,
@@ -48,7 +46,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     TinTucPage,
     ChiTietTinPage,
     LoginPage,
-    TinnoibatPage,
     LktinxoaPage,
     TinquantamPage,
     TinmoiPage

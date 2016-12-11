@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Tin quan tâm</ion-title>
+    <ion-title>{{Title}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
@@ -25,7 +25,7 @@
         <ion-item-options (ionSwipe)="del(n,i)" side="right">
           <button ion-button color="danger" expandable (click)="del(n,i)">
 						<ion-icon ios="ios-heart" md="md-heart"></ion-icon>
-						<div>Bỏ thích</div>
+						<div>{{Dislike}}</div>
 
 						</button>
         </ion-item-options>
@@ -33,7 +33,7 @@
         <ion-item-options (ionSwipe)="del(n,i) " side="left">
           <button ion-button color="danger" expandable (click)="del(n,i)">
 						<ion-icon ios="ios-heart" md="md-heart"></ion-icon>
-						<div>Bỏ thích</div>
+						<div>{{Dislike}}</div>
 						</button>
         </ion-item-options>
 

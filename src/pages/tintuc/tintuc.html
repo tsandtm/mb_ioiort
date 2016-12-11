@@ -1,19 +1,16 @@
 <ion-header class="body">
     <ion-toolbar no-border-top>
-        <ion-segment [(ngModel)]="t">
-            <ion-segment-button value="tinmoi" (ionSelect)="LoadTinMoi()">
-                Tin mới
-            </ion-segment-button>
-            <ion-segment-button value="tinnoibat" (ionSelect)="LoadTinNoiBat()">
-                Tin nổi bật
+        <ion-segment>
+            <ion-segment-button value="tinmoi">
+                {{TinMoi}}
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="body">
-    <div [ngSwitch]="t">
-        <ion-list *ngSwitchCase="'tinmoi'">
+    <div>
+        <ion-list>
             <page-tinmoi [news]="newstinmoi" [IDuser]="IDuser"></page-tinmoi>
             <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
                 <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
@@ -22,16 +19,16 @@
         </ion-list>
 
 
-        <ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">
+        <!--<ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">-->
 
             <!--<page-tinnoibat [new]="newstinnoibat"></page-tinnoibat>-->
-            <page-tinmoi [newtinnoibat]="newstinnoibat" [IDuser]="IDuser"></page-tinmoi>
+            <!--<page-tinmoi [newtinnoibat]="newstinnoibat" [IDuser]="IDuser"></page-tinmoi>
             <ion-infinite-scroll (ionInfinite)="doInfinite2($event)">
                 <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
                 </ion-infinite-scroll-content>
             </ion-infinite-scroll>
 
-        </ion-list>
+        </ion-list>-->
 
     </div>
     <ion-fab bottom left #fab4>

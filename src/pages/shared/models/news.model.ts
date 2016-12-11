@@ -13,5 +13,4 @@ export interface INews{
         ArrayQuanTam?:number;
         ChuaXem?:boolean;
         Undo?:boolean;
-        TimeOut:number;
 }

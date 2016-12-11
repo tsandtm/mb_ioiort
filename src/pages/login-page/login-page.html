@@ -4,12 +4,12 @@
 
     <ion-row>
       <ion-col>
-        <h2 class="cus_header" [@flyInBottomSlow]="logoState">Tin Tuc Page</h2>
+        <h2 class="cus_header" [@flyInBottomSlow]="logoState">{{Header}}</h2>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <h4 class="cus_subheader" [@flyInBottomSlow]="logoState">Đăng nhập hệ thống</h4>
+        <h4 class="cus_subheader" [@flyInBottomSlow]="logoState">{{Subheader}}</h4>
       </ion-col>
     </ion-row>
 
@@ -18,17 +18,17 @@
         <ion-list inset [@bounceInBottom]="formState">
 
           <ion-item>
-            <ion-label>Tài khoản</ion-label>
+            <ion-label>{{TaiKhoan}}</ion-label>
             <ion-input type="text" name="name" [(ngModel)]=username clearInput></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label>Mật Mã</ion-label>
+            <ion-label>{{MatKhau}}</ion-label>
             <ion-input type="password" name="password" [(ngModel)]=password clearInput></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label>Ghi nhớ tài khoản</ion-label>
+            <ion-label>{{GhiNho}}</ion-label>
             <ion-checkbox [(ngModel)]="save" (ionChange)="Change()"></ion-checkbox>
           </ion-item>
 
@@ -38,7 +38,7 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button class="login-button" [@fadeIn]="loginState" (click)="Login()">Đăng nhập</button>
+        <button ion-button class="login-button" [@fadeIn]="loginState" (click)="Login()">{{Button_DangNhap}}</button>
       </ion-col>
     </ion-row>
 

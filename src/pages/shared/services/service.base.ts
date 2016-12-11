@@ -2,10 +2,9 @@ import { ToastController, LoadingController } from 'ionic-angular';
 import { urllog } from '../variables'
 import { Platform } from 'ionic-angular';
 import { Http, URLSearchParams } from '@angular/http';
-import { Injectable } from '@angular/core';
 export abstract class ServiceBase {
 
-    constructor(private _toast?: ToastController, private _loadingCtrl?: LoadingController, public _http?: Http, private _platfrom?: Platform) {
+    constructor(private _toast?: ToastController, private _loadingCtrl?: LoadingController, private _http?: Http, private _platfrom?: Platform) {
 
     }
 

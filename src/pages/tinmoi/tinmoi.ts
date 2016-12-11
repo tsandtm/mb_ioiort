@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
-
+import { ITinMoi } from '../shared/variables'
 /*
   Generated class for the Tinmoi page.
 
@@ -16,76 +16,87 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
 })
 export class TinmoiPage {
     @Input() news: INews[];
-    @Input() newtinnoibat: INews[];
     @Input() IDuser: number;
-    arr: INews[];
-    TimeOut: INews[] = [];
+
+    // Set Text
+    Text_Undo = ITinMoi.Undo;
+
+    daxoa: INews;
+    vitricu: number = -1;
     constructor(public navCtrl: NavController, private _newservice: NewsService) { }
 
     ionViewDidLoad() {
         console.log("Tin tức Pages")
     }
 
-    del = (news: INews, i, arr) => {
-        let index = this.Timvitri(arr, news.id)
-        this.arr[index].Undo = true;
-        console.log(arr[i].Undo)
+    del = (news: INews, i) => {
 
-        this.arr[index].TimeOut = setTimeout(() => {
-            this._newservice.xoatin(this.IDuser, news.id)
-                .then(result => {
-                    console.log(`Đã xóa vị trí: ${i} Tin: ${arr[i].TieuDe}`)
-                    this.arr.splice(index, 1);
-                    this._newservice.ShowToastOK("Đã xóa xong", { position: "middle" })
-                })
-                .catch(error => {
-                    console.log('Loi' + error.message);
-                })
-        }, 5000);
+        this.daxoa = news;
+        let index = this.news.findIndex(x => x.id === news.id ? true : false)
+
+        this.news[index].Undo = true;
+
+        console.log(this.news[index].Undo)
+
+        this._newservice.xoatin(news.id, this.IDuser)
+            .then(result => {
+                // xóa vị trí trước
+                if (this.vitricu !== -1) {
+                    this.news[this.vitricu].Undo = false
+                    console.log(`Đã xóa vị trí ${this.vitricu}`)
+                    this.news.splice(this.vitricu, 1);
+                }
+                console.log(`Đã xóa vị trí: ${index} Tin: ${this.news[index].TieuDe} trên server`)
+                // this.daxoa = this.news.splice(index, 1);
+                this.vitricu = index;
+                this._newservice.ShowToastOK(ITinMoi.ShowToast_Xoa, { position: "middle" })
+                return
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     Undo = (news: INews, i: number, arr) => {
-        let index = this.Timvitri(arr, news.id);
-
-        this.arr[index].Undo = false;
-        clearTimeout(this.arr[i].TimeOut);
+        let index = this.news.findIndex(x => x.id === news.id ? true : false)
+        console.log(`Vị trí ${index}`)
+        this._newservice.boxoa(news.id, this.IDuser)
+            .then(() => {
+                this.daxoa.Undo = false
+                return this.vitricu = -1;//trả 
+            })
+            .catch(err => console.log(err))
     }
 
     qt = (news: INews) => {
 
         this._newservice.themtin(this.IDuser, news.id)
             .then(result => {
-                this._newservice.ShowToastOK(`Đã thêm`)
+                return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
             })
             .catch(error => {
                 console.log('Loi' + error.message);
-
             })
     }
 
     daxem = (news: INews) => {
         this._newservice.daxem(this.IDuser, news.id)
             .then(result => {
+                return
             })
             .catch(error => {
-                alert('Loi' + error.message);
+                return console.log('Loi' + error.message);
 
             })
     }
 
     goDetail($event, index, arr) {
         console.log("index " + index);
-        this.arr = arr
-        this.arr[index].ChuaXem = false;
-        this.navCtrl.push(ChiTietTinPage, { index, news: this.arr, IDuser: this.IDuser });
+        this.news = arr
+        this.news[index].ChuaXem = false;
+        this.navCtrl.push(ChiTietTinPage, { index, news: this.news, IDuser: this.IDuser });
+        return
     }
 
-    Timvitri = (arr: INews[], idcantim) => {
-        this.arr = arr;
-        return this.arr.findIndex(value => {
-            if (value.id === idcantim)
-                return true
-            return false
-        })
-    }
 }

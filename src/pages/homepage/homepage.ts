@@ -11,18 +11,21 @@ import { IHomePage,IBienToanCuc } from '../shared/variables'
 })
 export class HomePage {
     @ViewChild(Nav) nav: Nav;
+    // Set text 
     lbdachon = IHomePage.Label_Dachon;
     btnnext = IHomePage.Button_Next;
     loadtext = IBienToanCuc.Loading_Text;
+
+    // Biến toàn cục
     webs1: IWeb[];
     webs2: IWeb[];
     count: number = 0;
     listFilter: string = '';
-    public start: number = 12;
+    public start: number = IBienToanCuc.Start*2;
     public click: boolean = false;
     index: number;
-
     IDuser: number;
+
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
         private userWebSite: UserWebService) {
@@ -30,9 +33,6 @@ export class HomePage {
     }
 
     ionViewDidLoad() {
-    }
-    ngOnInit(): void {
-
         this._webService.getList_user(this.IDuser) //danh sach site user da chon
             .then(web => {
                 this.webs2 = web;
@@ -67,7 +67,7 @@ export class HomePage {
                             this.webs1.push(x);
                         }
                         // this.webs1.concat(res);
-                        this.start += 12;
+                        this.start += IBienToanCuc.Start*2;
                     }
                 })
                 .catch(errorMessage => {
@@ -80,7 +80,7 @@ export class HomePage {
 
 
     nextToPage() {
-        this._webService.ShowLoading("Vui lòng chờ")
+        this._webService.ShowLoading(IHomePage.ShowLoading)
 
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }

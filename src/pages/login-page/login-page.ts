@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
+import { ILoginPage,IBienToanCuc } from '../shared/variables'
 
 /*
   Generated class for the LoginPage page.
@@ -63,10 +64,21 @@ import { HomePage } from '../homepage/homepage';
     ]
 })
 export class LoginPage {
+
+    //Animation
     logoState: any = "in";
     cloudState: any = "in";
     loginState: any = "in";
     formState: any = "in";
+    //set text
+    Header = ILoginPage.Header;
+    Subheader = ILoginPage.Subheader;
+    TaiKhoan = ILoginPage.TaiKhoan;
+    MatKhau = ILoginPage.MatKhau;
+    GhiNho = ILoginPage.GhiNho;
+    Button_DangNhap = ILoginPage.Button_DangNhap;
+    
+    //Biến toàn cục
     username: string;
     password: string;
     save: boolean = false;
@@ -91,14 +103,14 @@ export class LoginPage {
                 this.service.LoginToSever(this.username, this.password)
                     .then(result => {
                         if (result !== 'Khong Co') {
-                            this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
                             this.IDuser = result._body;
                             console.log("id user:" + this.IDuser);
                             this.navCtrl.push(HomePage, { id: this.IDuser });
                         }
                         else {
                             console.log(result)
-                            this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
+                            this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
                             return
                         }
                     })
@@ -114,7 +126,7 @@ export class LoginPage {
             .then(result => {
                 if (result !== 'Khong Co') {
                     console.log("id " + result._body);
-                    this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' });
+                    this.service.ShowToastOK(this.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
                     console.log("id user:" + this.IDuser);
                     if (this.save) {
@@ -129,7 +141,7 @@ export class LoginPage {
 
                 else {
                     console.log(result)
-                    this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
+                    this.service.ShowToastOK(this.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
                     return
                 }
             })

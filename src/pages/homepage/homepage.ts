@@ -54,7 +54,6 @@ export class HomePage {
             this._webService.getWebs(this.start)
                 .then(
                 (res) => {
-<<<<<<< HEAD
                     if (res.length !== 0) {
                         for (var j = 0; j < res.length; j++) {
                             var x = res[j];
@@ -65,9 +64,6 @@ export class HomePage {
                                     x.chontin = true;
                                 }
                             }
-=======
-                    if (res.length !== 0) {                        for (let x of res)
->>>>>>> 7ee2d40281c689f56b6f4979c1d2563e66c394a9
                             this.webs1.push(x);
                         }
                         // this.webs1.concat(res);

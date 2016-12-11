@@ -24,25 +24,25 @@ export class LoginService extends ServiceBase {
                     return respone;
                 }
                 if (respone.status == 400)
-                    return `Khong Co`
+                    return 0;
             })
             .catch(this.handleError)
     }
     // login bebinh nay` nua ne 
-    public GetLogin(user: any, pass: any): Promise<any> {
-        let U: IUser = {
-            TaiKhoan: user,
-            Password: pass
-        }
+    // public GetLogin(user: any, pass: any): Promise<any> {
+    //     let U: IUser = {
+    //         TaiKhoan: user,
+    //         Password: pass
+    //     }
 
-        return this._http.post(`http://localhost:8080/tintuc/login`, U)
-            .toPromise()
-            .then(respone => {
-                let id = respone.json().id;
-                return id;
-            })
-            .catch(this.handleError)
-    }
+    //     return this._http.post(`http://localhost:8080/tintuc/login`, U)
+    //         .toPromise()
+    //         .then(respone => {
+    //             let id = respone.json().id;
+    //             return id;
+    //         })
+    //         .catch(this.handleError)
+    // }
     public GetCount(id: number): Promise<any> {
         return this._http.post(`http://localhost:8080/api/getCountNews`, { id }).toPromise().then(res => { return res.json() }).catch(err => { return 0 });
     }

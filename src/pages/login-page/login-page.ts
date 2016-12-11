@@ -89,32 +89,32 @@ export class LoginPage {
             console.log(`${this.username}${this.password}`)
              //login bebinh
              this.LoginRouterPage();
-            // if (this.username && this.password)
-            //     this.service.LoginToSever(this.username, this.password)
-            //         .then(result => {
-            //             if (result !== 'Khong Co') {
-            //                 this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
-            //                 this.IDuser = result._body;
-            //                 console.log("id user:" + this.IDuser);
-            //                 this.navCtrl.push(HomePage, { id: this.IDuser });
-            //             }
-            //             else {
-            //                 console.log(result)
-            //                 this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
-            //                 return
-            //             }
-            //         })
-            //         .catch(err => {
-            //             console.log(err)
-            //         })
+            if (this.username && this.password)
+                this.service.LoginToSever(this.username, this.password)
+                    .then(result => {
+                        if (result !== 'Khong Co') {
+                            this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
+                            this.IDuser = result._body;
+                            console.log("id user:" + this.IDuser);
+                            this.navCtrl.push(HomePage, { id: this.IDuser });
+                        }
+                        else {
+                            console.log(result)
+                            this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
+                            return
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
         })
     }
 
      //Login dem count>0 vo thang tin tuc, count==0 vo homepage
   LoginRouterPage = () => {
-    this.service.GetLogin(this.username, this.password).then(res => {
-      this.IDuser = res;
-      this.service.GetCount(res).then(data => {
+    this.service.LoginToSever(this.username, this.password).then(res => {
+      this.IDuser = res._body;
+      this.service.GetCount(res._body).then(data => {
         if (data == 0) {
           this.navCtrl.setRoot(HomePage, this.IDuser);
         }
@@ -129,7 +129,7 @@ export class LoginPage {
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
-                if (result !== 'Khong Co') {
+                if (result!== 0) {
                     console.log("id " + result._body);
                     this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' });
                     this.IDuser = result._body;

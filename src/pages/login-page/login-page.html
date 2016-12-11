@@ -41,7 +41,11 @@
         <button ion-button class="login-button" [@fadeIn]="loginState" (click)="Login()">Đăng nhập</button>
       </ion-col>
     </ion-row>
-
+     <ion-row>
+        <ion-col>
+          <button ion-button (click)="LoginFacebook()"><ion-icon name="logo-facebook"></ion-icon></button>
+        </ion-col>
+    </ion-row>
   </div>
 
 </ion-content>

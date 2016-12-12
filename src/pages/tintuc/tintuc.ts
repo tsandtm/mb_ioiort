@@ -27,7 +27,7 @@ export class TinTucPage implements OnInit {
     IDuser: number;
     constructor(private _newservice: NewsService,public navParams: NavParams ,platform: Platform, public navCtrl: NavController, private storage: Storage) {
         this.IDuser = this.navParams.get('id');        
-        console.log("id tin tuc: "+ this.IDuser);
+        console.log("id user: "+ this.IDuser);
 
 
      }

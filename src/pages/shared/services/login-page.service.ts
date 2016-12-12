@@ -14,8 +14,9 @@ export class LoginService extends ServiceBase {
     let U: IUser = {
       TaiKhoan : user,
       Password : pass
-
     }
+    console.log("TaiKhoan "+U.TaiKhoan);
+    debugger
     return this._http.post(`http://localhost:8080/tintuc/login`, U)
       .toPromise()
       .then(respone => {

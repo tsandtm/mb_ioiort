@@ -11,8 +11,6 @@ import { IWeb } from '../shared/models/website.model';
 })
 export class HomePage {
     @ViewChild(Nav) nav: Nav;
-
-    // webs: IWeb[];
     webs1: IWeb[];
     webs2: IWeb[];
     count: number = 0;
@@ -23,7 +21,8 @@ export class HomePage {
 
     IDuser: number;
     constructor(private _webService: WebsService, public navParams: NavParams, public navCtrl: NavController, private userWebSite: UserWebService) {
-        this.IDuser = this.navParams.get('id');
+        this.IDuser = 1;
+        // this.navParams.get('id');
     }
 
     ionViewDidLoad() {
@@ -38,30 +37,72 @@ export class HomePage {
             .catch(errorMessage => {
                 console.error(errorMessage.message)
             });
-        if (this.count > 0) {
-            this.navCtrl.push(TinTucPage, { id: this.IDuser });
-            
-        } else {
-            this.LoadList()
+        this.LoadList(12);
+    }
+
+    LoadList(limit) {
+        this._webService.getWebs(0, limit)
+            .then(web => {
+                this.webs1 = web;
+                this.Loop();
+            })
+            .catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
+    }
+
+    Loop() {
+        if (this.webs2 != null) {
+            for (var i = 0; i < this.webs2.length; i++) {
+                let web2 = this.webs2[i];
+                for (var j = 0; j < this.webs1.length; j++) {
+                    let web1 = this.webs1[j];
+                    if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
+                        web1.chontin = true;
+                        web2.chontin = true;
+                        this.webs1[j] = web1;
+                    }
+                }
+            }
         }
+    }
+    search() {
+        this._webService.getName(this.listFilter)
+            .then(web => {
+                this.webs1 = web;
+                this.Loop();
+            }).catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
+        // let val = ev.target.value;
+        // if (val && val.trim() != '') {
+        //     this.webs1 = this.webs1.filter((item) => {
+        //         let a = (item.TenGoi.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        //         let b = (item.TenGoi_KoDau.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        //         return (a || b) ? true : false
+        //     })
+        // }
+
     }
 
     doInfinite(infiniteScroll) {
         setTimeout(() => {
-            this._webService.getWebs(this.start)
+            this._webService.getWebs(this.start, 12)
                 .then(
                 (res) => {
                     if (res.length !== 0) {
                         for (var j = 0; j < res.length; j++) {
                             var x = res[j];
-                            for (var i = 0; i < this.webs2.length; i++) {
-                                let web2 = this.webs2[i];
-                                if (x.IDDanhMucSite == web2.IDDanhMucSite) {
-                                    web2.chontin = true;
-                                    x.chontin = true;
+                            if (this.webs1[this.start + 12].IDDanhMucSite !== x.IDDanhMucSite) {
+                                for (var i = 0; i < this.webs2.length; i++) {
+                                    let web2 = this.webs2[i];
+                                    if (x.IDDanhMucSite == web2.IDDanhMucSite) {
+                                        web2.chontin = true;
+                                        x.chontin = true;
+                                    }
                                 }
+                                this.webs1.push(x);
                             }
-                            this.webs1.push(x);
                         }
                         // this.webs1.concat(res);
                         this.start += 12;
@@ -74,16 +115,15 @@ export class HomePage {
         }, 2000);
     }
 
-
     nextToPage() {
         this._webService.ShowLoading("Vui lòng chờ")
-     
+
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
 
     chon(id: number, index: number) {
-        let i = this.webs1.findIndex(i => 
-            (i.IDDanhMucSite === id)? true:  false
+        let i = this.webs1.findIndex(i =>
+            (i.IDDanhMucSite === id) ? true : false
         )
         let web = this.webs1[i];
 
@@ -136,39 +176,18 @@ export class HomePage {
 
     dschon(): void {
         this.click = !this.click;
-        console.log('hien tai 1: ' + this.click);
+        this.listFilter = '';
+        // console.log('hien tai 1: ' + this.click);
         if (this.click) {
-            console.log('hien tai 2: ' + this.click);
+            // console.log('hien tai 2: ' + this.click);
             this.webs1 = this.webs2;
         } else {
-            console.log('hien tai 3: ' + this.click);
-            this.LoadList()
+            // console.log('hien tai 3: ' + this.click);
+            this.listFilter = '';
+            this.LoadList(12)
         }
     }
 
-    LoadList() {
-        this._webService.getWebs(0)
-            .then(web => {
-                this.webs1 = web;
-                
-                if (this.webs2 != null) {
-                    for (var i = 0; i < this.webs2.length; i++) {
-                        let web2 = this.webs2[i];
-                        for (var j = 0; j < this.webs1.length; j++) {
-                            let web1 = this.webs1[j];
-                            if (web1.IDDanhMucSite == web2.IDDanhMucSite) {
-                                web1.chontin = true;
-                                web2.chontin = true;
-                                this.webs1[j] = web1;
-                            }
-                        }
-                    }
-                }
-            })
-            .catch(errorMessage => {
-                console.error(errorMessage.message)
-            });
-    }
 
     openPage(page) {
         // Reset the content nav to have just this page

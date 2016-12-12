@@ -17,16 +17,26 @@ export class WebsService extends ServiceBase {
         super(toast, load)
     }
 
-    getWebs(start: number): Promise<IWeb[]> {
+    getWebs(start: number,limit:any): Promise<IWeb[]> {
         return new Promise(resolve => {
-            this._http.get(`${url}/website?limit=${this.limit}&offset=${start}`)
-
+            this._http.get(`${url}/website?limit=${limit}&offset=${start}`)
                 .map(res => res.json())
                 .subscribe(data => {
                     resolve(data);
                 });
         });
     }
+
+     getName(value: string): Promise<IWeb[]> {
+        return new Promise(resolve => {
+            this._http.get(`${url}/getName?string=${value}`)
+                .map(res => res.json())
+                .subscribe(data => {
+                    resolve(data);
+                });
+        });
+    }
+
 
 
     getList_user(id): Promise<IWeb[]> {

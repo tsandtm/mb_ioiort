@@ -17,6 +17,7 @@ import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 import { TinmoiPage } from '../pages/tinmoi/tinmoi'
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
     'swipe': { velocity: 0.4, threshold: 20 } // override default settings
@@ -34,7 +35,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     Safe,
     LktinxoaPage,
     TinquantamPage,
-    TinmoiPage
+    TinmoiPage,
+    HomeFilterNews
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -48,7 +50,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     LoginPage,
     LktinxoaPage,
     TinquantamPage,
-    TinmoiPage
+    TinmoiPage,
   ],
   providers: [
     WebsService,

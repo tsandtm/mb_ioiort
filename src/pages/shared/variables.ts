@@ -29,7 +29,7 @@ export let ITinQuanTam = {
     "Title": "Tin quan tâm",
     "Button_Dislike": "Không thích"
 }
-export let ITinTuc: {
+export let ITinTuc = {
     "segment_button": "Tin mới"
 }
 export let ITinMoi = {

@@ -32,5 +32,10 @@ export class WebsService extends ServiceBase {
             .catch(this.handleError);
     }
 
-
+    GetList(id:number,offset:number):Promise<IWeb[]>{
+        return this.http.get(`${url}/GetList/${id}?limit=${this.limit}&offset=${offset}`)
+            .toPromise()
+            .then(res => res.json() as IWeb[])
+            .catch(this.handleError)
+    }
 }

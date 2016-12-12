@@ -15,8 +15,8 @@
 </ion-header>
 
 <ion-content class="card-background-page" #content>
-  <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
-    <div [class.opi]="web.chontin" (click)="chon(web.IDDanhMucSite,i);chontin =! chontin">
+  <div *ngFor="let web of webs1 | TinDaChon:click  | homeFilter : listFilter ; let i = index">
+    <div [class.opi]="web.GiaTri" (click)="chon(web.IDDanhMucSite,web)">
       <ion-card>
         <img [src]='web.Icon' />
         <h4>{{web.TenGoi}}</h4>

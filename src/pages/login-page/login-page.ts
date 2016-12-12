@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
-import { ILoginPage,IBienToanCuc } from '../shared/variables'
+import { ILoginPage } from '../shared/variables'
 
 /*
   Generated class for the LoginPage page.
@@ -126,7 +126,7 @@ export class LoginPage {
             .then(result => {
                 if (result !== 'Khong Co') {
                     console.log("id " + result._body);
-                    this.service.ShowToastOK(this.Toast_ThanhCong, { position: 'top' });
+                    this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top' });
                     this.IDuser = result._body;
                     console.log("id user:" + this.IDuser);
                     if (this.save) {
@@ -141,7 +141,7 @@ export class LoginPage {
 
                 else {
                     console.log(result)
-                    this.service.ShowToastOK(this.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
+                    this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
                     return
                 }
             })

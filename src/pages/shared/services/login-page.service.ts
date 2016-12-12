@@ -5,6 +5,7 @@ import { ServiceBase } from './service.base';
 import { IUser } from '../models/user.model';
 @Injectable()
 export class LoginService extends ServiceBase {
+
     urlAPI = `localhost:8080/tintuc/`
 
     constructor(private http: Http, private toast: ToastController, private platfrom: Platform) {
@@ -14,7 +15,6 @@ export class LoginService extends ServiceBase {
         let U: IUser = {
             TaiKhoan: user,
             Password: pass
-
         }
         return this.http.post(`http://localhost:8080/tintuc/login`, U)
             .toPromise()

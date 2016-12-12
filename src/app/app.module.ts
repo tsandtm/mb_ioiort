@@ -8,7 +8,6 @@ import { ChiTietTinPage } from '../pages/chitiettin/chitiettin';
 import { HomePage } from '../pages/homepage/homepage';
 import { WebsService } from '../pages/shared/services/website.service';
 import { NewsService } from '../pages/shared/services/news.service';
-import { HomeFilterPipe } from '../pages/homepage/homepage-filter.pipe';
 import { UserWebService } from '../pages/shared/services/user_website.service';
 import { LoginPage } from '../pages/login-page/login-page';
 import { LoginService } from '../pages/shared/services/login-page.service'
@@ -30,7 +29,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomePage,
     TinTucPage,
     ChiTietTinPage,
-    HomeFilterPipe,
     LoginPage,
     Safe,
     LktinxoaPage,

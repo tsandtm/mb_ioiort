@@ -43,4 +43,5 @@ export let IBienToanCuc = {
     "Start": 6,
     "Button_Undo": "Hoàn tác",
     "ShowToast_Xoa": "Đã xóa xong",
+    "Loading_Infinity": "Vui lòng chờ...!"
 }

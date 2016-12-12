@@ -28,6 +28,7 @@ export class HomePage {
         public navParams: NavParams, public navCtrl: NavController,
         private userWebSite: UserWebService) {
         this.IDuser = this.navParams.get('id');
+
     }
 
     ionViewDidLoad() {
@@ -39,6 +40,22 @@ export class HomePage {
                 return
             })
             .catch(err => console.log(err))
+    }
+    search() {
+        this._webService.getName(this.listFilter)
+            .then(web => {
+                this.webs1 = web;
+            }).catch(errorMessage => {
+                console.error(errorMessage.message)
+            });
+        // let val = ev.target.value;
+        // if (val && val.trim() != '') {
+        //     this.webs1 = this.webs1.filter((item) => {
+        //         let a = (item.TenGoi.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        //         let b = (item.TenGoi_KoDau.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        //         return (a || b) ? true : false
+        //     })
+        // }
 
     }
 
@@ -50,16 +67,15 @@ export class HomePage {
                     console.log(result)
                     if (result.length != 0) {
                         result.forEach(x => this.webs1.push(x))
+
                     }
                 })
             infiniteScroll.complete();
         }, 2000);
     }
 
-
     nextToPage() {
         this._webService.ShowLoading(IHomePage.ShowLoading)
-
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
 

@@ -10,12 +10,12 @@
 
 <ion-header>
   <ion-navbar color="primary" class="header" hideBackButton=true>
-    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter'></ion-searchbar>
+    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter' (ionInput)="search()"></ion-searchbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="card-background-page" #content>
-  <div *ngFor="let web of webs1 | TinDaChon:click  | homeFilter : listFilter ; let i = index">
+  <div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
     <div [class.opi]="web.GiaTri" (click)="chon(web.IDDanhMucSite,web)">
       <ion-card>
         <img [src]='web.Icon' />

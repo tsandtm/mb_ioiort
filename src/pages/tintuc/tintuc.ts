@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform,InfiniteScroll } from 'ionic-angular';
 
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
@@ -12,15 +12,14 @@ import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { Storage } from '@ionic/storage';
 import { TinquantamPage } from '../tinquantam/tinquantam';
 
-import { IBienToanCuc,ITinTuc } from '../shared/variables'
+import { IBienToanCuc } from '../shared/variables'
 
 @Component({
     selector: 'page-tintuc',
     templateUrl: 'tintuc.html'
 })
 export class TinTucPage {
-    TinMoi = ITinTuc.segment_button;
-    
+    loadingText = IBienToanCuc.Loading_Infinity;
     rootchitiet: any = ChiTietTinPage;
     newstinmoi: INews[];
     newstinnoibat: INews[] = [];
@@ -28,11 +27,10 @@ export class TinTucPage {
     start: number = IBienToanCuc.Start;
     arr: any[];
     IDuser: number;
-    constructor(private _newservice: NewsService, public navParams: NavParams, platform: Platform, public navCtrl: NavController, private storage: Storage) {
+    constructor(private _newservice: NewsService, public navParams: NavParams, 
+                platform: Platform, public navCtrl: NavController, private storage: Storage) {
         this.IDuser = this.navParams.get('id');
-        console.log("id tin tuc: " + this.IDuser);
-
-
+        console.log("id user: " + this.IDuser);
     }
 
 
@@ -50,7 +48,7 @@ export class TinTucPage {
         this.storage.clear()
         this.navCtrl.push(LoginPage)
     }
-    doInfinite(infiniteScroll) {
+    doInfinite(infiniteScroll:InfiniteScroll) {
         setTimeout(() => {
             this._newservice.getWebs(this.IDuser, this.start)
                 .then(
@@ -61,8 +59,7 @@ export class TinTucPage {
                             x.Undo = false;
                             this.newstinmoi.push(x);
                         }
-
-                        this.start = IBienToanCuc.Start;
+                        this.start += IBienToanCuc.Start;
                     }
                 })
                 .catch(errorMessage => {

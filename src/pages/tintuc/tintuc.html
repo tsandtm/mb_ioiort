@@ -1,34 +1,13 @@
-<ion-header class="body">
-    <ion-toolbar no-border-top>
-        <ion-segment>
-            <ion-segment-button value="tinmoi">
-                {{TinMoi}}
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content class="body">
     <div>
         <ion-list>
+
             <page-tinmoi [news]="newstinmoi" [IDuser]="IDuser"></page-tinmoi>
-            <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
+            <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold = "300%">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadingText}}>
                 </ion-infinite-scroll-content>
             </ion-infinite-scroll>
         </ion-list>
-
-
-        <!--<ion-list *ngSwitchCase="'tinnoibat'" class="card-tin">-->
-
-            <!--<page-tinnoibat [new]="newstinnoibat"></page-tinnoibat>-->
-            <!--<page-tinmoi [newtinnoibat]="newstinnoibat" [IDuser]="IDuser"></page-tinmoi>
-            <ion-infinite-scroll (ionInfinite)="doInfinite2($event)">
-                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Tải dữ liệu...">
-                </ion-infinite-scroll-content>
-            </ion-infinite-scroll>
-
-        </ion-list>-->
 
     </div>
     <ion-fab bottom left #fab4>

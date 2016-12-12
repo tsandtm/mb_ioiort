@@ -32,13 +32,13 @@ export class TinmoiPage {
     del = (news: INews, i) => {
 
         this.daxoa = news;
-        let index = this.news.findIndex(x => x.id === news.id ? true : false)
+        let index = this.news.findIndex(x => x.IDTinTuc === news.IDTinTuc ? true : false)
 
         this.news[index].Undo = true;
 
         console.log(this.news[index].Undo)
 
-        this._newservice.xoatin(news.id, this.IDuser)
+        this._newservice.xoatin(news.IDTinTuc, this.IDuser)
             .then(result => {
                 // xóa vị trí trước
                 if (this.vitricu !== -1) {
@@ -59,9 +59,9 @@ export class TinmoiPage {
     }
 
     Undo = (news: INews, i: number, arr) => {
-        let index = this.news.findIndex(x => x.id === news.id ? true : false)
+        let index = this.news.findIndex(x => x.IDTinTuc === news.IDTinTuc ? true : false)
         console.log(`Vị trí ${index}`)
-        this._newservice.boxoa(news.id, this.IDuser)
+        this._newservice.boxoa(news.IDTinTuc, this.IDuser)
             .then(() => {
                 this.daxoa.Undo = false
                 return this.vitricu = -1;//trả 
@@ -71,7 +71,7 @@ export class TinmoiPage {
 
     qt = (news: INews) => {
 
-        this._newservice.themtin(this.IDuser, news.id)
+        this._newservice.themtin(this.IDuser, news.IDTinTuc)
             .then(result => {
                 return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
             })
@@ -81,7 +81,7 @@ export class TinmoiPage {
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(this.IDuser, news.id)
+        this._newservice.daxem(this.IDuser, news.IDTinTuc)
             .then(result => {
                 return
             })

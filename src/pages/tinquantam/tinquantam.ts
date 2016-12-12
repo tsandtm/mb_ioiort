@@ -35,7 +35,7 @@ export class TinquantamPage {
   }
   del = (news: INews, i) => {
 
-    this._newsService.xoatinquantam(news.id, this.IDuser)
+    this._newsService.xoatinquantam(news.IDTinTuc, this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
@@ -48,7 +48,7 @@ export class TinquantamPage {
   }
 
   daxem = (news: INews) => {
-    this._newsService.daxem(news.id, this.IDuser)
+    this._newsService.daxem(news.IDTinTuc, this.IDuser)
       .then(result => {
 
       })

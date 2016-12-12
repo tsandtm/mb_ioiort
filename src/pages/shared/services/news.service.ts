@@ -16,12 +16,11 @@ export class NewsService extends ServiceBase {
     }
 
     /**api load tat ca cac tin moi tru nhung tin minh da xoa */
-    getWebs(id, start: number): Promise<INews[]> {
-        return this.http.get(`${url}/tintuc/${id}?limit=${this.limit}&offset=${start}`)
+    getWebs(id, start: number,limit:number = this.limit): Promise<INews[]> {
+        return this.http.get(`${url}/tintuc/${id}?limit=${limit}&offset=${start}`)
                 .toPromise()
                 .then(res => res.json() as INews[])
                 .catch(this.handleError)
-
        
     }
 

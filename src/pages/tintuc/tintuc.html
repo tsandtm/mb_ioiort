@@ -1,15 +1,17 @@
 <ion-content class="body">
-    <div>
-        <ion-list>
+    <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
 
-            <page-tinmoi [news]="newstinmoi" [IDuser]="IDuser"></page-tinmoi>
-            <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold = "300%">
-                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadingText}}>
-                </ion-infinite-scroll-content>
-            </ion-infinite-scroll>
-        </ion-list>
+    <ion-list>
+        <page-tinmoi [news]="newstinmoi" [IDuser]="IDuser"></page-tinmoi>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="300%">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadingText}}>
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
-    </div>
     <ion-fab bottom left #fab4>
         <button ion-fab color="primary" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
         <ion-fab-list side="top">

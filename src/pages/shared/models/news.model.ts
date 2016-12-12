@@ -1,5 +1,5 @@
 export interface INews{
-        id?:number;
+        IDTinTuc?:number;
         IDDanhMucSite?:number;
         TieuDe?:string;
         MoTa?:string;

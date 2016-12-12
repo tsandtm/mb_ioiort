@@ -53,7 +53,7 @@ export class LktinxoaPage {
   }
 
   boxoa = (news: INews, i) => {
-    this._newservice.boxoa(news.id, this.IDuser)
+    this._newservice.boxoa(news.IDTinTuc, this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);

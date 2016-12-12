@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController, NavParams, Platform,InfiniteScroll } from 'ionic-angular';
+import { NavController, NavParams, Platform, InfiniteScroll, Refresher } from 'ionic-angular';
 
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
@@ -22,13 +22,12 @@ export class TinTucPage {
     loadingText = IBienToanCuc.Loading_Infinity;
     rootchitiet: any = ChiTietTinPage;
     newstinmoi: INews[];
-    newstinnoibat: INews[] = [];
     news: INews[];
     start: number = IBienToanCuc.Start;
     arr: any[];
     IDuser: number;
-    constructor(private _newservice: NewsService, public navParams: NavParams, 
-                platform: Platform, public navCtrl: NavController, private storage: Storage) {
+    constructor(private _newservice: NewsService, public navParams: NavParams,
+        platform: Platform, public navCtrl: NavController, private storage: Storage) {
         this.IDuser = this.navParams.get('id');
         console.log("id user: " + this.IDuser);
     }
@@ -48,7 +47,7 @@ export class TinTucPage {
         this.storage.clear()
         this.navCtrl.push(LoginPage)
     }
-    doInfinite(infiniteScroll:InfiniteScroll) {
+    doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this._newservice.getWebs(this.IDuser, this.start)
                 .then(
@@ -80,10 +79,40 @@ export class TinTucPage {
                     value.ChuaXem = true;
                     value.Undo = false;
                 })
+
                 return this.newstinmoi = nw;
             })
             .catch(errorMessage => {
                 console.error(errorMessage.message)
             })
+    }
+
+    doRefresh = (refresher: Refresher) => {
+        // console.log('DOREFRESH', refresher);
+        setTimeout(() => {
+            this._newservice.getWebs(this.IDuser, 0, 3)
+                .then(nw => {
+                    nw.forEach(value => {
+                        value.ChuaXem = true;
+                        value.Undo = false;
+                        console.log(value)
+                        console.log(typeof value.IDDanhMucSite)
+                        // this.newstinmoi.forEach(x => {
+                        //     x.IDDanhMucSite == value.IDDanhMucSite ? this.newstinmoi.unshift(x) : console.log(`${x.IDDanhMucSite} đã có `)
+                        // })
+                    })
+
+                    // this.newstinmoi.unshift(nw)
+                    refresher.complete();
+                    return;
+                })
+                .catch(errorMessage => {
+                    console.error(errorMessage.message)
+                })
+        }, 2000);
+    }
+
+    doPulling(refresher: Refresher) {
+        // console.log('DOPULLING', refresher.progress);
     }
 }

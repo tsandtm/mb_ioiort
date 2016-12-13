@@ -10,7 +10,7 @@
     <img src="http://kenh14cdn.com/2016/hqdefault-1471067394884.jpg" />
   </div>
 </ion-list-header>
-<div *ngFor="let n of news,let i = index" [class.opi]="n.ChuaXem">
+<div *ngFor="let n of news,let i = index"  [class.undo]="n.Undo" [class.opi]="n.ChuaXem">
   <ion-card>
     <ion-item-sliding>
       <ion-item (click)="daxem(n)" (click)="goDetail($event,i,news)" *ngIf="!n.Undo">
@@ -24,7 +24,7 @@
           <p>{{n.MoTa}}</p>
         </ion-card-content>
       </ion-item>
-      <ion-item *ngIf="n.Undo" (click)="Undo(n,i)">
+      <ion-item *ngIf="n.Undo"  (click)="Undo(n,i)">
         <strong>{{Text_Undo}}</strong>
       </ion-item>
 

@@ -24,7 +24,7 @@ export class LoginService extends ServiceBase {
                     return respone;
                 }
                 if (respone.status == 400)
-                    return `Khong Co`
+                    return 0;
             })
             .catch(this.handleError)
     }

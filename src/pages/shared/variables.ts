@@ -7,7 +7,7 @@ export let urllogin = `localhost:8080/tintuc/`
  */
 export let IHomePage = {
     "Button_Next": "Tiếp theo",
-    "Label_Dachon": "Đã chọn: ",
+    "Label_Dachon": "ĐÃ CHỌN: ",
     "ShowLoading": "Vui lòng chờ..!"
 }
 export let ITinXoa = {
@@ -27,13 +27,14 @@ export let ILoginPage = {
 }
 export let ITinQuanTam = {
     "Title": "Tin quan tâm",
-    "Button_Dislike": "Không thích"
+    "Button_Dislike": "Không thích",
+    "ShowToast_Xoa":"Đã bỏ quan tâm"
 }
 export let ITinTuc = {
     "segment_button": "Tin mới"
 }
 export let ITinMoi = {
-    "Undo": "Undo",
+    "Undo": "Hoàn tác",
     "ShowToast_Xoa": "Đã xóa xong",
     "ShowToast_Them": "Đã thêm",
 }

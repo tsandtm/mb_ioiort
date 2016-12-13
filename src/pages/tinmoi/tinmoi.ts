@@ -71,7 +71,7 @@ export class TinmoiPage {
 
     qt = (news: INews) => {
 
-        this._newservice.themtin(this.IDuser, news.IDTinTuc)
+        this._newservice.themtin(news.IDTinTuc,this.IDuser)
             .then(result => {
                 return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
             })
@@ -81,7 +81,7 @@ export class TinmoiPage {
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(this.IDuser, news.IDTinTuc)
+        this._newservice.daxem(news.IDTinTuc,this.IDuser)
             .then(result => {
                 return
             })

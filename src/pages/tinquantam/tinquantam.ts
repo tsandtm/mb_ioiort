@@ -39,7 +39,7 @@ export class TinquantamPage {
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
-        this._newsService.ShowToastOK(IBienToanCuc.ShowToast_Xoa, { position: "middle" })
+        this._newsService.ShowToastOK(ITinQuanTam.ShowToast_Xoa, { position: "middle" })
 
       })
       .catch(error => {

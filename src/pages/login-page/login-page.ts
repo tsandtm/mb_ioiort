@@ -102,7 +102,7 @@ export class LoginPage {
             if (this.username && this.password)
                 this.service.LoginToSever(this.username, this.password)
                     .then(result => {
-                        if (result !== 'Khong Co') {
+                        if (result !== 0) {
                             this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
                             this.IDuser = result._body;
                             console.log("id user:" + this.IDuser);

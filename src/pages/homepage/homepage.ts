@@ -27,7 +27,8 @@ export class HomePage {
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
         private userWebSite: UserWebService) {
-        this.IDuser = this.navParams.get('id');
+        this.IDuser = 1;
+        // this.navParams.get('id');
 
     }
 

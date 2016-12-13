@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
-import { INews } from '../shared/models/news.model'
-import { TinTucPage } from '../tintuc/tintuc'
+import { INews } from '../shared/models/news.model';
+import { TinTucPage } from '../tintuc/tintuc';
+import { IBienToanCuc,ITinQuanTam } from '../shared/variables'
 
 /*
   Generated class for the Lktindaxoa page.
@@ -57,6 +58,8 @@ export class LktinxoaPage {
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
+        this._newservice.ShowToastOK(IBienToanCuc.ShowToast_Xoa, { position: "middle" })
+
       })
       .catch(error => {
         alert('Loi' + error.message);

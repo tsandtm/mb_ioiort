@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+// import {RouterModule,Routes} from 'angular2/router';
 import { MyApp } from './app.component';
 import { TinTucPage } from '../pages/tintuc/tintuc';
 import { ChiTietTinPage } from '../pages/chitiettin/chitiettin';
@@ -15,6 +15,7 @@ import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 import { TinmoiPage } from '../pages/tinmoi/tinmoi'
+import {Facebook} from 'ionic-native';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
 export class MyHammerConfig extends HammerGestureConfig {
@@ -59,7 +60,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
-    },
+    },Facebook
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

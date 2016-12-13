@@ -95,23 +95,28 @@ export class TinTucPage {
                     nw.forEach(value => {
                         value.ChuaXem = true;
                         value.Undo = false;
-                        console.log(value)
-                        console.log(typeof value.IDDanhMucSite)
-                        // this.newstinmoi.forEach(x => {
-                        //     x.IDDanhMucSite == value.IDDanhMucSite ? this.newstinmoi.unshift(x) : console.log(`${x.IDDanhMucSite} đã có `)
-                        // })
                     })
-
-                    // this.newstinmoi.unshift(nw)
                     refresher.complete();
-                    return;
+                    return Promise.resolve(nw);
+                })
+                .then((res) => {
+                    this.newstinmoi.forEach(x=>{
+                        res.forEach((value,index) => {
+                            if(x.IDTinTuc === value.IDTinTuc){
+                                this.newstinmoi.unshift(value);
+                                res.splice(index,1);
+                                return;
+                            }
+                            res.splice(index,1);
+                        })
+                    })
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
                 })
         }, 2000);
     }
-
+// !(this.newstinmoi[i].IDTinTuc === res[j].IDTinTuc) ? this.newstinmoi.unshift(res[j]) : console.log(`${res[j].IDTinTuc} Đã có`)
     doPulling(refresher: Refresher) {
         // console.log('DOPULLING', refresher.progress);
     }

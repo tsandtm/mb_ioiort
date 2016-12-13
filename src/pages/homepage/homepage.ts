@@ -36,7 +36,7 @@ export class HomePage {
             .then(res => {
                 this.webs1 = res
                 this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                console.log(this.webs1)
+                // console.log(this.webs1)
                 return
             })
             .catch(err => console.log(err))
@@ -48,14 +48,6 @@ export class HomePage {
             }).catch(errorMessage => {
                 console.error(errorMessage.message)
             });
-        // let val = ev.target.value;
-        // if (val && val.trim() != '') {
-        //     this.webs1 = this.webs1.filter((item) => {
-        //         let a = (item.TenGoi.toLowerCase().indexOf(val.toLowerCase()) > -1);
-        //         let b = (item.TenGoi_KoDau.toLowerCase().indexOf(val.toLowerCase()) > -1)
-        //         return (a || b) ? true : false
-        //     })
-        // }
 
     }
 

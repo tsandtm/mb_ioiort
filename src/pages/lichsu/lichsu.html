@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <!--hideBackButton=true-->
+        <ion-title>Lịch sử theo dõi</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-tabs class="tabs-icon" color="primary">
+    <ion-tab tabIcon="time" tabTitle="Lịch sử" [root]="tab3" [rootParams]="params"></ion-tab>
+    <ion-tab tabIcon="trash" tabTitle="Tin đã xóa" [root]="tab1" [rootParams]="params"></ion-tab>
+    <ion-tab tabIcon="star" tabTitle="Tin quan tâm" [root]="tab2" [rootParams]="params"></ion-tab>
+</ion-tabs>

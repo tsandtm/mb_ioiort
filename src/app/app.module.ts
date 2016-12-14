@@ -20,7 +20,8 @@ import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-br
 import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular'
 import { SENDER_ID } from '../pages/shared/variables'
-
+import { LichSuPage } from '../pages/lichsu/lichsu';
+import { TinDaXemPage } from '../pages/tindaxem/tindaxem';
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
     'swipe': { velocity: 0.4, threshold: 20 } // override default settings
@@ -57,7 +58,9 @@ const cloudsetting: CloudSettings = {
     LktinxoaPage,
     TinquantamPage,
     TinmoiPage,
-    HomeFilterNews
+    HomeFilterNews,
+    LichSuPage,
+    TinDaXemPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -73,6 +76,8 @@ const cloudsetting: CloudSettings = {
     LktinxoaPage,
     TinquantamPage,
     TinmoiPage,
+    LichSuPage,
+    TinDaXemPage
   ],
   providers: [
     WebsService,

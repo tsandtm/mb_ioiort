@@ -26,8 +26,7 @@ export class HomePage {
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
         private userWebSite: UserWebService) {
-        this.IDuser = 1;
-        // this.navParams.get('id');
+        this.IDuser = this.navParams.get('id');
 
     }
 
@@ -42,6 +41,7 @@ export class HomePage {
             .catch(err => console.log(err))
     }
     search() {
+
         this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
                 this.webs1 = web;

@@ -3,20 +3,19 @@ import { ToastController, Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { ServiceBase } from './service.base';
 import { IUser } from '../models/user.model';
+import { urllogin,url } from '../variables'
 @Injectable()
 export class LoginService extends ServiceBase {
-
-    urlAPI = `localhost:8080/tintuc/`
 
     constructor(private http: Http, private toast: ToastController, private platfrom: Platform) {
         super(toast, null, http, platfrom)
     }
     public LoginToSever(user: any, pass: any): Promise<any> {
-        let U: IUser = {
-            TaiKhoan: user,
-            Password: pass
-        }
-        return this.http.post(`http://localhost:8080/tintuc/login`, U)
+        // let U: IUser = {
+        //     TaiKhoan: user,
+        //     Password: pass
+        // }
+        return this.http.post(`${urllogin}login`,{TaiKhoan:user,Password:pass})
             .toPromise()
             .then(respone => {
                 if (respone.status == 200) {
@@ -28,18 +27,18 @@ export class LoginService extends ServiceBase {
             })
             .catch(this.handleError)
     }
-   
+
     public GetCount(id: number): Promise<any> {
-        return this.http.post(`http://localhost:8080/api/getCountNews`, { id }).toPromise().then(res => { return res.json() }).catch(err => { return 0 });
+        return this.http.post(`${url}getCountNews`, { id }).toPromise().then(res => { return res.json() }).catch(err => { return 0 });
     }
     public GetCountFacebook(Facebook): Promise<any> // tra ve id user
     {
-        return this.http.post(`http://localhost:8080/Facebook/GetUserFacebook`, { Facebook: Facebook }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
+        return this.http.post(`${urllogin}Facebook/GetUserFacebook`, { Facebook: Facebook }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
     }
     public InserUserFacebook(Facebook, name, email, token): Promise<any> // them user neu chua co
     {
         console.log("facebook:" + Facebook);
-        return this.http.post(`http://localhost:8080/Facebook/InsertUserFacebook`, { Facebook: Facebook, name: name, email: email, token: token }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
+        return this.http.post(`${urllogin}Facebook/InsertUserFacebook`, { Facebook: Facebook, name: name, email: email, token: token }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
     }
 }
 

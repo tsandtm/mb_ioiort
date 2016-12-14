@@ -1,26 +1,25 @@
-<ion-content class="body">
-    <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
-        </ion-refresher-content>
-    </ion-refresher>
+<ion-content class="body" scroll="true">
+        <ion-refresher (ionRefresh)="doRefresh($event)" (ionPull)="doPulling($event)">
+            <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+            </ion-refresher-content>
+        </ion-refresher>
 
-    <ion-list>
         <page-tinmoi [news]="newstinmoi" [IDuser]="IDuser"></page-tinmoi>
-    </ion-list>
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="300%">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadingText}}>
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
 
-    <ion-fab bottom left #fab4>
-        <button ion-fab color="primary" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
-        <ion-fab-list side="top">
-            <button ion-fab (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
-            <button ion-fab (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
-            <button ion-fab (click)='lktindaxoa()'><ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>
-            <button ion-fab color="light" (click)='lktinquantam()'> <ion-icon name="heart"></ion-icon></button>
-        </ion-fab-list>
-    </ion-fab>
+
+        <ion-fab bottom left #fab4>
+            <button ion-fab color="primary" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
+            <ion-fab-list side="top">
+                <button ion-fab (click)='trove()'><ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon></button>
+                <button ion-fab (click)='dangxuat()'> <ion-icon name="log-out"></ion-icon></button>
+                <button ion-fab (click)='history()'>  <ion-icon ios="ios-timer" md="md-timer"></ion-icon></button>
+                <!--<button ion-fab color="light" (click)='lktinquantam()'> <ion-icon name="heart"></ion-icon></button>-->
+            </ion-fab-list>
+        </ion-fab>
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="300%">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadingText}}>
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
 </ion-content>
 
 <style>

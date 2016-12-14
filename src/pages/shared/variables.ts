@@ -1,9 +1,10 @@
-export let url = 'http://localhost:8080/api';
-// export let url = `http://test4.hutech.edu.vn/api`
+// export let url = 'http://localhost:8080/api';
+export let url = `http://test4.hutech.edu.vn/api/`
 // export let urllogin = `http://test4.hutech.edu.vn/tintuc/`
 export let urllog = 'http://test1.hutech.edu.vn/';
-// export let urllogin = `localhost:8080/tintuc/`
+export let urllogin = `localhost:8080/tintuc/`
 export let SENDER_ID = "413199343728";
+
 /**
  * Trang HomePage
  */

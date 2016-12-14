@@ -47,13 +47,6 @@ export class NewsService extends ServiceBase {
     }
     //load api tin noi bat 
 
-    tinnoibat(id, start: number): Promise<INews[]> {
-        return this.http.get(`${url}/tinnoibat/${id}?limit=${this.limit}&offset=${start}`)
-            .toPromise()
-            .then(res => res.json())
-            .catch(this.handleError)
-
-    }
     //bo xoa nhung tin minh moi xoa luu trong lich su xoa
 
     public boxoa(id: number, IDUser): Promise<number> {
@@ -69,6 +62,13 @@ export class NewsService extends ServiceBase {
             .then(res => res.json() as INews[])
             .catch(this.handleError)
 
+
+    }
+    tindaxem(id, start: number): Promise<INews[]> {
+        return  this.http.get(`${url}/tindaxem/${id}?limit=${this.limit}&offset=${start}`)
+                .toPromise()
+                .then(res => res.json() as INews[])
+                .catch(this.handleError)
     }
     public daxem(id: number, IDUser): Promise<number> {
         return this.http.post(`${url}/daxem`, { id: id, IDUser: IDUser }).toPromise()

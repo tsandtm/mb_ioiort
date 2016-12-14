@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model';
 import { TinTucPage } from '../tintuc/tintuc';
-import { IBienToanCuc,ITinQuanTam } from '../shared/variables'
+import { IBienToanCuc, ITinQuanTam } from '../shared/variables'
+import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*
   Generated class for the Lktindaxoa page.
@@ -16,12 +17,12 @@ import { IBienToanCuc,ITinQuanTam } from '../shared/variables'
 })
 export class LktinxoaPage {
   new: INews[];
+  IDuser: number;
   public start: number = 6;
 
-  IDuser: number;
   constructor(public navCtrl: NavController, public navParams: NavParams, private _newservice: NewsService) {
-    this.IDuser = this.navParams.get('id');
-
+    this.IDuser = this.navParams.data;
+    console.log("id xoa: " + navParams.data);
   }
 
   ngOnInit(): void {
@@ -52,7 +53,10 @@ export class LktinxoaPage {
       infiniteScroll.complete();
     }, 2000);
   }
-
+  goDetail($event, index) {
+    console.log("index " + index);
+    this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
+  }
   boxoa = (news: INews, i) => {
     this._newservice.boxoa(news.IDTinTuc, this.IDuser)
       .then(result => {
@@ -67,10 +71,6 @@ export class LktinxoaPage {
       })
   }
 
-
-  trove = () => {
-    this.navCtrl.push(TinTucPage)
-  }
   ionViewDidLoad() {
     console.log('Hello LktindaxoaPage Page');
   }

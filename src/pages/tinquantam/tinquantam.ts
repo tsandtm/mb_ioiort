@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service'
 import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
-import { IBienToanCuc,ITinQuanTam } from '../shared/variables'
+import { IBienToanCuc, ITinQuanTam } from '../shared/variables'
 
 /*
   Generated class for the Tinquantam page.
@@ -24,7 +24,8 @@ export class TinquantamPage {
   IDuser: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _newsService: NewsService) {
-    this.IDuser = this.navParams.get('id');
+    this.IDuser = this.navParams.data;
+    console.log("id quan tam: " + this.IDuser);
   }
   ngOnInit(): void {
     this._newsService.tinquantam(this.IDuser, 0)
@@ -68,7 +69,7 @@ export class TinquantamPage {
           if (res.length !== 0) {
             for (let x of res)
               this.new.push(x);
-            this.start = this.start*2;
+            this.start = this.start * 2;
           }
         })
         .catch(errorMessage => {

@@ -90,34 +90,36 @@ export class LoginPage {
 
 
     ionViewDidLoad() {
-        this.storage.forEach((value, key) => {
-            switch (key) {
-                case "TaiKhoan": this.username = value; break;
-                case "Password": this.password = value; break;
-                case "Checkbox": this.save = value; break
-                default:
-            }
-            console.log(`${this.username}${this.password}`)
-            //login bebinh
-            if (this.username && this.password)
-                this.service.LoginToSever(this.username, this.password)
-                    .then(result => {
-                        if (result !== 0) {
-                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
-                            this.IDuser = result._body;
-                            console.log("id user:" + this.IDuser);
-                            this.navCtrl.push(HomePage, { id: this.IDuser });
-                        }
-                        else {
-                            console.log(result)
-                            this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
-                            return
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-        })
+        this.navCtrl.push(HomePage, { id: 1 });
+        // this.storage.forEach((value, key) => {
+        //     switch (key) {
+        //         case "TaiKhoan": this.username = value; break;
+        //         case "Password": this.password = value; break;
+        //         case "Checkbox": this.save = value; break
+        //         default:
+        //     }
+        //     console.log(`${this.username}${this.password}`)
+        //     //login bebinh
+        //     if (this.username && this.password)
+        //         this.service.LoginToSever(this.username, this.password)
+        //             .then(result => {
+        //                 if (result !== 0) {
+        //                     this.IDuser = result._body;
+        //                     // console.log("id user:" + this.IDuser);
+        //                     this.navCtrl.push(HomePage, { id: this.IDuser });
+        //                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
+        //                     return
+        //                 }
+        //                 else {
+        //                     console.log(result)
+        //                     this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
+        //                     return
+        //                 }
+        //             })
+        //             .catch(err => {
+        //                 console.log(err)
+        //             })
+        // })
     }
 
 
@@ -125,10 +127,9 @@ export class LoginPage {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
                 if (result !== 0) {
-                    console.log("id " + result._body);
                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
-                    console.log("id user:" + this.IDuser);
+                    // console.log("id user:" + this.IDuser);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);

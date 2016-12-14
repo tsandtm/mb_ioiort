@@ -13,10 +13,13 @@ import { LoginPage } from '../pages/login-page/login-page';
 import { LoginService } from '../pages/shared/services/login-page.service'
 import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
-import { Safe } from '../pages/chitiettin/safe'
-import { TinmoiPage } from '../pages/tinmoi/tinmoi'
+import { Safe } from '../pages/chitiettin/safe';
+import { TinmoiPage } from '../pages/tinmoi/tinmoi';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
+import { LichSuPage } from '../pages/lichsu/lichsu';
+import {TinDaXemPage} from '../pages/tindaxem/tindaxem';
+
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
     'swipe': { velocity: 0.4, threshold: 20 } // override default settings
@@ -34,7 +37,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     LktinxoaPage,
     TinquantamPage,
     TinmoiPage,
-    HomeFilterNews
+    HomeFilterNews,
+    LichSuPage,
+    TinDaXemPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -49,6 +54,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     LktinxoaPage,
     TinquantamPage,
     TinmoiPage,
+    LichSuPage,
+    TinDaXemPage
   ],
   providers: [
     WebsService,

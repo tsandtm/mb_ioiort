@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
-
 import { NavController, NavParams, Platform, InfiniteScroll, Refresher } from 'ionic-angular';
-
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
-
 import { HomePage } from '../homepage/homepage';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model'
 import { LoginPage } from '../login-page/login-page';
-import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { Storage } from '@ionic/storage';
-import { TinquantamPage } from '../tinquantam/tinquantam';
+import { LichSuPage } from '../lichsu/lichsu';
 
 import { IBienToanCuc } from '../shared/variables'
 
@@ -36,12 +32,8 @@ export class TinTucPage {
     trove = () => {
         this.navCtrl.push(HomePage, { id: this.IDuser })
     }
-
-    lktindaxoa = () => {
-        this.navCtrl.push(LktinxoaPage, { id: this.IDuser });
-    }
-    lktinquantam() {
-        this.navCtrl.push(TinquantamPage, { id: this.IDuser });
+    history = () => {
+        this.navCtrl.push(LichSuPage, { id: this.IDuser });
     }
     dangxuat = () => {
         this.storage.clear()

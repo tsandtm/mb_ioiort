@@ -17,18 +17,18 @@
                     <br/> {{n.ThoiGianDangTin | date: 'dd/MM/yyyy HH:mm'}}
                 </ion-item>
 
-                <ion-item-options (swipe)="boxoa(n,i)" side="right">
+                <!--<ion-item-options (swipe)="boxoa(n,i)" >
                     <button ion-button color="danger" expandable (click)="boxoa(n,i)">
 						<ion-icon name="heart"></ion-icon>
 						<div>Bỏ Xóa</div>
 						</button>
-                </ion-item-options>
-                 <ion-item-options (swipe)="boxoa(n,i)" side="left">
+                </ion-item-options>-->
+                 <!--<ion-item-options (swipe)="boxoa(n,i)" side="left">
                     <button ion-button color="danger" expandable (click)="boxoa(n,i)">
 						<ion-icon name="heart"></ion-icon>
 						<div>Bỏ Xóa</div>
 						</button>
-                </ion-item-options>
+                </ion-item-options>-->
             </ion-item-sliding>
         </ion-card>
         <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

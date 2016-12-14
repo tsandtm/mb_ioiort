@@ -2,6 +2,9 @@ export let url = 'http://localhost:8080/api';
 export let urllog = 'http://localhost:8080/';
 export let urllogin = `localhost:8080/tintuc/`
 
+// export let url = `http://test4.hutech.edu.vn/api`
+// export let urllogin = `http://test4.hutech.edu.vn/tintuc/`
+// export let urllog = 'http://localhost:8080/';
 /**
  * Trang HomePage
  */

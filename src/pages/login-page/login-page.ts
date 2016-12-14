@@ -103,10 +103,11 @@ export class LoginPage {
                 this.service.LoginToSever(this.username, this.password)
                     .then(result => {
                         if (result !== 0) {
-                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
                             this.IDuser = result._body;
-                            console.log("id user:" + this.IDuser);
+                            // console.log("id user:" + this.IDuser);
                             this.navCtrl.push(HomePage, { id: this.IDuser });
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
+                            return
                         }
                         else {
                             console.log(result)
@@ -125,10 +126,10 @@ export class LoginPage {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
                 if (result !== 0) {
-                    console.log("id " + result._body);
-                    this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top' });
+                    // console.log("id " + result._body);
+                    this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
-                    console.log("id user:" + this.IDuser);
+                    // console.log("id user:" + this.IDuser);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);

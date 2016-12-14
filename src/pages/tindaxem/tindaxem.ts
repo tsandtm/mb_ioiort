@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model';
@@ -12,21 +12,21 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-lktinxoa',
-  templateUrl: 'lktinxoa.html'
+  selector: 'page-tindaxem',
+  templateUrl: 'tindaxem.html'
 })
-export class LktinxoaPage {
+export class TinDaXemPage {
   new: INews[];
   IDuser: number;
   public start: number = 6;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private _newservice: NewsService) {
     this.IDuser = this.navParams.data;
-    console.log("id xoa: " + navParams.data);
+    console.log("id xoa: "+ navParams.data);
   }
 
   ngOnInit(): void {
-    this._newservice.lkxoa(this.IDuser, 0)
+    this._newservice.tindaxem(this.IDuser, 0)
       .then(news => this.new = news)
       .catch(errorMessage => {
         console.log(errorMessage.message)
@@ -36,7 +36,7 @@ export class LktinxoaPage {
   doInfinite(infiniteScroll) {
     console.log('Begin async operation');
     setTimeout(() => {
-      this._newservice.lkxoa(this.IDuser, this.start)
+      this._newservice.tindaxem(this.IDuser, this.start)
         .then(
         (res) => {
           if (res.length !== 0) {
@@ -53,23 +53,25 @@ export class LktinxoaPage {
       infiniteScroll.complete();
     }, 2000);
   }
+
   goDetail($event, index) {
     console.log("index " + index);
     this.navCtrl.push(ChiTietTinPage, { index, news: this.new });
   }
-  boxoa = (news: INews, i) => {
-    this._newservice.boxoa(news.IDTinTuc, this.IDuser)
-      .then(result => {
-        console.log('Da xoa');
-        this.new.splice(i, 1);
-        this._newservice.ShowToastOK(IBienToanCuc.ShowToast_Xoa, { position: "middle" })
 
-      })
-      .catch(error => {
-        alert('Loi' + error.message);
+//   boxoa = (news: INews, i) => {
+//     this._newservice.boxoa(news.IDTinTuc, this.IDuser)
+//       .then(result => {
+//         console.log('Da xoa');
+//         this.new.splice(i, 1);
+//         this._newservice.ShowToastOK(IBienToanCuc.ShowToast_Xoa, { position: "middle" })
 
-      })
-  }
+//       })
+//       .catch(error => {
+//         alert('Loi' + error.message);
+
+//       })
+//   }
 
   ionViewDidLoad() {
     console.log('Hello LktindaxoaPage Page');

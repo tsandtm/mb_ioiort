@@ -4,17 +4,12 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{Title}}</ion-title>
-  </ion-navbar>
-</ion-header>
 <ion-content padding>
   <ion-list>
     <ion-card *ngFor="let n of new,let i = index">
       <ion-item-sliding>
 
-        <ion-item (click)="goDetail($event,i)">
+        <ion-item (tap)="goDetail($event,i)">
           <ion-thumbnail item-left>
             <img [src]=n.URLThumbImage class="img">
           </ion-thumbnail>
@@ -22,16 +17,16 @@
           <br/> {{n.ThoiGianDangTin | date: 'dd/MM/yyyy HH:mm'}}
         </ion-item>
 
-        <ion-item-options (ionSwipe)="del(n,i)" side="right">
-          <button ion-button color="danger" expandable (click)="del(n,i)">
+        <ion-item-options (swipe)="del(n,i)" side="right">
+          <button ion-button color="danger" expandable (tap)="del(n,i)">
 						<ion-icon ios="ios-heart" md="md-heart"></ion-icon>
 						<div>{{Dislike}}</div>
 
 						</button>
         </ion-item-options>
 
-        <ion-item-options (ionSwipe)="del(n,i) " side="left">
-          <button ion-button color="danger" expandable (click)="del(n,i)">
+        <ion-item-options (swipe)="del(n,i) " side="left">
+          <button ion-button color="danger" expandable (tap)="del(n,i)">
 						<ion-icon ios="ios-heart" md="md-heart"></ion-icon>
 						<div>{{Dislike}}</div>
 						</button>

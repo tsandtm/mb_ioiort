@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs'
+import { Subject } from 'rxjs'
 import 'rxjs/add/operator/toPromise';
 import { INews } from '../models/news.model';
 import { url } from '../variables';
@@ -16,12 +16,15 @@ export class NewsService extends ServiceBase {
     }
 
     /**api load tat ca cac tin moi tru nhung tin minh da xoa */
-    getWebs(id, start: number,limit:number = this.limit): Promise<INews[]> {
+    getWebs(id, start: number, limit: number = this.limit): Promise<INews[]> {
+        let subject = new Subject();
+        subject.next
         return this.http.get(`${url}/tintuc/${id}?limit=${limit}&offset=${start}`)
-                .toPromise()
-                .then(res => res.json() as INews[])
-                .catch(this.handleError)
-       
+            .cache()
+            .toPromise()
+            .then(res => res.json() as INews[])
+            .catch(this.handleError)
+
     }
 
 
@@ -29,11 +32,11 @@ export class NewsService extends ServiceBase {
 
     tinquantam(id, start: number, IDUser?): Promise<INews[]> {
         return this.http.get(`${!IDUser ? ` ${url}/tinquantam/${id}?limit=${this.limit}&offset=${start}` :
-                ` ${url}/tinquantam/${id}/${IDUser}?limit=${this.limit}&offset=${start}`}   `)
-                .toPromise()
-                .then(res => res.json() as INews[])
-                .catch(this.handleError)
-       
+            ` ${url}/tinquantam/${id}/${IDUser}?limit=${this.limit}&offset=${start}`}   `)
+            .toPromise()
+            .then(res => res.json() as INews[])
+            .catch(this.handleError)
+
     }
     //xoa tin quan tam minh` moi them vao
 
@@ -45,11 +48,11 @@ export class NewsService extends ServiceBase {
     //load api tin noi bat 
 
     tinnoibat(id, start: number): Promise<INews[]> {
-        return  this.http.get(`${url}/tinnoibat/${id}?limit=${this.limit}&offset=${start}`)
-                .toPromise()
-                .then(res => res.json())
-                .catch(this.handleError)
-        
+        return this.http.get(`${url}/tinnoibat/${id}?limit=${this.limit}&offset=${start}`)
+            .toPromise()
+            .then(res => res.json())
+            .catch(this.handleError)
+
     }
     //bo xoa nhung tin minh moi xoa luu trong lich su xoa
 
@@ -61,11 +64,11 @@ export class NewsService extends ServiceBase {
     //api liet ke nhung tin minh moi xoa xong
 
     lktindaxoa(id, start: number): Promise<INews[]> {
-        return  this.http.get(`${url}/tindaxoa/${id}?limit=${this.limit}&offset=${start}`)
-                .toPromise()
-                .then(res => res.json() as INews[])
-                .catch(this.handleError)
-       
+        return this.http.get(`${url}/tindaxoa/${id}?limit=${this.limit}&offset=${start}`)
+            .toPromise()
+            .then(res => res.json() as INews[])
+            .catch(this.handleError)
+
     }
     public daxem(id: number, IDUser): Promise<number> {
         return this.http.post(`${url}/daxem`, { id: id, IDUser: IDUser }).toPromise()

@@ -96,7 +96,7 @@ export class ChiTietTinPage implements OnInit {
             })
     }
 
-    swipe = (currentIndex: number, action = this.SWIPE_ACTION.RIGHT) => {
+    swipe = (action = this.SWIPE_ACTION.RIGHT) => {
         // if (this.nnew[this.index + 1] > this.nnew.length) {
         //     this._newsService.getNew(this.index).then(result => {
         //         this.nnew.push(result)

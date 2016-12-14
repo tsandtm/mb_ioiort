@@ -32,7 +32,7 @@
   
   <ion-content class='padding has-subheader' z-index>
     <ion-slides pager>
-      <ion-slide style="height:98%" (swipeleft)="swipe(idx, $event.type)" (swiperight)="swipe(idx, $event.type)" >
+      <ion-slide style="height:98%" (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)" >
         <iframe #iframe class='webPage' style="height:100%;" name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
           id="IDTinTuc" frameborder="0" allowfullscreen >
         </iframe>

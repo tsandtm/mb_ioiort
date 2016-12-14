@@ -53,11 +53,11 @@ export class TinTucPage {
                 .then(
                 (res) => {
                     if (res.length !== 0) {
-                        for (let x of res) {
+                        res.forEach(x => {
                             x.ChuaXem = true
                             x.Undo = false;
                             this.newstinmoi.push(x);
-                        }
+                        })
                         this.start += IBienToanCuc.Start;
                     }
                 })
@@ -100,23 +100,23 @@ export class TinTucPage {
                     return Promise.resolve(nw);
                 })
                 .then((res) => {
-                    this.newstinmoi.forEach(x=>{
-                        res.forEach((value,index) => {
-                            if(x.IDTinTuc === value.IDTinTuc){
-                                this.newstinmoi.unshift(value);
-                                res.splice(index,1);
-                                return;
+                    res.some((value, index) => {
+                        return this.newstinmoi.some(x => {
+                            if (value.IDTinTuc !== x.IDTinTuc) {    
+                                this.newstinmoi.push(value)
+                                res.splice(index, 1);
+                                return true
                             }
-                            res.splice(index,1);
+                            else return false
                         })
                     })
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
                 })
-        }, 2000);
+        }, 1000);
     }
-// !(this.newstinmoi[i].IDTinTuc === res[j].IDTinTuc) ? this.newstinmoi.unshift(res[j]) : console.log(`${res[j].IDTinTuc} Đã có`)
+    // !(this.newstinmoi[i].IDTinTuc === res[j].IDTinTuc) ? this.newstinmoi.unshift(res[j]) : console.log(`${res[j].IDTinTuc} Đã có`)
     doPulling(refresher: Refresher) {
         // console.log('DOPULLING', refresher.progress);
     }

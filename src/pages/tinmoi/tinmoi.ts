@@ -49,7 +49,7 @@ export class TinmoiPage {
                 console.log(`Đã xóa vị trí: ${index} Tin: ${this.news[index].TieuDe} trên server`)
                 // this.daxoa = this.news.splice(index, 1);
                 this.vitricu = index;
-                this._newservice.ShowToastOK(ITinMoi.ShowToast_Xoa, { position: "middle" })
+                // this._newservice.ShowToastOK(ITinMoi.ShowToast_Xoa, { position: "middle" })
                 return
 
             })
@@ -73,10 +73,10 @@ export class TinmoiPage {
 
         this._newservice.themtin(news.IDTinTuc,this.IDuser)
             .then(result => {
-                return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
+                // return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
             })
             .catch(error => {
-                console.log('Loi' + error.message);
+               return console.log('Loi' + error.message);
             })
     }
 
@@ -87,7 +87,6 @@ export class TinmoiPage {
             })
             .catch(error => {
                 return console.log('Loi' + error.message);
-
             })
     }
 

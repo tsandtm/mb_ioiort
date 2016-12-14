@@ -126,7 +126,7 @@ export class LoginPage {
             .then(result => {
                 if (result !== 0) {
                     console.log("id " + result._body);
-                    this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top' });
+                    this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
                     console.log("id user:" + this.IDuser);
                     if (this.save) {

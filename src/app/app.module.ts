@@ -15,15 +15,37 @@ import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 import { TinmoiPage } from '../pages/tinmoi/tinmoi'
-import {Facebook} from 'ionic-native';
+import { Facebook } from 'ionic-native';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular'
+import { SENDER_ID } from '../pages/shared/variables'
+
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
     'swipe': { velocity: 0.4, threshold: 20 } // override default settings
   }
 
 }
+
+const cloudsetting: CloudSettings = {
+  "core": {
+    'app_id': "8bc7e193"
+  },
+  'push': {
+    'sender_id': "413199343728",
+    'pluginConfig': {
+      'ios': {
+        'badge': true,
+        'sound': true
+      },
+      'android': {
+        'iconColor': '#343434'
+      }
+    }
+  }
+};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -38,7 +60,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomeFilterNews
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    CloudModule.forRoot(cloudsetting)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -60,7 +83,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
-    },Facebook
+    }, Facebook,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

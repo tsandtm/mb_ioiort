@@ -15,7 +15,6 @@ export class HomePage {
     lbdachon = IHomePage.Label_Dachon;
     btnnext = IHomePage.Button_Next;
     loadtext = IBienToanCuc.Loading_Text;
-
     // Biến toàn cục
     webs1: IWeb[];
     count: number = 0;
@@ -43,7 +42,7 @@ export class HomePage {
             .catch(err => console.log(err))
     }
     search() {
-        this._webService.getName(this.listFilter,this.IDuser)
+        this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
                 this.webs1 = web;
             }).catch(errorMessage => {
@@ -57,11 +56,15 @@ export class HomePage {
             this.start += 12;
             this._webService.GetList(this.IDuser, this.start)
                 .then(result => {
-                    console.log(result)
-                    if (result.length != 0) {
-                        result.forEach(x => this.webs1.push(x))
-
-                    }
+                    result.some((value, index) => {
+                        return this.webs1.some(x => {
+                            if (value.IDDanhMucSite !== x.IDDanhMucSite) {
+                                this.webs1.push(value)
+                                result.splice(index, 1);
+                                return true;
+                            } else return false
+                        })
+                    })
                 })
             infiniteScroll.complete();
         }, 2000);
@@ -76,31 +79,31 @@ export class HomePage {
         let i = this.webs1.findIndex(i => (i.IDDanhMucSite === id) ? true : false)
         let web = this.webs1[i];
 
-        console.log('tin dang chon: ' + web.GiaTri);
+        // console.log('tin dang chon: ' + web.GiaTri);
 
         if (!web.GiaTri) {
-            console.log('post :D');
-            console.log('id: ' + id);
-            console.log('index: ' + i);
+            // console.log('post :D');
+            // console.log('id: ' + id);
+            // console.log('index: ' + i);
 
             this.userWebSite.createUserWebSite(this.IDuser, id, new Date())
                 .then(() => {
-                    console.log('da them');
+                    // console.log('da them');
                     web.GiaTri = true;
                     this.count++;
-                    console.log('chon ' + web.GiaTri);
+                    // console.log('chon ' + web.GiaTri);
                 })
                 .catch(error => console.error('Error: ', error))
         } else {
-            console.log('delete :D');
-            console.log('id: ' + id);
-            console.log('index: ' + i);
+            // console.log('delete :D');
+            // console.log('id: ' + id);
+            // console.log('index: ' + i);
             this.userWebSite.deleteUserWebSite(this.IDuser, id)
                 .then(() => {
-                    console.log('da xoa');
+                    // console.log('da xoa');
                     web.GiaTri = false;
                     this.count--;
-                    console.log('chon ' + web.GiaTri);
+                    // console.log('chon ' + web.GiaTri);
                 })
                 .catch(error => console.error('Error: ', error))
         }
@@ -108,7 +111,7 @@ export class HomePage {
 
     dschon(): void {
         this.click = !this.click;
-        console.log('hien tai 1: ' + this.click);
+        // console.log('hien tai 1: ' + this.click);
     }
 
 

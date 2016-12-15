@@ -42,7 +42,6 @@
   <allow-navigation href="http://192.168.3.67:8100"/>
   <gap:plugin name="cordova-plugin-whitelist" source="npm"/>
   <gap:plugin name="cordova-plugin-statusbar" source="npm"/>
-  <gap:plugin name="cordova-plugin-console" source="npm"/>
   <gap:plugin name="cordova-plugin-splashscreen" source="npm"/>
   <gap:plugin name="cordova-plugin-device" source="npm"/>
   <gap:plugin name="ionic-plugin-keyboard" source="npm"/>

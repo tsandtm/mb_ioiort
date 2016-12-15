@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicframework.nkengineering197580" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" versionCode="1">
   <name>nkengineering</name>
-  <description>An awesome Ionic/Cordova app.</description>
+  <description>App quan trac</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -26,6 +26,8 @@
   <platform name="ios">
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
+    <icon src="resources/ios/icon/icon-50@2x.png" width="180" height="180" />
+    <splash src="resources/ios/splash/Default-568h@2x.png" width="640" height="1136" />
   </platform>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>

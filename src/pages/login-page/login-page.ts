@@ -161,15 +161,17 @@ export class LoginPage {
     }
      LoginFacebook() {
     //test
+     Facebook.logout(); // chặn cái diablog show cái lỗi ra.
     Facebook.login(['email']).then((response) => {
+     // alert("thong tin user:"+JSON.stringify(response));
       let token = response.authResponse.accessToken;
-      // alert(JSON.stringify(response));
+    //  Facebook.getLoginStatus().then((res)=>{alert("trang thai trong login:"+JSON.stringify(res.status))}).catch(err=>{alert("loi trang thai trong:"+ JSON.stringify(err))});
       Facebook.api('/' + response.authResponse.userID + '?fields=id,name,email', []).then((result) => {
+        //alert(JSON.stringify(result));
         let name = result.name;
         let email = result.email;
         let Facebook = response.authResponse.userID;
         this.service.GetCountFacebook(Facebook).then(resGet => {
-          console.log("resGet:" + resGet);
           if (resGet > 0) {
             this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
             this.navCtrl.setRoot(HomePage);
@@ -179,7 +181,6 @@ export class LoginPage {
               this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
               this.service.GetCountFacebook(Facebook).then(resGetID => {
                 this.IDuser = resGetID;
-                console.log("id moi=" + this.IDuser);
                 this.navCtrl.setRoot(HomePage, this.IDuser);
               });
             })
@@ -187,10 +188,8 @@ export class LoginPage {
         }).catch(err => {
           this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
             this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-            console.log("id moi:" + this.IDuser);
             this.service.GetCountFacebook(Facebook).then(resGetID => {
               this.IDuser = resGetID;
-              console.log("id moi=" + this.IDuser);
               this.navCtrl.setRoot(HomePage, this.IDuser);
             });
           });
@@ -200,8 +199,11 @@ export class LoginPage {
         this.password=Facebook;
         this.storage.set("TaiKhoan",this.username);
         this.storage.set("Password",this.password);
-        // coi thử xem có nên làm ghi nhớ hem
-      }).catch(err => { this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) });
-    }).catch(err => { this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) });
+        //coi thử xem có nên làm ghi nhớ hem
+       }).catch(err => {
+           this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) 
+        });
+    }).catch(err=>{
+      });
   }
 }

@@ -88,9 +88,11 @@ export class LoginPage {
         private storage: Storage) {
     }
 
-
+/**
+ * @param Load
+ */
     ionViewDidLoad() {
-        this.navCtrl.push(HomePage, { id: 1 });
+         this.navCtrl.push(HomePage, { id: 1 });
         // this.storage.forEach((value, key) => {
         //     switch (key) {
         //         case "TaiKhoan": this.username = value; break;

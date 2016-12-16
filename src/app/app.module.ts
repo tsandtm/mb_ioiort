@@ -29,23 +29,23 @@ export class MyHammerConfig extends HammerGestureConfig {
 
 }
 
-const cloudsetting: CloudSettings = {
-  "core": {
-    'app_id': "8bc7e193"
-  },
-  'push': {
-    'sender_id': "413199343728",
-    'pluginConfig': {
-      'ios': {
-        'badge': true,
-        'sound': true
-      },
-      'android': {
-        'iconColor': '#343434'
-      }
-    }
-  }
-};
+// const cloudsetting: CloudSettings = {
+//   "core": {
+//     'app_id': "8bc7e193"
+//   },
+//   'push': {
+//     'sender_id': "413199343728",
+//     'pluginConfig': {
+//       'ios': {
+//         'badge': true,
+//         'sound': true
+//       },
+//       'android': {
+//         'iconColor': '#343434'
+//       }
+//     }
+//   }
+// };
 
 @NgModule({
   declarations: [
@@ -64,7 +64,7 @@ const cloudsetting: CloudSettings = {
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    CloudModule.forRoot(cloudsetting)
+    // CloudModule.forRoot(cloudsetting)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -60,7 +60,7 @@ export class NewsService extends ServiceBase {
     }
     //api liet ke nhung tin minh moi xoa xong
 
-    lkxoa(id, start: number): Promise<INews[]> {
+    lktindaxoa(id, start: number): Promise<INews[]> {
         return  this.http.get(`${url}/tindaxoa/${id}?limit=${this.limit}&offset=${start}`)
                 .toPromise()
                 .then(res => res.json() as INews[])

@@ -12,7 +12,7 @@ export abstract class ServiceBase {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
-        this.LogError(error,"Lỗi")
+        this.LogError(error,"Tâm anh")
         return Promise.reject(error.message || error);
 
     }

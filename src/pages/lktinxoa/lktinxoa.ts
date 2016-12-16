@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model';
@@ -26,7 +26,7 @@ export class LktinxoaPage {
   }
 
   ngOnInit(): void {
-    this._newservice.lkxoa(this.IDuser, 0)
+    this._newservice.lktindaxoa(this.IDuser, 0)
       .then(news => this.new = news)
       .catch(errorMessage => {
         console.log(errorMessage.message)
@@ -36,7 +36,7 @@ export class LktinxoaPage {
   doInfinite(infiniteScroll) {
     console.log('Begin async operation');
     setTimeout(() => {
-      this._newservice.lkxoa(this.IDuser, this.start)
+      this._newservice.lktindaxoa(this.IDuser, this.start)
         .then(
         (res) => {
           if (res.length !== 0) {

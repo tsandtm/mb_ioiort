@@ -36,7 +36,7 @@ export class HomePage {
             .then(res => {
                 this.webs1 = res
                 this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                console.log(this.webs1)
+                console.log(this.count)
                 return
             })
             .catch(err => console.log(err))

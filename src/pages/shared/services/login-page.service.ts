@@ -3,6 +3,7 @@ import { ToastController, Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { ServiceBase } from './service.base';
 import { IUser } from '../models/user.model';
+import {urllogin} from '../variables'
 @Injectable()
 export class LoginService extends ServiceBase {
 
@@ -16,7 +17,7 @@ export class LoginService extends ServiceBase {
             TaiKhoan: user,
             Password: pass
         }
-        return this.http.post(`http://localhost:8080/tintuc/login`, U)
+        return this.http.post(`${urllogin}login`, U)
             .toPromise()
             .then(respone => {
                 if (respone.status == 200) {

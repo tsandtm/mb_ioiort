@@ -6,8 +6,8 @@
 
 <ion-content class="card-background-page" #content>
   <div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
-    <div [class.opi]="web.GiaTri" (tap)="chon(web.IDDanhMucSite,web)">
-      <ion-card>
+    <div [class.opi]="web.GiaTri" >
+      <ion-card (click)="chon(web.IDDanhMucSite,web)">
         <img [src]='web.Icon' />
         <h4>{{web.TenGoi}}</h4>
       </ion-card>
@@ -26,11 +26,11 @@
     <div style="background-color: #387ef5;
     height: 55px;
     width: 100%;">
-      <div class="dachon" (tap)='dschon()'>
+      <div class="dachon" (click)='dschon()'>
         <label> {{lbdachon}}{{count}}</label>
       </div>
       <ion-buttons>
-        <button ion-button (tap)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+        <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
 </button>
       </ion-buttons>
     </div>

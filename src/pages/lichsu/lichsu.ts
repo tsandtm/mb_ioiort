@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
-import { NewsService } from '../shared/services/news.service';
-import { INews } from '../shared/models/news.model';
-import { TinTucPage } from '../tintuc/tintuc';
-import { IBienToanCuc, ITinQuanTam } from '../shared/variables'
+import { NavParams} from 'ionic-angular';
 import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { TinquantamPage } from '../tinquantam/tinquantam';
 import { TinDaXemPage } from '../tindaxem/tindaxem';
@@ -14,17 +10,13 @@ import { TinDaXemPage } from '../tindaxem/tindaxem';
 })
 
 export class LichSuPage {
-    new: INews[];
-    newsxoa: INews[];
-    newsquantam: INews[];
-
     tab1: any;
     tab2: any;
     tab3: any;
     params ;
     IDuser: number;
     c: string = "tindaxoa";
-    constructor(public navCtrl: NavController, public navParams: NavParams, private _newservice: NewsService) {
+    constructor(public navParams: NavParams) {
         this.IDuser = this.navParams.get('id');
         this.params = this.IDuser;
         // let params = {

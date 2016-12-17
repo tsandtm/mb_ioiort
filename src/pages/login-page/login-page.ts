@@ -161,22 +161,25 @@ export class LoginPage {
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
 
-                        if (this.count === 0)
+                        if (this.count === 0) {
                             this.navCtrl.push(HomePage, { id: this.IDuser });
+                            this._webService.ShowLoading(IHomePage.ShowLoading)
+                        }
                         else {
                             this._webService.ShowLoading(IHomePage.ShowLoading)
                             this.navCtrl.push(TinTucPage, { id: this.IDuser });
                         }
                     } else {
-                        if (this.count === 0)
+                        if (this.count === 0) {
                             this.navCtrl.push(HomePage, { id: this.IDuser });
+                            this._webService.ShowLoading(IHomePage.ShowLoading)
+                        }
                         else {
                             this._webService.ShowLoading(IHomePage.ShowLoading)
                             this.navCtrl.push(TinTucPage, { id: this.IDuser });
                         }
                     }
                 }
-
                 else {
                     console.log(result)
                     this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })

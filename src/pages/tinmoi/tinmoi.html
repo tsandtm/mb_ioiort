@@ -11,7 +11,7 @@
   </div>
 </ion-list-header>
 
-<div *ngFor="let n of news,let i = index" [class.undo]="n.Undo" [class.opi]="n.ChuaXem">
+<div *ngFor="let n of news,let i = index" [class.undo]="n.Undo" [class.opi]="!n.ChuaXem">
   <ion-list>
     <ion-item-sliding #item>
       <ion-item>

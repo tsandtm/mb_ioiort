@@ -42,16 +42,24 @@ export class TinTucPage {
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this._newservice.getWebs(this.IDuser, this.start)
-                .then(
-                (res) => {
-                    if (res.length !== 0) {
-                        res.forEach(x => {
-                            x.ChuaXem = true
-                            x.Undo = false;
-                            this.newstinmoi.push(x);
-                        })
-                        this.start += IBienToanCuc.Start;
-                    }
+                .then((result) => {
+                    result.some((value, index) => {
+                        let a = this.newstinmoi.find(x => +x.IDTinTuc === +value.IDTinTuc);
+                        if (a) {
+                            result.splice(index, 1)
+                        } else {
+                            value.Undo = false;
+                            this.newstinmoi.push(value)
+                        }
+
+                        if (result.length === 0) {
+                            return true
+                        } else {
+                            return false
+                        }
+
+                    })
+                    this.start += IBienToanCuc.Start;
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
@@ -68,7 +76,6 @@ export class TinTucPage {
         this._newservice.getWebs(this.IDuser, 0)
             .then(nw => {
                 nw.forEach(value => {
-                    value.ChuaXem = true;
                     value.Undo = false;
                 })
 
@@ -85,22 +92,25 @@ export class TinTucPage {
             this._newservice.getWebs(this.IDuser, 0, 3)
                 .then(nw => {
                     nw.forEach(value => {
-                        value.ChuaXem = true;
                         value.Undo = false;
                     })
                     refresher.complete();
                     return Promise.resolve(nw);
                 })
-                .then((res) => {
-                    res.some((value, index) => {
-                        return this.newstinmoi.some(x => {
-                            if (value.IDTinTuc !== x.IDTinTuc) {    
-                                this.newstinmoi.push(value)
-                                res.splice(index, 1);
-                                return true
-                            }
-                            else return false
-                        })
+                .then((result) => {
+                    result.some((value, index) => {
+                        let a = this.newstinmoi.find(x => +x.IDTinTuc === +value.IDTinTuc);
+                        if (a) {
+                            result.splice(index, 1)
+                        } else {
+                            value.Undo = false;
+                            this.newstinmoi.push(value)
+                        }
+                        if (result.length === 0) {
+                            return true
+                        } else {
+                            return false
+                        }
                     })
                 })
                 .catch(errorMessage => {

@@ -50,20 +50,22 @@ export class HomePage {
             });
 
     }
-
+    //Thành : 17/12/2016 19h40p Fix khi load thêm dữ liệu mới vào
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this.start += 12;
             this._webService.GetList(this.IDuser, this.start)
                 .then(result => {
                     result.some((value, index) => {
-                        return this.webs1.some(x => {
-                            if (value.IDDanhMucSite !== x.IDDanhMucSite) {
-                                this.webs1.push(value)
-                                result.splice(index, 1);
-                                return true;
-                            } else return false
-                        })
+                        let a =  this.webs1.find(x => +x.IDDanhMucSite === +value.IDDanhMucSite);
+                        (a)? result.splice(index,1): this.webs1.push(value)
+                     
+                        if(result.length === 0){
+                            return true
+                        }else{
+                            return false
+                        }
+                        
                     })
                 })
             infiniteScroll.complete();

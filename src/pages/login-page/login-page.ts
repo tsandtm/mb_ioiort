@@ -159,51 +159,55 @@ export class LoginPage {
     Change = () => {
         console.log(`save: ${this.save}`)
     }
-     LoginFacebook() {
-    //test
+    LoginFacebook() {
      Facebook.logout(); // chặn cái diablog show cái lỗi ra.
     Facebook.login(['email']).then((response) => {
-     // alert("thong tin user:"+JSON.stringify(response));
       let token = response.authResponse.accessToken;
-    //  Facebook.getLoginStatus().then((res)=>{alert("trang thai trong login:"+JSON.stringify(res.status))}).catch(err=>{alert("loi trang thai trong:"+ JSON.stringify(err))});
       Facebook.api('/' + response.authResponse.userID + '?fields=id,name,email', []).then((result) => {
         //alert(JSON.stringify(result));
         let name = result.name;
         let email = result.email;
-        let Facebook = response.authResponse.userID;
-        this.service.GetCountFacebook(Facebook).then(resGet => {
+        let facebook = response.authResponse.userID;
+        this.username=facebook;
+        this.password=facebook;
+        this.service.GetCountFacebook(facebook).then(resGet => {
           if (resGet > 0) {
             this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-            this.navCtrl.setRoot(HomePage);
+            this.IDuser=resGet;
+             if (this.save) {
+                        this.storage.set("TaiKhoan", this.username);
+                        this.storage.set("Password", this.password);
+                        this.storage.set("Checkbox", this.save);
+                         this.navCtrl.setRoot(HomePage, this.IDuser);  
+                }
+                    else{
+                        this.navCtrl.setRoot(HomePage, this.IDuser);   
+                    }
           }
           else {
-            this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
+            this.service.InserUserFacebook(facebook, name, email, token).then(resInsert => {
               this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-              this.service.GetCountFacebook(Facebook).then(resGetID => {
+              this.service.GetCountFacebook(facebook).then(resGetID => {
                 this.IDuser = resGetID;
-                this.navCtrl.setRoot(HomePage, this.IDuser);
+                 if (this.save) {
+                        this.storage.set("TaiKhoan", this.username);
+                        this.storage.set("Password", this.password);
+                        this.storage.set("Checkbox", this.save);
+                         this.navCtrl.setRoot(HomePage, this.IDuser);  
+                    }
+                    else{
+                        this.navCtrl.setRoot(HomePage, this.IDuser);   
+                    }
               });
             })
           }
-        }).catch(err => {
-          this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
-            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-            this.service.GetCountFacebook(Facebook).then(resGetID => {
-              this.IDuser = resGetID;
-              this.navCtrl.setRoot(HomePage, this.IDuser);
-            });
           });
+        }).catch(err => {
+             console.log(JSON.stringify(err));
+          this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) 
         });
-        // coi thử xem có nên làm ghi nhớ hem
-        this.username=Facebook;
-        this.password=Facebook;
-        this.storage.set("TaiKhoan",this.username);
-        this.storage.set("Password",this.password);
-        //coi thử xem có nên làm ghi nhớ hem
-       }).catch(err => {
-           this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) 
+       }).catch(err => { 
+         console.log(JSON.stringify(err));
         });
-    }).catch(err=>{
-      });
   }
 }

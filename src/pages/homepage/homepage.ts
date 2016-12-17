@@ -22,12 +22,13 @@ export class HomePage {
     start: number = 0;
     click: boolean = false;
     IDuser: number;
+    flag: number; //móc cờ : 1 là login 
     hientin: boolean = false
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
         private userWebSite: UserWebService) {
         this.IDuser = this.navParams.get('id');
-
+        this.flag = this.navParams.get('flag');
     }
 
     ionViewDidLoad() {
@@ -35,13 +36,17 @@ export class HomePage {
             .then(res => {
                 this.webs1 = res
                 this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                // console.log(this.webs1)
+
+                console.log(this.count)
+                if (this.count > 0 && this.flag == 1) {
+                    this._webService.ShowLoading(IHomePage.ShowLoading)
+                    this.navCtrl.push(TinTucPage, { id: this.IDuser });
+                }
                 return
             })
             .catch(err => console.log(err))
     }
     search() {
-
         this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
                 this.webs1 = web;

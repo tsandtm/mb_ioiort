@@ -3,8 +3,10 @@ import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
-import { ILoginPage } from '../shared/variables'
+import { ILoginPage,IHomePage } from '../shared/variables'
 import { Facebook } from 'ionic-native';
+import { WebsService } from '../shared/services/website.service';
+import { TinTucPage } from '../tintuc/tintuc';
 /*
   Generated class for the LoginPage page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -83,45 +85,58 @@ export class LoginPage {
     password: string;
     save: boolean = false;
     IDuser: number;
+    webs1: any[];
+    count: number = 0;
 
     constructor(public navCtrl: NavController, private service: LoginService,
-        private storage: Storage) {
+        private storage: Storage, private _webService: WebsService) {
     }
 
 /**
  * @param Load
  */
     ionViewDidLoad() {
-         this.navCtrl.push(HomePage, { id: 1 });
-        // this.storage.forEach((value, key) => {
-        //     switch (key) {
-        //         case "TaiKhoan": this.username = value; break;
-        //         case "Password": this.password = value; break;
-        //         case "Checkbox": this.save = value; break
-        //         default:
-        //     }
-        //     console.log(`${this.username}${this.password}`)
-        //     //login bebinh
-        //     if (this.username && this.password)
-        //         this.service.LoginToSever(this.username, this.password)
-        //             .then(result => {
-        //                 if (result !== 0) {
-        //                     this.IDuser = result._body;
-        //                     // console.log("id user:" + this.IDuser);
-        //                     this.navCtrl.push(HomePage, { id: this.IDuser });
-        //                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
-        //                     return
-        //                 }
-        //                 else {
-        //                     console.log(result)
-        //                     this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
-        //                     return
-        //                 }
-        //             })
-        //             .catch(err => {
-        //                 console.log(err)
-        //             })
-        // })
+        this.storage.forEach((value, key) => {
+            switch (key) {
+                case "TaiKhoan": this.username = value; break;
+                case "Password": this.password = value; break;
+                case "Checkbox": this.save = value; break
+                default:
+            }
+            console.log(`${this.username}${this.password}`)
+
+            if (this.username && this.password)
+                this.service.LoginToSever(this.username, this.password)
+                    .then(result => {
+                        if (result !== 0) {
+                            this.IDuser = result._body;
+                            // console.log("id user:" + this.IDuser);
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
+                            return
+                        }
+                        // this.navCtrl.push(HomePage, { id: this.IDuser });
+                        else {
+                            console.log(result)
+                            this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
+                            return
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+        })
+    }
+
+    countweb(): any {
+        this._webService.GetList(this.IDuser, 0)
+            .then(res => {
+                this.webs1 = res
+                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
+                console.log(this.count)
+                return this.count;
+            })
+            .catch(err => console.log(err));
     }
 
 
@@ -132,16 +147,20 @@ export class LoginPage {
                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
                     // console.log("id user:" + this.IDuser);
+                    this.count = this.countweb();
+                    console.log("count " + this.count);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                        this.navCtrl.push(HomePage, { id: this.IDuser });
-                    }else{
-                        this.navCtrl.push(HomePage, { id: this.IDuser });
+                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1  });
+                        this._webService.ShowLoading(IHomePage.ShowLoading)
+
+                    } else {
+                        this.navCtrl.push(HomePage, { id: this.IDuser , flag: 1 });
+
                     }
                 }
-
                 else {
                     console.log(result)
                     this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })

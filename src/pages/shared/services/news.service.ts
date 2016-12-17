@@ -57,18 +57,18 @@ export class NewsService extends ServiceBase {
     //api liet ke nhung tin minh moi xoa xong
 
     lktindaxoa(id, start: number): Promise<INews[]> {
+
         return this.http.get(`${url}/tindaxoa/${id}?limit=${this.limit}&offset=${start}`)
             .toPromise()
             .then(res => res.json() as INews[])
             .catch(this.handleError)
 
-
     }
     tindaxem(id, start: number): Promise<INews[]> {
-        return  this.http.get(`${url}/tindaxem/${id}?limit=${this.limit}&offset=${start}`)
-                .toPromise()
-                .then(res => res.json() as INews[])
-                .catch(this.handleError)
+        return this.http.get(`${url}/tindaxem/${id}?limit=${this.limit}&offset=${start}`)
+            .toPromise()
+            .then(res => res.json() as INews[])
+            .catch(this.handleError)
     }
     public daxem(id: number, IDUser): Promise<number> {
         return this.http.post(`${url}/daxem`, { id: id, IDUser: IDUser }).toPromise()

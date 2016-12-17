@@ -16,6 +16,8 @@ Chú ý: 2/ và 3/ dùng để làm app mình chạy Facebook tốt cho mọi c�
 
 preference name="loadUrlTimeoutValue" value="700000"  //bỏ này vô config.xml nhớ bỏ vô < />. Trong đó value là thời gian trễ giống như setTimeout.
 
+*add thư viện để sài:* import { Facebook } from 'ionic-native'; // chúng ta làm login facebook ở đâu ta bỏ ở đó.
+
 *Chỉnh sửa:* Chúng ta sửa lại 3 file:
 
 1/ login-page => login-page.ts: bạn chỉ cần dán đè hàm LoginFacebook().

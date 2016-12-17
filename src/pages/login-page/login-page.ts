@@ -110,15 +110,9 @@ export class LoginPage {
                     .then(result => {
                         if (result !== 0) {
                             this.IDuser = result._body;
-                            this.count = this.countweb();
                             // console.log("id user:" + this.IDuser);
-                            if (this.count === 0)
-                                this.navCtrl.push(HomePage, { id: this.IDuser });
-                            else {
-                                this._webService.ShowLoading(IHomePage.ShowLoading)
-                                this.navCtrl.push(TinTucPage, { id: this.IDuser });
-                                this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
-                            }
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
                             return
                         }
                         // this.navCtrl.push(HomePage, { id: this.IDuser });
@@ -161,23 +155,12 @@ export class LoginPage {
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
 
-                        if (this.count === 0) {
-                            this.navCtrl.push(HomePage, { id: this.IDuser });
-                            this._webService.ShowLoading(IHomePage.ShowLoading)
-                        }
-                        else {
-                            this._webService.ShowLoading(IHomePage.ShowLoading)
-                            this.navCtrl.push(TinTucPage, { id: this.IDuser });
-                        }
+                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1  });
+                        this._webService.ShowLoading(IHomePage.ShowLoading)
+
                     } else {
-                        if (this.count === 0) {
-                            this.navCtrl.push(HomePage, { id: this.IDuser });
-                            this._webService.ShowLoading(IHomePage.ShowLoading)
-                        }
-                        else {
-                            this._webService.ShowLoading(IHomePage.ShowLoading)
-                            this.navCtrl.push(TinTucPage, { id: this.IDuser });
-                        }
+                        this.navCtrl.push(HomePage, { id: this.IDuser , flag: 1 });
+
                     }
                 }
                 else {

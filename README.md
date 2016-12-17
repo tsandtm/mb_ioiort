@@ -1,6 +1,7 @@
 Phần nhánh bebinh-dev-login-facebook làm chức năng login bằng Facebook.
 
 Trước khi chạy app nên install những phần sau, ta mở command trong thư mục mb_ioiort:
+
 *Cài đặt:*
 
 1/ APP_ID="1576863542330748" --variable APP_NAME="Login_Ionic" //Tài khoản cho app.
@@ -15,8 +16,7 @@ Chú ý: 2/ và 3/ dùng để làm app mình chạy Facebook tốt cho mọi c�
 
 preference name="loadUrlTimeoutValue" value="700000"  //bỏ này vô config.xml nhớ bỏ vô < />. Trong đó value là thời gian trễ giống như setTimeout.
 
-*Chỉnh sửa:*
-Chúng ta sửa lại 3 file:
+*Chỉnh sửa:* Chúng ta sửa lại 3 file:
 
 1/ login-page => login-page.ts: bạn chỉ cần dán đè hàm LoginFacebook().
 

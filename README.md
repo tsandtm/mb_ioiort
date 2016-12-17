@@ -11,10 +11,13 @@ Chú ý: 2/ và 3/ dùng để làm app mình chạy Facebook tốt cho mọi c�
 <preference name="loadUrlTimeoutValue" value="700000"/> //bỏ này vô config.xml. Trong đó value là thời gian trễ giống như setTimeout.
 
 *Chỉnh sửa:*
-Chúng ta sửa lại 2 file:
-1/ login-page => login-page.ts: bạn chỉ cần dán đè hàm LoginFacebook()
+Chúng ta sửa lại 3 file:
+1/ login-page => login-page.ts: bạn chỉ cần dán đè hàm LoginFacebook().
 2/ shared => services => login-page.service.ts: bạn cũng dán đè GetCountFacebook và InserUserFacebook. 
+3/ shared => variables.ts: thêm biến urlLoginFace.
 
 Sau khi xong các bước trên các bạn chạy app là ok bấm vô nút icon Facebook thì các bạn nhập tài khoản Facebook thành công sẽ vô được app tức là thành công rồi đó nha.
+
+Có 1 điều ai đọc bài viết này: ai dám lấy ID_APP mà đi quậy hoặc phá Facebook là tui giấu dép cho kiếm chết cha luôn.
 
 

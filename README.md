@@ -2,6 +2,7 @@ Phần nhánh bebinh-dev-login-facebook làm chức năng login bằng Facebook.
 
 Trước khi chạy app nên install những phần sau, ta mở command trong thư mục mb_ioiort:
 *Cài đặt:*
+
 1/ APP_ID="1576863542330748" --variable APP_NAME="Login_Ionic" //Tài khoản cho app.
 
 2/ cordova plugin add --save cordova-plugin-inappbrowser 

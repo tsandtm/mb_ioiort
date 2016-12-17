@@ -50,12 +50,12 @@ export class LoginService extends ServiceBase {
     //login facebook
     public GetCountFacebook(Facebook): Promise<any> // tra ve id user
     {
-        return this._http.post(`http://localhost:8080/Facebook/GetUserFacebook`, { Facebook: Facebook }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
+        return this.http.post(`${urlLoginFace}/GetUserFacebook`, { Facebook: Facebook }).toPromise().then(res => { console.log(res); return res.json(); });
     }
     public InserUserFacebook(Facebook, name, email, token): Promise<any> // them user neu chua co
     {
         console.log("facebook:" + Facebook);
-        return this._http.post(`http://localhost:8080/Facebook/InsertUserFacebook`, { Facebook: Facebook, name: name, email: email, token: token }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
+        return this.http.post(`${urlLoginFace}/InsertUserFacebook`, { Facebook: Facebook, name: name, email: email, token: token }).toPromise().then(res => { console.log(res); return res.json(); }).catch(err => { return 0 });
     }
     //login facebook
 }

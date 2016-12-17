@@ -2,7 +2,6 @@ import { Http } from '@angular/http';
 import { ToastController, Platform } from 'ionic-angular';
 import { Injectable } from '@angular/core';
 import { ServiceBase } from './service.base';
-import { IUser } from '../models/user.model';
 import { urllogin,url } from '../variables'
 @Injectable()
 export class LoginService extends ServiceBase {
@@ -11,10 +10,6 @@ export class LoginService extends ServiceBase {
         super(toast, null, http, platfrom)
     }
     public LoginToSever(user: any, pass: any): Promise<any> {
-        // let U: IUser = {
-        //     TaiKhoan: user,
-        //     Password: pass
-        // }
         return this.http.post(`${urllogin}login`,{TaiKhoan:user,Password:pass})
             .toPromise()
             .then(respone => {

@@ -1,137 +1,101 @@
-/*div.polaroid {
-    width: 20%;
-    height: 110px;
-    float: left;
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-bottom: 10px;
-    margin-left: 13px;
-    margin-top: 10px;
-    border-radius: 10px;
-
-    img {
-        width: 70px;
-        height: 63px;
-        padding: 2px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+page-home {
+    ion-col div {
+        background-color: #F9FAFB;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+        text-align: center;
+        width: 33%;
     }
-}*/
-
-.contain {
-    text-align: center;
-    padding: 0px 3px 2px 3px;
-    p {
-        font-size: 10px;
-        margin: 2px;
-        padding-top: 4px;
+    .opi {
+        .card-md {
+            background-color: red;
+            h4 {
+                color: white;
+            }
+        }
     }
-}
-
-.tool-home {
-    
-    button {
-        color: white;
-        height: 55px;
-        width: 180px;
-        float: right;
-        /*padding: 20px 0px;*/
-        font-size: 18px;
-        font-weight: bold;
-        border-left: 2px solid white; 
-    }
-    .dachon {
-        height: 55px;
-        width: 165px;
-        float: left;
-        padding: 18px;
-        label {
+    .tool-home {
+        button {
             color: white;
-            position: absolute;
+            height: 55px;
+            width: 180px;
+            float: right;
             /*padding: 20px 0px;*/
             font-size: 18px;
             font-weight: bold;
-            margin-left:5px;
+            border-left: 2px solid white;
+        }
+        .dachon {
+            height: 55px;
+            width: 165px;
+            float: left;
+            padding: 18px;
+            label {
+                color: white;
+                position: absolute;
+                /*padding: 20px 0px;*/
+                font-size: 18px;
+                font-weight: bold;
+                margin-left: 5px;
+            }
+        }
+    }
+    .contain {
+        text-align: center;
+        padding: 0px 3px 2px 3px;
+        p {
+            font-size: 10px;
+            margin: 2px;
+            padding-top: 4px;
+        }
+    }
+    .card-background-page {
+        margin: 3px;
+        .card-md {
+            margin: 4px;
+        }
+        img {
+            max-width: 70%;
+            height: 80px;
+            float: left;
+            /*margin-bottom: 15px;*/
+            margin: 20px 18px 15px 18px;
+            /*padding: 10px;*/
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            /*opacity: .8;*/
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out;
+        }
+        ion-card {
+            width: 30%;
+            height: 150px;
+            float: left;
+            text-align: center;
+            h4 {
+                font-weight: bold;
+                margin: 1px;
+                font-size: 15px;
+            }
+        }
+        .card-title {
+            position: absolute;
+            top: 36%;
+            font-size: 2.0em;
+            width: 100%;
+            font-weight: bold;
+            color: #fff;
+        }
+        .card-subtitle {
+            font-size: 1.0em;
+            position: absolute;
+            top: 52%;
+            width: 100%;
+            color: #fff;
         }
     }
 }
 
 ion-toolbar {
     max-height: 50px;
-}
-
-.opi {
-    .card-md {
-        background-color: red;
-        h4 {
-            color: white;
-        }
-    }
-}
-
-div.blur {
-    /*height: 250px;
-    width: 100%;
-    margin: -20px auto;
-    z-index: -1;
-    position: relative;*/
-    filter: blur(1px);
-    -webkit-filter: blur(1px);
-    -moz-filter: blur(1px);
-    -o-filter: blur(1px);
-    -ms-filter: blur(1px);
-    /*filter: url(#blur);*/
-    /*filter: progid: DXImageTransform.Microsoft.Blur(PixelRadius='10');*/
-    /*overflow: hidden;*/
-}
-
-div.scroll-content {
-    margin-top: 70px;
-    margin-left: 4px;
-    margin-right: 2px;
-}
-
-.card-background-page {
-    margin: 3px;
-    .card-md {
-        margin: 4px;
-    }
-    img {
-        max-width: 70%;
-        height: 80px;
-        float: left;
-        /*margin-bottom: 15px;*/
-        margin: 20px 18px 15px 18px;
-        /*padding: 10px;*/
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        /*opacity: .8;*/
-        -webkit-transition: .3s ease-in-out;
-        transition: .3s ease-in-out;
-    }
-    ion-card {
-        width: 30%;
-        height: 150px;
-        float: left;
-        text-align: center;
-        h4 {
-            font-weight: bold;
-            margin: 1px;
-            font-size: 15px;
-        }
-    }
-    .card-title {
-        position: absolute;
-        top: 36%;
-        font-size: 2.0em;
-        width: 100%;
-        font-weight: bold;
-        color: #fff;
-    }
-    .card-subtitle {
-        font-size: 1.0em;
-        position: absolute;
-        top: 52%;
-        width: 100%;
-        color: #fff;
-    }
 }

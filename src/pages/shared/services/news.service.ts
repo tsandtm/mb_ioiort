@@ -87,4 +87,13 @@ export class NewsService extends ServiceBase {
             .then(result => id)
             .catch(this.handleError);
     }
+
+    /**
+     * test
+     */
+    public test() {
+        return this.http.get(`${url}/test`).toPromise()
+            .then(result => result.json() as INews)
+            .catch(this.handleError);
+    }
 }

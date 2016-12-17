@@ -13,7 +13,7 @@ Chú ý: 2/ và 3/ dùng để làm app mình chạy Facebook tốt cho mọi c�
 
 *Trường hợp* máy mình bị màn hình trắng là do không load được index.html, main.ts, ... do app cấu hình cao hoặc load không kịp thì ta dùng:
 
-*<preference name="loadUrlTimeoutValue" value="700000"/>* //bỏ này vô config.xml. Trong đó value là thời gian trễ giống như setTimeout.
+preference name="loadUrlTimeoutValue" value="700000"  //bỏ này vô config.xml nhớ bỏ vô < />. Trong đó value là thời gian trễ giống như setTimeout.
 
 *Chỉnh sửa:*
 Chúng ta sửa lại 3 file:

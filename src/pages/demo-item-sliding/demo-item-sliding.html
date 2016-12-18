@@ -1,0 +1,145 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Demo Sliding Items</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="outer-content">
+  <ion-list>
+    <!--<ion-item-sliding>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/spengler.jpg">
+        </ion-avatar>
+        <h2>Egon</h2>
+        <p>We're gonna go full stream.</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="light" icon-left>
+          <ion-icon name="ios-more"></ion-icon>
+          More
+        </button>
+        <button ion-button color="primary" icon-left>
+          <ion-icon name="text"></ion-icon>
+          Text
+        </button>
+        <button ion-button color="secondary" icon-left>
+          <ion-icon name="call"></ion-icon>
+          Call
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>-->
+  <!--<ion-item-sliding>
+    <ion-item>
+      Item 1
+    </ion-item>
+    <ion-item-options side="right" (ionSwipe)="saveItem(item)">
+      <button ion-button expandable (click)="saveItem(item)">
+        <ion-icon name="star"></ion-icon>
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>-->
+
+  <!--<ion-item-sliding (ionDrag)="logDrag($event)">
+    <ion-item>Item</ion-item>
+    <ion-item-options>
+      <button ion-button>Favorite</button>
+    </ion-item-options>
+  </ion-item-sliding>-->
+
+    <ion-item-sliding (ionDrag)="logDrag($event)">
+      <ion-item>
+        <ion-card>
+          <ion-item>
+            <ion-avatar item-left>
+              <img src="assets/img/sarah-avatar.png.jpeg">
+            </ion-avatar>
+            <h2>Sarah Connor</h2>
+            <p>May 12, 1984</p>
+          </ion-item>
+          <img src="assets/img/advance-card-tmntr.jpg">
+          <ion-card-content>
+            I face the unknown future, with a sense of hope. Because if a machine, a Terminator, can learn the value of human life, maybe
+            we can too.
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item-options side="left" (ionSwipe)="saveItem(item)">
+        <button ion-button >right delete1111</button>
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button ion-button>right delete1111111111</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-card>
+          <ion-item>
+            <ion-avatar item-left>
+              <img src="assets/img/sarah-avatar.png.jpeg">
+            </ion-avatar>
+            <h2>Sarah Connor</h2>
+            <p>May 12, 1984</p>
+          </ion-item>
+          <img src="assets/img/advance-card-tmntr.jpg">
+          <ion-card-content>
+            I face the unknown future, with a sense of hope. Because if a machine, a Terminator, can learn the value of human life, maybe
+            we can too.
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button (click)="delete(item)">delete</button>
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button ion-button (click)="delete(item)">delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-card>
+          <ion-item>
+            <ion-avatar item-left>
+              <img src="assets/img/sarah-avatar.png.jpeg">
+            </ion-avatar>
+            <h2>Sarah Connor</h2>
+            <p>May 12, 1984</p>
+          </ion-item>
+          <img src="assets/img/advance-card-tmntr.jpg">
+          <ion-card-content>
+            <p>I face the unknown future, with a sense of hope. Because if a machine, a Terminator, can learn the value of human
+              life, maybe we can too.</p>
+          </ion-card-content>
+          <ion-row>
+            <ion-col>
+              <button ion-button color="primary" clear small icon-left>
+        <ion-icon name='thumbs-up'></ion-icon>
+        30 Likes
+      </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button color="primary" clear small icon-left>
+        <ion-icon name='text'></ion-icon>
+        64 Comments
+      </button>
+            </ion-col>
+            <ion-col center text-center>
+              <ion-note>
+                30yr ago
+              </ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button (click)="delete(item)">delete</button>
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button ion-button (click)="delete(item)">delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

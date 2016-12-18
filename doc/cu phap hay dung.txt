@@ -1,0 +1,43 @@
+﻿1. setup môi trường chạy. Dùng để debug trực tiếp từ browser
+- check ionic CLI and Cordova
+# cordova -v
+# ionic -v
+Nếu chưa có thông tin gì => chưa cài đặt => tiến hành cài đặt
+# npm install ionic@latest cordova -g
+
+
+2. Quá trình code
+
+2.1 Tạo 1 project
+Omit –v2 if you’d like to use Ionic 1.
+# ionic start cutePuppyPics --v2
+
+# ionic start MyIonic2Project tutorial --v2
+
+- start will tell the CLI create a new app.
+- MyIonic2Project will be the directory name and the app name from your project.
+- tutorial will be the starter template for your project.
+- --v2 tells the CLI that you want a 2.0 project.
+Along with creating your project, this will also install npm modules for the application, and get Cordova set up and ready to go.
+
+If the tutorial template isn’t something you want to use, Ionic has a few templates available:
+
+- tabs : a simple 3 tab layout
+- sidemenu: a layout with a swipable menu on the side
+- blank: a bare starter with a single page
+- tutorial: a guided starter project
+If you don’t specify a template by running ionic start MyIonic2Project --v2, the tabs template will be used.
+
+2.2 Chạy project
+Di chuyển vào thư mục chứa project
+# ionic serve
+
+$Tạo 1 trang mới
+# ionic g page <PageName>
+# ionic g page myPage
+
+√ Create app/pages/my-page/my-page.html
+√ Create app/pages/my-page/my-page.ts
+√ Create app/pages/my-page/my-page.scss
+
+

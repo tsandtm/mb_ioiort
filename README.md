@@ -16,4 +16,4 @@ Update the project’s package.json file’s script section to look like this:
 run app
 >ionic serve
 
-Trường hợp bị lỗi. Vào thư mục C:\Users\[user login computer]\AppData\Roaming\npm\node_modules. Xoá các module liên quan rồi install lại
+Trường hợp bị lỗi trong quá trình install các packet. Vào thư mục C:\Users\[user login computer]\AppData\Roaming\npm\node_modules. Xoá các module liên quan rồi install lại

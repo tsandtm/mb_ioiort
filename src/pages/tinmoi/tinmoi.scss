@@ -1,77 +1,74 @@
-.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated{
+page-tinmoi {
+    .segment-md .segment-button.activated,
+    .segment-md .segment-button.segment-activated {
         border-color: #248f8f;
-}
-.segment-md .segment-button{
-     color:#145252;
-     font-weight: bold;
-     font-size: 13px;
-}
-
-.body {
-    background-color: #cccccc;
-
-    ion-item {
-        margin-bottom: 3px;
     }
-    ion-row {
-        background-color: #248f8f;
-        ion-icon{
-            color: white;
-        }
-    }
-}
-.card-tin{
-    ion-card{
-            padding: 2px;
-        }
-}
-.ion-thumbnail{
-    img{
-        max-height:200%;
-    }
-}
-.tin-thumb {
-    img {
-        height: 100%;
-        width: 100%;
-    }
-    h3 {
-        font-size: 17px;
-        padding-left: 10px;
+    .segment-md .segment-button {
+        color: #145252;
         font-weight: bold;
+        font-size: 13px;
     }
-    p {
-        padding-left: 15px;
-        color: grey
+    .avatar {
+        background-image: url("http://www.mhi.com.br/wp-content/uploads/2013/10/bg-azul-raiado.jpg");
+        background-color: transparent;
+        height: 150px;
+        img {
+            margin-left: 150px;
+            margin-top: 60px;
+            border-radius: 60%;
+            width: 80px;
+            height: 80px;
+        }
     }
-}
-
-.icons {
-    padding-left: 60px;
-}
-.card-md ion-card-content{
-    padding-top:0px;
-}
-.tin {
-    
-    p {
-        word-wrap: break-word;
-        color: grey
+    .label-md {
+        margin: 0px;
     }
-}
-
-.menu1 {
-    height: auto;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.menu1 .searchbar-input {
-    width: 250px;
-}
-.opi {
-    .card-md {
-        border-color: brown;
-        border-style: solid;
+    ion-label {
+        white-space: normal;
+    }
+    .item-md.item-block .item-inner {
+        padding: 0px;
+    }
+    .item-md {
+        padding: 0px;
+    }
+    .list-header-md,
+    .list-md ion-item-divider {
+        padding-left: 0px;
+    }
+    .body {
+        background-color: #cccccc;
+        ion-item {
+            margin-bottom: 3px;
+        }
+        ion-row {
+            background-color: #248f8f;
+            ion-icon {
+                color: white;
+            }
+        }
+    }
+   
+    ion-card {
+        img{
+            height: 200px;
+        }
+    }
+    .opi {
+        .card-md {
+            border: solid brown;
+        }
+    }
+    .undo {
+        .card-md {
+            border: 0px;
+            background-color:dimgray;
+            ion-item {
+                background-color: lightgrey;
+            }
+        }
+        strong {
+            padding-left: 10px;
+        }
     }
 }

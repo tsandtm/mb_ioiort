@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service'
 import { INews } from '../shared/models/news.model'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
+import { IBienToanCuc, ITinQuanTam } from '../shared/variables'
 
 /*
   Generated class for the Tinquantam page.
@@ -15,11 +16,16 @@ import { ChiTietTinPage } from '../chitiettin/chitiettin';
   templateUrl: 'tinquantam.html'
 })
 export class TinquantamPage {
+  Dislike = ITinQuanTam.Button_Dislike
+  Title = ITinQuanTam.Title;
+
+  start: number = IBienToanCuc.Start;
   new: INews[];
-  public start: number = 6;
   IDuser: number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private _newsService: NewsService) {
-    this.IDuser = this.navParams.get('id');
+    this.IDuser = this.navParams.data;
+    console.log("id quan tam: " + this.IDuser);
   }
   ngOnInit(): void {
     this._newsService.tinquantam(this.IDuser, 0)
@@ -30,11 +36,11 @@ export class TinquantamPage {
   }
   del = (news: INews, i) => {
 
-    this._newsService.xoatinquantam(news.id, this.IDuser)
+    this._newsService.xoatinquantam(news.IDTinTuc, this.IDuser)
       .then(result => {
         console.log('Da xoa');
         this.new.splice(i, 1);
-        this._newsService.ShowToastOK("Đã xóa", { position: "middle" })
+        this._newsService.ShowToastOK(ITinQuanTam.ShowToast_Xoa, { position: "middle" })
 
       })
       .catch(error => {
@@ -43,7 +49,7 @@ export class TinquantamPage {
   }
 
   daxem = (news: INews) => {
-    this._newsService.daxem(news.id, this.IDuser)
+    this._newsService.daxem(news.IDTinTuc, this.IDuser)
       .then(result => {
 
       })
@@ -63,7 +69,7 @@ export class TinquantamPage {
           if (res.length !== 0) {
             for (let x of res)
               this.new.push(x);
-            this.start += 6;
+            this.start = this.start * 2;
           }
         })
         .catch(errorMessage => {

@@ -4,7 +4,7 @@ Trước khi chạy app nên install những phần sau, ta mở command trong t
 
 *Cài đặt:*
 
-1/ APP_ID="1576863542330748" --variable APP_NAME="Login_Ionic" //Tài khoản cho app.
+1/ ionic plugin add cordova-plugin-facebook4 --variable APP_ID="1576863542330748" --variable APP_NAME="Login_Ionic" //Tài khoản cho app.
 
 2/ cordova plugin add --save cordova-plugin-inappbrowser 
 

@@ -3,8 +3,10 @@ import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
-import {TinTucPage} from '../tintuc/tintuc';
-import {Facebook} from 'ionic-native';
+import { ILoginPage,IHomePage } from '../shared/variables'
+import { Facebook } from 'ionic-native';
+import { WebsService } from '../shared/services/website.service';
+import { TinTucPage } from '../tintuc/tintuc';
 /*
   Generated class for the LoginPage page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -64,20 +66,35 @@ import {Facebook} from 'ionic-native';
     ]
 })
 export class LoginPage {
+
+    //Animation
     logoState: any = "in";
     cloudState: any = "in";
     loginState: any = "in";
     formState: any = "in";
+    //set text
+    Header = ILoginPage.Header;
+    Subheader = ILoginPage.Subheader;
+    TaiKhoan = ILoginPage.TaiKhoan;
+    MatKhau = ILoginPage.MatKhau;
+    GhiNho = ILoginPage.GhiNho;
+    Button_DangNhap = ILoginPage.Button_DangNhap;
+
+    //Biến toàn cục
     username: string;
     password: string;
     save: boolean = false;
     IDuser: number;
+    webs1: any[];
+    count: number = 0;
 
     constructor(public navCtrl: NavController, private service: LoginService,
-        private storage: Storage) {
+        private storage: Storage, private _webService: WebsService) {
     }
 
-
+/**
+ * @param Load
+ */
     ionViewDidLoad() {
         this.storage.forEach((value, key) => {
             switch (key) {
@@ -87,20 +104,21 @@ export class LoginPage {
                 default:
             }
             console.log(`${this.username}${this.password}`)
-             //login bebinh
-             this.LoginRouterPage();
+
             if (this.username && this.password)
                 this.service.LoginToSever(this.username, this.password)
                     .then(result => {
-                        if (result !== 'Khong Co') {
-                            this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' })
+                        if (result !== 0) {
                             this.IDuser = result._body;
-                            console.log("id user:" + this.IDuser);
-                            this.navCtrl.push(HomePage, { id: this.IDuser });
+                            // console.log("id user:" + this.IDuser);
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
+                            return
                         }
+                        // this.navCtrl.push(HomePage, { id: this.IDuser });
                         else {
                             console.log(result)
-                            this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
+                            this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
                             return
                         }
                     })
@@ -110,47 +128,42 @@ export class LoginPage {
         })
     }
 
-     //Login dem count>0 vo thang tin tuc, count==0 vo homepage
-  LoginRouterPage = () => {
-    this.service.LoginToSever(this.username, this.password).then(res => {
-      this.IDuser = res._body;
-      this.service.GetCount(res._body).then(data => {
-        if (data == 0) {
-          this.navCtrl.setRoot(HomePage, this.IDuser);
-        }
-        else {
-          this.navCtrl.setRoot(TinTucPage, this.IDuser);
-        }
+    countweb(): any {
+        this._webService.GetList(this.IDuser, 0)
+            .then(res => {
+                this.webs1 = res
+                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
+                console.log(this.count)
+                return this.count;
+            })
+            .catch(err => console.log(err));
+    }
 
-      })
-    });
-  }
 
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
-                if (result!== 0) {
-                    console.log("id " + result._body);
-                    this.service.ShowToastOK("Dang Nhap Thanh Cong", { position: 'top' });
+                if (result !== 0) {
+                    this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
-                    console.log("id user:" + this.IDuser);
+                    // console.log("id user:" + this.IDuser);
+                    this.count = this.countweb();
+                    console.log("count " + this.count);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                        this.navCtrl.push(HomePage, { id: this.IDuser });
-                          //Login Bebinh 
-                         this.LoginRouterPage();
+                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1  });
+                        this._webService.ShowLoading(IHomePage.ShowLoading)
 
                     } else {
-                        //Login Bebinh
-                          this.LoginRouterPage();
+                        this.navCtrl.push(HomePage, { id: this.IDuser , flag: 1 });
+
                     }
                 }
-
                 else {
                     console.log(result)
-                    this.service.ShowToastOK("Dang nhap ko thanh cong", { position: 'top', duration: 3000 })
+                    this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
                     return
                 }
             })
@@ -160,21 +173,20 @@ export class LoginPage {
         console.log(`save: ${this.save}`)
     }
     LoginFacebook() {
-     Facebook.logout(); // chặn cái diablog show cái lỗi ra.
+     Facebook.logout(); 
     Facebook.login(['email']).then((response) => {
       let token = response.authResponse.accessToken;
       Facebook.api('/' + response.authResponse.userID + '?fields=id,name,email', []).then((result) => {
-        //alert(JSON.stringify(result));
         let name = result.name;
         let email = result.email;
-        let facebook = response.authResponse.userID;
+        let facebook = response.authResponse.userID; // sua chu Facebook => facebook
         this.username=facebook;
         this.password=facebook;
         this.service.GetCountFacebook(facebook).then(resGet => {
           if (resGet > 0) {
             this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
             this.IDuser=resGet;
-             if (this.save) {
+             if (this.save) { // them nay vo nua
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
@@ -189,7 +201,7 @@ export class LoginPage {
               this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
               this.service.GetCountFacebook(facebook).then(resGetID => {
                 this.IDuser = resGetID;
-                 if (this.save) {
+                 if (this.save) { // them nay vo nua
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
@@ -202,11 +214,11 @@ export class LoginPage {
             })
           }
           });
-        }).catch(err => {
+        }).catch(err => {  // sua nay lai
              console.log(JSON.stringify(err));
           this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) 
         });
-       }).catch(err => { 
+       }).catch(err => { // sua nay lai
          console.log(JSON.stringify(err));
         });
   }

@@ -1,5 +1,5 @@
 export interface INews{
-        id?:number;
+        IDTinTuc?:number;
         IDDanhMucSite?:number;
         TieuDe?:string;
         MoTa?:string;
@@ -13,5 +13,4 @@ export interface INews{
         ArrayQuanTam?:number;
         ChuaXem?:boolean;
         Undo?:boolean;
-        TimeOut:number;
 }

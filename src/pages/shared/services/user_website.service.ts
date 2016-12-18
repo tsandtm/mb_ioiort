@@ -26,7 +26,7 @@ export class UserWebService extends ServiceBase {
     }
 
     public deleteUserWebSite(idUser: any, idDanhMuc: any): Promise<boolean> {
-        return this.http.delete(`${url}/userwebsite?idUser=${idUser}&idDanhMuc=${idDanhMuc}`)
+        return this.http.get(`${url}/deleteuserwebsite?idUser=${idUser}&idDanhMuc=${idDanhMuc}`)
             .toPromise()
             .then(() => true)
             .catch(this.handleError);

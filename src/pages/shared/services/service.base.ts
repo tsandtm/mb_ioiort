@@ -2,10 +2,9 @@ import { ToastController, LoadingController } from 'ionic-angular';
 import { urllog } from '../variables'
 import { Platform } from 'ionic-angular';
 import { Http, URLSearchParams } from '@angular/http';
-import { Injectable } from '@angular/core';
 export abstract class ServiceBase {
 
-    constructor(private _toast?: ToastController, private _loadingCtrl?: LoadingController, public _http?: Http, private _platfrom?: Platform) {
+    constructor(private _toast?: ToastController, private _loadingCtrl?: LoadingController, private _http?: Http, private _platfrom?: Platform) {
 
     }
 
@@ -13,7 +12,7 @@ export abstract class ServiceBase {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
-        this.LogError(error,"Lỗi")
+        this.LogError(error,"Thành")
         return Promise.reject(error.message || error);
 
     }
@@ -49,7 +48,7 @@ export abstract class ServiceBase {
         body.set("Platform", platfrom)
         body.set("TieuDeLog","Lỗi")
         body.set("UngDung", "App Tin tức siêu thân thiện")
-        this._http.post(`${urllog}log`, body).toPromise()
+        this._http.post(`${urllog}/log`, body).toPromise()
             .then(result => {
                 (result.status === 200) ?
                     console.log(`send LogError`) : console.log(`Error khi send Log`)

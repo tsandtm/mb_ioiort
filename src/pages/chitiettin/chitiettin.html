@@ -7,22 +7,22 @@
 
 <ion-header class="body" no-shadow>
   <ion-toolbar no-border-bottom>
-    <button ion-button menuToggle icon-only (click)="Back()"> 
+    <button ion-button menuToggle icon-only (tap)="Back()"> 
        <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
     </button>
-    <button ion-button icon-only menuToggle (click)="Forward()">
+    <button ion-button icon-only menuToggle (tap)="Forward()">
       <ion-icon ios="ios-arrow-forward" md="md-arrow-forward" ></ion-icon>
     </button>
     <ion-title>
       {{url}}
     </ion-title>
     <ion-buttons right>
-      <button ion-button icon-only (click)="Like()">
+      <button ion-button icon-only (tap)="Like()">
         <ion-icon ios="ios-heart" md="md-heart" [color]="like? 'danger': 'default'"></ion-icon>
       </button>
 
-      <button ion-button icon-only icon-right (click)="Close()">
-      <ion-spinner *ngIf="spinner"></ion-spinner >      
+      <button ion-button icon-only icon-right (tap)="Close()">
+      <!--<ion-spinner *ngIf="spinner"></ion-spinner >      -->
         <ion-icon ios="ios-close" md="md-close"></ion-icon>
       </button>
     </ion-buttons>
@@ -32,7 +32,7 @@
   
   <ion-content class='padding has-subheader' z-index>
     <ion-slides pager>
-      <ion-slide style="height:98%" (swipeleft)="swipe(idx, $event.type)" (swiperight)="swipe(idx, $event.type)" >
+      <ion-slide style="height:98%" (swipeleft)="swipe($event.type)" (swiperight)="swipe($event.type)" >
         <iframe #iframe class='webPage' style="height:100%;" name="eventsPage" [src]="url | safe" data-tap-disabled="true" (load)="onLoad(iframe.src)"
           id="IDTinTuc" frameborder="0" allowfullscreen >
         </iframe>

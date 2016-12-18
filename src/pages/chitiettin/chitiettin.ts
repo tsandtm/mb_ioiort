@@ -55,7 +55,7 @@ export class ChiTietTinPage implements OnInit {
         this.like = !this.like
         if (this.like) {
             this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
-            this._newsService.themtin(this.nnew[this.index].id, this.IDuser)
+            this._newsService.themtin(this.nnew[this.index].IDTinTuc, this.IDuser)
                 .then(result => {
                 })
                 .catch(error => {
@@ -64,7 +64,7 @@ export class ChiTietTinPage implements OnInit {
 
         } else {
             this._newsService.ShowToastOK("Đã Like", { position: "middle", duration: 3000 })
-            this._newsService.xoatinquantam(this.nnew[this.index].id, this.IDuser)
+            this._newsService.xoatinquantam(this.nnew[this.index].IDTinTuc, this.IDuser)
                 .then(result => {
                     console.log('Da xoa')
                 })
@@ -84,7 +84,7 @@ export class ChiTietTinPage implements OnInit {
         else
             this.spinner = false;
 
-        this._newsService.tinquantam(this.IDuser, 0, this.nnew[this.index].id)
+        this._newsService.tinquantam(this.IDuser, 0, this.nnew[this.index].IDTinTuc)
             .then(nw => {
 
                 nw.length > 0 ? this.like = !this.like : this.like
@@ -96,7 +96,7 @@ export class ChiTietTinPage implements OnInit {
             })
     }
 
-    swipe = (currentIndex: number, action = this.SWIPE_ACTION.RIGHT) => {
+    swipe = (action = this.SWIPE_ACTION.RIGHT) => {
         // if (this.nnew[this.index + 1] > this.nnew.length) {
         //     this._newsService.getNew(this.index).then(result => {
         //         this.nnew.push(result)

@@ -12,4 +12,5 @@ export interface IWeb {
     Icon: string;
     TenGoi_KoDau: string;
     chontin: boolean;
+    GiaTri?:boolean;
 }

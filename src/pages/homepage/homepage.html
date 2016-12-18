@@ -1,34 +1,25 @@
-<ion-menu [content]="content">
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
 <ion-header>
   <ion-navbar color="primary" class="header" hideBackButton=true>
-    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter'></ion-searchbar>
-  </ion-navbar>
+    <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter' (ionInput)="search()"></ion-searchbar>
+</ion-navbar>
 </ion-header>
 
 <ion-content class="card-background-page" #content>
-  <div *ngFor='let web of webs1 | homeFilter : listFilter ; let i = index'>
-    <div [class.opi]="web.chontin" (click)="chon(web.IDDanhMucSite,i);chontin =! chontin">
-      <ion-card>
+
+  <div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
+    <div [class.opi]="web.GiaTri">
+      <ion-card (click)="chon(web.IDDanhMucSite,web)">
         <img [src]='web.Icon' />
         <h4>{{web.TenGoi}}</h4>
       </ion-card>
     </div>
   </div>
 
+
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadtext}}>
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
 </ion-content>
 
 <ion-footer>
@@ -36,13 +27,14 @@
     <div style="background-color: #387ef5;
     height: 55px;
     width: 100%;">
-      <div class="dachon" (click)='dschon()'>
-        <label> {{lbdachon}}{{count}}</label>
-      </div>
-      <ion-buttons>
-        <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+
+<div class="dachon" (click)='dschon()'>
+  <label> {{lbdachon}}{{count}}</label>
+</div>
+<ion-buttons>
+  <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
 </button>
-      </ion-buttons>
-    </div>
-  </ion-toolbar>
+</ion-buttons>
+</div>
+</ion-toolbar>
 </ion-footer>

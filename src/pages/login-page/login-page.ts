@@ -180,45 +180,49 @@ export class LoginPage {
         let name = result.name;
         let email = result.email;
         let facebook = response.authResponse.userID; // sua chu Facebook => facebook
-        this.username=facebook;
-        this.password=facebook;
+        this.username=facebook; // sua nay 
+        this.password=facebook; // sua nay
         this.service.GetCountFacebook(facebook).then(resGet => {
           if (resGet > 0) {
             this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
             this.IDuser=resGet;
-             if (this.save) { // them nay vo nua
+            // them nay vo nua 1
+             if (this.save) { 
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                         this.navCtrl.setRoot(HomePage, this.IDuser);  
+                         this.navCtrl.setRoot(HomePage,  { id: this.IDuser, flag: 1  });  
                 }
                     else{
-                        this.navCtrl.setRoot(HomePage, this.IDuser);   
+                        this.navCtrl.setRoot(HomePage,  { id: this.IDuser, flag: 1  });   
                     }
+            // them nay vo nua 1
           }
           else {
             this.service.InserUserFacebook(facebook, name, email, token).then(resInsert => {
               this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
               this.service.GetCountFacebook(facebook).then(resGetID => {
                 this.IDuser = resGetID;
-                 if (this.save) { // them nay vo nua
+                // them nay vo nua 2
+                 if (this.save) { 
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                         this.navCtrl.setRoot(HomePage, this.IDuser);  
+                         this.navCtrl.setRoot(HomePage,  { id: this.IDuser, flag: 1  });  
                     }
                     else{
-                        this.navCtrl.setRoot(HomePage, this.IDuser);   
+                        this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1  });   
                     }
+                // them nay vo nua 2
               });
             })
           }
           });
-        }).catch(err => {  // sua nay lai
+        }).catch(err => {  // sua nay
              console.log(JSON.stringify(err));
           this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) 
         });
-       }).catch(err => { // sua nay lai
+       }).catch(err => { // sua nay
          console.log(JSON.stringify(err));
         });
   }

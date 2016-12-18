@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import { Platform, AlertController } from 'ionic-angular';
-import { StatusBar, Splashscreen, Push } from 'ionic-native';
+import { StatusBar, Push } from 'ionic-native';
 
-import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login-page/login-page';
+// import { HomePage } from '../pages/home/home';
+// import { LoginPage } from '../pages/login-page/login-page';
 import { DemoItemSlidingPage } from '../pages/demo-item-sliding/demo-item-sliding';
 
 
@@ -16,10 +16,26 @@ export class MyApp {
   rootPage = DemoItemSlidingPage;
 
   constructor(platform: Platform, public alertCtrl: AlertController, http: Http) {
+
+    let alert;
+
+    alert = this.alertCtrl.create({
+      title: 'thong bao chay app',
+      message: 'app bat dau chay'
+    });
+    alert.present();
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+
+      alert = this.alertCtrl.create({
+        title: 'thong bao push firebase',
+        message: 'bat dau push firebase'
+      });
+      alert.present();
+
       //Splashscreen.hide();
       let push = Push.init({
         android: {
@@ -32,26 +48,80 @@ export class MyApp {
         },
         windows: {}
       });
+
+      alert = this.alertCtrl.create({
+        title: 'thong bao init push',
+        message: 'sau khi init push'
+      });
+      alert.present();
+
+
       if (platform.is('android')) {
+
+        alert = this.alertCtrl.create({
+          title: 'platform alert',
+          message: `day la platform android`
+        });
+        alert.present();
+
         push.on('registration', (data) => {
           console.log("device token ->", data.registrationId);
+
+          alert = this.alertCtrl.create({
+            title: 'init token',
+            message: `token la: ${data.registrationId}`
+          });
+          alert.present();
+
+
           //TODO - send device token to server
 
-          let body = new URLSearchParams();
-          body.set('Token', data.registrationId);
-          body.set('Device', 'android');
-          body.set('NgayTao', '12/12/2016');
-          body.set('TagAppID', '{1}');
+          // let body = new URLSearchParams();
+          // body.set('Token', data.registrationId);
+          // body.set('Device', 'android');
+          // body.set('NgayTao', '12/12/2016');
+          // body.set('TagAppID', '1');
 
-          http.post('http://test5.hutech.edu.vn/api/pushFireBase/clientdangky', body)
+          alert = this.alertCtrl.create({
+            title: 'thong bao request',
+            message: `bat dau send request`
+          });
+          alert.present();
+
+
+
+          http.get(`http://test5.hutech.edu.vn/api/pushFireBase/clientdangky/${data.registrationId}/android/1`)
             .subscribe((response) => {
-              console.log('success');
+
+              alert = this.alertCtrl.create({
+                title: 'thong bao push firebase',
+                message: `ket qua push firebase ${JSON.stringify(response)}`
+              });
+              alert.present();
+
             },
             (error) => {
-              console.error('Loi khi push token: ', error);
+
+              alert = this.alertCtrl.create({
+                title: 'Http Error: thong bao push firebase',
+                message: `co loi khi push len firebase: ${error.message}
+                 stacktrace: ${error}`
+              });
+              alert.present();
+
+            }, () => {
+
+              alert = this.alertCtrl.create({
+                title: 'thong bao push firebase',
+                message: `hoan thanh push len firebase`
+              });
+              alert.present();
+
             })
 
         });
+        //-----------------------------------end push on registration----------------------
+
         push.on('notification', (data) => {
           console.log('message', data.message);
           //if user using app and push notification comes
@@ -68,11 +138,25 @@ export class MyApp {
             console.log("Push notification clicked");
           }
         });
+
+        //-----------------------end push on notification----------------
+
         push.on('error', (e) => {
-          console.log(e.message);
+          alert = this.alertCtrl.create({
+            title: 'Push OnError: thong bao push firebase',
+            message: `co loi khi push len firebase: ${e.message}
+                 stacktrace: ${e}`
+          });
+          alert.present();
         });
+
+        //-------------------------------end push on error---------------
 
       }
     });
+
+
+
+
   }
 }

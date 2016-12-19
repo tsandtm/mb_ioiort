@@ -14,13 +14,12 @@ export class LoginService extends ServiceBase {
         return this.http.post(`${urllogin}/login`,{TaiKhoan:user,Password:pass})
 
             .toPromise()
-            .then(respone => {
-                if (respone.status == 200) {
-                    console.log("id " + respone);
-                    return respone;
-                }
-                if (respone.status == 400)
-                    return 0;
+            .then(respone => respone.json())
+            .then(res =>{
+                if(res.Message === `OK`)
+                    return res.IDUser;
+                if(res.Message === `Fail`)
+                    return -1;
             })
             .catch(this.handleError)
     }

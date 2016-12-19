@@ -108,10 +108,10 @@ export class LoginPage {
             if (this.username && this.password)
                 this.service.LoginToSever(this.username, this.password)
                     .then(result => {
-                        if (result !== 0) {
-                            this.IDuser = result._body;
+                        if (result !== -1) {
+                            // this.IDuser = result._body;
                             // console.log("id user:" + this.IDuser);
-                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                            this.navCtrl.push(HomePage, { id: result, flag: 1 });
                             this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
                             return
                         }
@@ -127,37 +127,23 @@ export class LoginPage {
                     })
         })
     }
-
-    countweb(): any {
-        this._webService.GetList(this.IDuser, 0)
-            .then(res => {
-                this.webs1 = res
-                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                console.log(this.count)
-                return this.count;
-            })
-            .catch(err => console.log(err));
-    }
-
-
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
-                if (result !== 0) {
+                if (result !== -1) {
                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
-                    this.IDuser = result._body;
+                    // this.IDuser = result._body;
                     // console.log("id user:" + this.IDuser);
-                    this.count = this.countweb();
                     console.log("count " + this.count);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1  });
+                        this.navCtrl.push(HomePage, { id: result, flag: 1  });
                         this._webService.ShowLoading(IHomePage.ShowLoading)
 
                     } else {
-                        this.navCtrl.push(HomePage, { id: this.IDuser , flag: 1 });
+                        this.navCtrl.push(HomePage, { id: result , flag: 1 });
 
                     }
                 }

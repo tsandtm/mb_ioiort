@@ -4,10 +4,14 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login-page/login-page';
-import { Service } from '../pages/share/variables';
 import {PageChartPage} from '../pages/chart/chart'
 import {ChartModule} from 'angular2-highcharts';
 import {Map} from '../pages/map/map';
+
+import {ChartService} from '../pages/chart/chart.service';
+import {MapService} from '../pages/map/map.service';
+import {LoginService} from '../pages/login-page/login.service';
+import {VietNamDecimal} from '../pipes/viet-nam-decimal';
 
 @NgModule({
   declarations: [
@@ -15,7 +19,8 @@ import {Map} from '../pages/map/map';
     HomePage,
     LoginPage,
     PageChartPage,
-    Map
+    Map,
+    VietNamDecimal
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -30,6 +35,6 @@ import {Map} from '../pages/map/map';
     PageChartPage,
     Map
   ],
-  providers: [Service]
+  providers: [ChartService,MapService,LoginService]
 })
 export class AppModule { }

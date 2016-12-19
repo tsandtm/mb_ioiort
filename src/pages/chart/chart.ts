@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { NavController, ViewController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
-import { Service } from '../share/variables';
+import { ChartService } from './chart.service';
 
 /*
   Generated class for the PageChart page.
@@ -31,7 +31,7 @@ export class PageChartPage {
   constructor(public navCtrl: NavController,
     private _http: Http,
     public viewCtrl: ViewController,
-    private service: Service) {
+    private service: ChartService) {
 
   }
 

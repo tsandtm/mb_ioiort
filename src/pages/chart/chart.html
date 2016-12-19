@@ -30,7 +30,7 @@
             {{value.name}}
           </td>
           <td style="text-align: right;">
-            <strong>{{value.value}}</strong> ({{value.DonViTinh}})
+            <strong>{{value.value | number | vietNamDecimal}}</strong> ({{value.DonViTinh}})
           </td>
         </tr>
       </tbody>

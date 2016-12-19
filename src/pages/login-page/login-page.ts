@@ -1,13 +1,9 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController, LoadingController,Loading } from 'ionic-angular';
-import { Service } from '../share/variables';
-import { HomePage } from '../home/home';
-/*
-  Generated class for the LoginPage page.
+import { NavController, LoadingController, Loading } from 'ionic-angular';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+import { LoginService } from './login.service';
+import { HomePage } from '../home/home';
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login-page.html',
@@ -62,15 +58,14 @@ import { HomePage } from '../home/home';
   ]
 })
 export class LoginPage {
-  loader:Loading
+  loader: Loading
   logoState: any = "in";
   cloudState: any = "in";
   loginState: any = "in";
   formState: any = "in";
-  // username + password
   username: string;
   password: string;
-  constructor(public navCtrl: NavController, private service: Service, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, private service: LoginService, public loadingCtrl: LoadingController) {
   }
 
   Login = () => {
@@ -80,13 +75,12 @@ export class LoginPage {
     } else {
       this.service.LoginToSever(this.username, this.password, `POST_Login`)
         .then(data => {
-          console.log('Data:' + data)
           if (data) {
             this.service.ShowToastOK("Đăng nhập thành công")
             return this.navCtrl.push(HomePage)
           } else {
             this.loader.dismiss();
-            return this.service.ShowToastOK("Đăng nhập không thành công")
+            return this.service.ShowToastOK("Đăng nhập không thành công", { position: 'top' })
           }
         })
     }

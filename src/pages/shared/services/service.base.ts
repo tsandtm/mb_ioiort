@@ -48,7 +48,7 @@ export abstract class ServiceBase {
         body.set("Platform", platfrom)
         body.set("TieuDeLog","Lỗi")
         body.set("UngDung", "App Tin tức siêu thân thiện")
-        this._http.post(`${urllog}log`, body).toPromise()
+        this._http.post(`${urllog}/log`, body).toPromise()
             .then(result => {
                 (result.status === 200) ?
                     console.log(`send LogError`) : console.log(`Error khi send Log`)

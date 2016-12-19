@@ -17,7 +17,7 @@ export class LoginService extends ServiceBase {
             TaiKhoan: user,
             Password: pass
         }
-        return this.http.post(`${urllogin}login`, U)
+        return this.http.post(`${urllogin}/login`, U)
             .toPromise()
             .then(respone => {
                 if (respone.status == 200) {

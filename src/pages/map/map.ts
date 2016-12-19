@@ -27,12 +27,13 @@ export class Map {
 
     this.showAlert('Start', 'bat dau load google map')
 
-    if(google === undefined){
+    if (google === undefined) {
       this.showAlert('Google undefined', 'google khong hoat dong');
     }
 
     this.service.layDanhSachDiem()
       .then(data => {
+        this.showAlert('du lieu dia diem', JSON.stringify(data))
         this.loadMap(data);
       })
   }
@@ -84,7 +85,7 @@ export class Map {
       .then(data => {
         content += data;
       })
-      .catch(error => this.showAlert('Lỗi mạng','kết nối không được xin thử lại sau'));
+      .catch(error => this.showAlert('Lỗi mạng', 'kết nối không được xin thử lại sau'));
 
     google.maps.event.addListener(marker, 'click', () => {
 

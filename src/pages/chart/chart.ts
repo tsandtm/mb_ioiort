@@ -168,12 +168,17 @@ export class PageChartPage {
       time: ttqt[0].time,
       info: a,
     };
+
+    this.showAlert('Summary duoc tao', JSON.stringify(this.summary));
   }
 
   /**
    * thêm dữ liệu vào biểu đồ và đặt thời gian chạy update
    */
   private addDataToChart(thongtinquantrac: ThongTinQuanTrac[]) {
+
+    this.showAlert('So luong du lieu duoc luu vao', thongtinquantrac.length.toString())
+
     for (let i = 0; i < 4; i++) {
       this.chart.addSeries({
         name: thongtinquantrac[i].DoDo_Name,

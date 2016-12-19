@@ -73,7 +73,7 @@ export class LoginPage {
     if (this.username.toString().length == 0 || this.password.toString().length == 0) {
       this.service.ShowToastOK("Không được để trống")
     } else {
-      this.service.LoginToSever(this.username, this.password, `POST_Login`)
+      this.service.LoginToSever(this.username, this.password)
         .then(data => {
           if (data) {
             this.service.ShowToastOK("Đăng nhập thành công")

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, Platform, AlertController } from 'ionic-angular';
+import { Network } from 'ionic-native';
 import { LoginPage } from '../login-page/login-page';
 import { PageChartPage } from '../chart/chart';
 import { Map } from '../map/map';
@@ -8,7 +9,10 @@ import { Map } from '../map/map';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController,
+    public modalCtrl: ModalController,
+    private platform: Platform,
+    private Alert: AlertController) {
   }
 
   GoToMap = () => {
@@ -23,5 +27,17 @@ export class HomePage {
   }
   Logout = () => {
     this.navCtrl.setRoot(LoginPage)
+  }
+
+  CheckNetwork = () => {
+    this.platform.ready().then(() => {
+      let alert = this.Alert.create({
+        title: "Connection Status",
+        subTitle: JSON.stringify(Network.connection),
+        buttons: ["OK"]
+      });
+      alert.present();
+    });
+
   }
 }

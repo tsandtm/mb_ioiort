@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController, AlertController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 
 import { MapService } from './map.service';
@@ -16,7 +16,10 @@ export class Map {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public service: MapService, private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController,
+    public service: MapService,
+    private viewCtrl: ViewController,
+    private alertCtrl: AlertController) {
 
   }
 
@@ -46,8 +49,10 @@ export class Map {
         this.addMarker(diaDiem);
       })
 
+      this.showAlert('Google Map', 'load map thành công');
+
     }, (err) => {
-      console.log(err);
+      this.showAlert('Loi geolication', JSON.stringify(err))
     });
 
   }
@@ -72,7 +77,7 @@ export class Map {
       .then(data => {
         content += data;
       })
-      .catch(error => alert('Lỗi kết nối hãy thử lại sau'));
+      .catch(error => this.showAlert('Lỗi mạng','kết nối không được xin thử lại sau'));
 
     google.maps.event.addListener(marker, 'click', () => {
 
@@ -83,6 +88,15 @@ export class Map {
 
     });
 
+  }
+
+  private showAlert(title: string, message: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message
+    })
+
+    alert.present();
   }
 
   public dismiss() {

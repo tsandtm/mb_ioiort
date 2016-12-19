@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController, AlertController, Alert } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
 import { ChartService } from './chart.service';
 
@@ -31,7 +31,8 @@ export class PageChartPage {
   constructor(public navCtrl: NavController,
     private _http: Http,
     public viewCtrl: ViewController,
-    private service: ChartService) {
+    private service: ChartService,
+    private alertCrl: AlertController) {
 
   }
 
@@ -110,24 +111,36 @@ export class PageChartPage {
     this.chart = charInstance;
   }
 
+  private showAlert(title: string, message: string) {
+    let alert = this.alertCrl.create({
+      title: title,
+      message: message
+    })
+
+    alert.present();
+  }
+
   /**
    * Gọi đến api get để lấy 60 giá trị đầu
    */
   callApi() {
     this.getData(75)
-      .subscribe(
-      (ttqt: ThongTinQuanTrac[]) => {
+      .subscribe((ttqt: ThongTinQuanTrac[]) => {
         this.isLoading = false;
         if (ttqt.length !== 0) {
           this.addDataToChart(ttqt);
         } else {
+          this.showAlert('Lỗi khi lấy dữ liệu', 'Hiện tại không có dữ liệu')
           this.showError('Hiện tại không có dữ liệu');
         }
 
-      },
-      (error) => {
+      }, (error) => {
         console.error('Error: ', error);
         this.showError(error._body);
+        this.showAlert('Lỗi khi lấy dữ liệu', JSON.stringify(error));
+      }, () => {
+
+        this.showAlert('Hoàn thành lấy dữ liệu', 'Success')
       })
   }
 
@@ -136,17 +149,10 @@ export class PageChartPage {
     this.errorMessage = message;
   }
 
-/**
- * cái service để gọi xuống api
- */
+  /**
+   * cái service để gọi xuống api
+   */
   private getData(sl: number) {
-    // return this._http
-    //   .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
-    //   .map(res => res.json())
-    //   .map(json => {
-    //     let ttqt = this.convertToThongTinQuanTrac(json);
-    //     return ttqt;
-    //   })
     return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27,%27coldata32%27&diemquantrac=2&tongsododo=' + sl)
   }
 
@@ -220,6 +226,7 @@ export class PageChartPage {
         }
       },
       (error) => {
+        this.showAlert('Lỗi khi cap nhat du lieu', JSON.stringify(error))
         console.error('Error: ', error);
         this.showError(error._body);
       }

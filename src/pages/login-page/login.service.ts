@@ -1,9 +1,9 @@
 import { Http, URLSearchParams } from '@angular/http';
 import { ToastController } from 'ionic-angular';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { ServiceBase } from '../share/service.base';
-import {url as urlApi} from '../share/variables';
+import { url as urlApi } from '../share/variables';
 
 @Injectable()
 export class LoginService extends ServiceBase {
@@ -11,11 +11,11 @@ export class LoginService extends ServiceBase {
     super(toast);
   }
 
-  public LoginToSever(user: any, pass: any, url: string): Promise<any> {
+  public LoginToSever(user: any, pass: any): Promise<any> {
     let body = new URLSearchParams()
     body.set("UserName", user)
     body.set("pass", pass)
-    return this._http.post(`${urlApi}${url}`, body)
+    return this._http.post(`${urlApi}POST_Login`, body)
       .toPromise()
       .then(respone => {
         console.log(respone.json());

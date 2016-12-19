@@ -1,18 +1,22 @@
-<ion-content >
-    <ion-title padding="center">NK Engineering System</ion-title>
+<ion-content>
+  <ion-title padding="center">NK Engineering System</ion-title>
 
-    <ion-list>
-        <ion-item (click)="GoToChart()">
-            <ion-icon item-left ios="ios-analytics" md="md-analytics" large></ion-icon>
-            <h2>Giám sát hệ thống</h2>
-        </ion-item>
-        <ion-item (click)="GoToMap()">
-            <ion-icon item-left ios="ios-map" md="md-map" large></ion-icon>
-            <h2>Bản đồ</h2>
-        </ion-item>
-        <ion-item (click)="Logout()">
-            <ion-icon item-left ios="ios-power" md="md-power" large></ion-icon>
-            <h2>Đăng xuất</h2>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-item (click)="GoToChart()">
+      <ion-icon item-left ios="ios-analytics" md="md-analytics" large></ion-icon>
+      <h2>Giám sát hệ thống</h2>
+    </ion-item>
+    <ion-item (click)="GoToMap()">
+      <ion-icon item-left ios="ios-map" md="md-map" large></ion-icon>
+      <h2>Bản đồ</h2>
+    </ion-item>
+    <ion-item (click)="CheckNetwork()">
+      <ion-icon item-left ios="ios-globe" md="md-globe" large></ion-icon>
+      <h2>Kiểm tra mạng</h2>
+    </ion-item>
+    <ion-item (click)="Logout()">
+      <ion-icon item-left ios="ios-power" md="md-power" large></ion-icon>
+      <h2>Đăng xuất</h2>
+    </ion-item>
+  </ion-list>
 </ion-content>

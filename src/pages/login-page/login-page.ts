@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
-import { ILoginPage,IHomePage } from '../shared/variables'
+import { ILoginPage, IHomePage } from '../shared/variables'
 import { Facebook } from 'ionic-native';
 import { WebsService } from '../shared/services/website.service';
 import { TinTucPage } from '../tintuc/tintuc';
@@ -92,9 +92,9 @@ export class LoginPage {
         private storage: Storage, private _webService: WebsService) {
     }
 
-/**
- * @param Load
- */
+    /**
+     * @param Load
+     */
     ionViewDidLoad() {
         this.storage.forEach((value, key) => {
             switch (key) {
@@ -139,11 +139,11 @@ export class LoginPage {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                        this.navCtrl.push(HomePage, { id: result, flag: 1  });
+                        this.navCtrl.push(HomePage, { id: result, flag: 1 });
                         this._webService.ShowLoading(IHomePage.ShowLoading)
 
                     } else {
-                        this.navCtrl.push(HomePage, { id: result , flag: 1 });
+                        this.navCtrl.push(HomePage, { id: result, flag: 1 });
 
                     }
                 }
@@ -159,48 +159,57 @@ export class LoginPage {
         console.log(`save: ${this.save}`)
     }
     LoginFacebook() {
-        //test
+        Facebook.logout();
         Facebook.login(['email']).then((response) => {
             let token = response.authResponse.accessToken;
-            // alert(JSON.stringify(response));
             Facebook.api('/' + response.authResponse.userID + '?fields=id,name,email', []).then((result) => {
                 let name = result.name;
                 let email = result.email;
-                let Facebook = response.authResponse.userID;
-                this.service.GetCountFacebook(Facebook).then(resGet => {
-                    console.log("resGet:" + resGet);
+                let facebook = response.authResponse.userID; // sua chu Facebook => facebook
+                this.username = facebook; // sua nay 
+                this.password = facebook; // sua nay
+                this.service.GetCountFacebook(facebook).then(resGet => {
                     if (resGet > 0) {
-                        this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-                        this.navCtrl.setRoot(HomePage);
+                        this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top', duration: 3000 })
+                        this.IDuser = resGet;
+                        // them nay vo nua 1
+                        if (this.save) {
+                            this.storage.set("TaiKhoan", this.username);
+                            this.storage.set("Password", this.password);
+                            this.storage.set("Checkbox", this.save);
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                        }
+                        else {
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                        }
+                        // them nay vo nua 1
                     }
                     else {
-                        this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
-                            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-                            this.service.GetCountFacebook(Facebook).then(resGetID => {
+                        this.service.InserUserFacebook(facebook, name, email, token).then(resInsert => {
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top', duration: 3000 })
+                            this.service.GetCountFacebook(facebook).then(resGetID => {
                                 this.IDuser = resGetID;
-                                console.log("id moi=" + this.IDuser);
-                                this.navCtrl.setRoot(HomePage, this.IDuser);
+                                // them nay vo nua 2
+                                if (this.save) {
+                                    this.storage.set("TaiKhoan", this.username);
+                                    this.storage.set("Password", this.password);
+                                    this.storage.set("Checkbox", this.save);
+                                    this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                                }
+                                else {
+                                    this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                                }
+                                // them nay vo nua 2
                             });
                         })
                     }
-                }).catch(err => {
-                    this.service.InserUserFacebook(Facebook, name, email, token).then(resInsert => {
-                        this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
-                        console.log("id moi:" + this.IDuser);
-                        this.service.GetCountFacebook(Facebook).then(resGetID => {
-                            this.IDuser = resGetID;
-                            console.log("id moi=" + this.IDuser);
-                            this.navCtrl.setRoot(HomePage, this.IDuser);
-                        });
-                    });
                 });
-                // coi thử xem có nên làm ghi nhớ hem
-                this.username = Facebook;
-                this.password = Facebook;
-                this.storage.set("TaiKhoan", this.username);
-                this.storage.set("Password", this.password);
-                // coi thử xem có nên làm ghi nhớ hem
-            }).catch(err => { this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) });
-        }).catch(err => { this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 }) });
+            }).catch(err => {  // sua nay
+                console.log(JSON.stringify(err));
+                this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
+            });
+        }).catch(err => { // sua nay
+            console.log(JSON.stringify(err));
+        });
     }
 }

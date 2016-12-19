@@ -24,6 +24,13 @@ export class Map {
   }
 
   ionViewDidLoad() {
+
+    this.showAlert('Start', 'bat dau load google map')
+
+    if(google === undefined){
+      this.showAlert('Google undefined', 'google khong hoat dong');
+    }
+
     this.service.layDanhSachDiem()
       .then(data => {
         this.loadMap(data);

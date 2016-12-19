@@ -29,14 +29,5 @@
     "@ionic/app-scripts": "0.0.43",
     "typescript": "2.0.6"
   },
-  "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
-    "cordova-plugin-statusbar",
-    "cordova-plugin-device",
-    "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
-  ],
-  "cordovaPlatforms": [],
   "description": "nkengineering: An Ionic project"
 }

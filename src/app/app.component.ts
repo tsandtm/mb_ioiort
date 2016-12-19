@@ -16,7 +16,7 @@ export class MyApp {
       alertCtrl.create({
         title: error.name,
         message: `error message: ${error.message}, message: ${message}, url: ${url}`
-      })
+      }).present();
     }
 
     platform.ready().then(() => {

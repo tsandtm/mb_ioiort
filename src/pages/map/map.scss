@@ -15,10 +15,16 @@
   border-collapse: collapse;
 }
 
-// .table td {
-//   width: 100%;
-//   height: 100%;
-// }
+.alertError{
+  color: red;
+  .alert-message{
+    color: black;
+  }
+}
+
+.alertSuccess{
+  color: blue
+}
 
 .table-bordered th,
 .table-bordered td {

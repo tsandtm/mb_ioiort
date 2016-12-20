@@ -1,6 +1,6 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { ToastController, AlertController } from 'ionic-angular';
+import { ToastController} from 'ionic-angular';
 import * as moment from 'moment';
 
 import { ServiceBase } from '../share/service.base';
@@ -10,7 +10,7 @@ import 'rxjs';
 
 @Injectable()
 export class ChartService extends ServiceBase {
-  constructor(private toast: ToastController, private _http: Http, private Alert: AlertController) {
+  constructor(private toast: ToastController, private _http: Http) {
     super(toast);
   }
 
@@ -31,11 +31,6 @@ export class ChartService extends ServiceBase {
  * chuyển json thành thông tin quản trắc
  */
   private convertToThongTinQuanTrac(json: any[]): ThongTinQuanTrac[] {
-
-    this.Alert.create({
-      title: 'json quan trac',
-      message: JSON.stringify(json),
-    }).present()
 
     let ttqt = json.map(value => {
       let qt: ThongTinQuanTrac = new ThongTinQuanTrac();

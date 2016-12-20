@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { NavController, ViewController, AlertController, Alert } from 'ionic-angular';
+import { NavController, ViewController, AlertController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
 import { ChartService } from './chart.service';
 
@@ -20,7 +20,6 @@ export class PageChartPage {
   chart: any;
   past: any = {};
   isLoading = true;
-  errorMessage: string = "";
   summary: {
     time: Date,
     info: Array<{ name: string, value: number, DonViTinh: string }>
@@ -32,8 +31,7 @@ export class PageChartPage {
     private _http: Http,
     public viewCtrl: ViewController,
     private service: ChartService,
-    private alertCrl: AlertController) {
-
+    private Alert: AlertController) {
   }
 
 
@@ -111,15 +109,6 @@ export class PageChartPage {
     this.chart = charInstance;
   }
 
-  private showAlert(title: string, message: string) {
-    let alert = this.alertCrl.create({
-      title: title,
-      message: message
-    })
-
-    alert.present();
-  }
-
   /**
    * Gọi đến api get để lấy 60 giá trị đầu
    */
@@ -130,23 +119,33 @@ export class PageChartPage {
         if (ttqt.length !== 0) {
           this.addDataToChart(ttqt);
         } else {
-          this.showAlert('Lỗi khi lấy dữ liệu', 'Hiện tại không có dữ liệu')
+
           this.showError('Hiện tại không có dữ liệu');
         }
 
       }, (error) => {
         console.error('Error: ', error);
         this.showError(error._body);
-        this.showAlert('Lỗi khi lấy dữ liệu', JSON.stringify(error));
       }, () => {
 
-        this.showAlert('Hoàn thành lấy dữ liệu', 'Success')
+        this.Alert.create({
+          title: 'Thông báo',
+          message: 'Dữ liệu đã được lấy',
+          cssClass: 'alertSuccess',
+          buttons: ['Ok'],
+        }).present();
+
       })
   }
 
   showError(message: string) {
     this.isLoading = false;
-    this.errorMessage = message;
+    this.Alert.create({
+      title: 'Error',
+      message: message,
+      cssClass: 'alertError',
+      buttons: ['Ok']
+    }).present()
   }
 
   /**
@@ -169,7 +168,6 @@ export class PageChartPage {
       info: a,
     };
 
-    this.showAlert('Summary duoc tao', JSON.stringify(this.summary));
   }
 
   /**
@@ -177,7 +175,6 @@ export class PageChartPage {
    */
   private addDataToChart(thongtinquantrac: ThongTinQuanTrac[]) {
 
-    this.showAlert('So luong du lieu duoc luu vao', thongtinquantrac.length.toString())
 
     for (let i = 0; i < 4; i++) {
       this.chart.addSeries({
@@ -231,7 +228,6 @@ export class PageChartPage {
         }
       },
       (error) => {
-        this.showAlert('Lỗi khi cap nhat du lieu', JSON.stringify(error))
         console.error('Error: ', error);
         this.showError(error._body);
       }

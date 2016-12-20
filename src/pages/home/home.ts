@@ -29,15 +29,4 @@ export class HomePage {
     this.navCtrl.setRoot(LoginPage)
   }
 
-  CheckNetwork = () => {
-    this.platform.ready().then(() => {
-      let alert = this.Alert.create({
-        title: "Connection Status",
-        subTitle: JSON.stringify(Network.connection),
-        buttons: ["OK"]
-      });
-      alert.present();
-    });
-
-  }
 }

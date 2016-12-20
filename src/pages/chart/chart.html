@@ -22,7 +22,7 @@
   <chart id="chart-container" [options]="options" (load)="saveInstance($event.context)"></chart>
   <hr />
   <div *ngIf="summary">
-    <p class="content">{{this.summary.time | date:'yMd'}} {{this.summary.time | date:'jms'}}</p>
+    <p class="content">{{this.summary.time | date:'d/M/y'}} {{this.summary.time | date:'jms'}}</p>
     <table class="cus_table" width="100%">
       <tbody>
         <tr *ngFor="let value of summary.info">
@@ -35,10 +35,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="errorMessage" style="color: red">
-    {{errorMessage}}
   </div>
 
 </ion-content>

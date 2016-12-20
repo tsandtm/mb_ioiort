@@ -23,11 +23,6 @@ export class Map {
   }
 
   ionViewDidLoad() {
-
-    this.showAlert('Start', 'bat dau load google map')
-
-    this.showAlert('Type of google', typeof google)
-
     this.service.layDanhSachDiem()
       .then(data => {
         this.loadMap(data);
@@ -35,6 +30,13 @@ export class Map {
   }
 
   loadMap(data: DiaDiem[]) {
+
+    this.alertCtrl.create({
+      title: 'Thông báo',
+      message: 'Đang load map',
+      buttons: ['Ok'],
+      cssClass: 'alertSuccess'
+    }).present();
 
     let latLng = new google.maps.LatLng(parseFloat(data[0].map_lat), parseFloat(data[0].map_long));
 
@@ -50,7 +52,6 @@ export class Map {
       this.addMarker(diaDiem);
     })
 
-    this.showAlert('Google Map', 'load map thành công');
 
   }
 
@@ -61,7 +62,7 @@ export class Map {
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(parseFloat(data.map_lat), parseFloat(data.map_long))
     }, (error) => {
-      this.showAlert('Error',JSON.stringify(error))
+      this.showErrorAlert(JSON.stringify(error))
       console.error(error)
     });
 
@@ -75,7 +76,7 @@ export class Map {
       .then(data => {
         content += data;
       })
-      .catch(error => this.showAlert('Lỗi mạng', 'kết nối không được xin thử lại sau'));
+      .catch(error => this.showErrorAlert('Lỗi mạng: kết nối không được xin thử lại sau'));
 
     google.maps.event.addListener(marker, 'click', () => {
 
@@ -88,11 +89,13 @@ export class Map {
 
   }
 
-  private showAlert(title: string, message: string) {
+  private showErrorAlert(message: string) {
     let alert = this.alertCtrl.create({
-      title: title,
-      message: message
-    })
+      title: 'Error',
+      message: message,
+      cssClass: 'alertError',
+      buttons: ['Ok']
+    });
 
     alert.present();
   }

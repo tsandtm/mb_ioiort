@@ -2,7 +2,6 @@ import { Component} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model';
-import { ITinQuanTam } from '../shared/variables'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*

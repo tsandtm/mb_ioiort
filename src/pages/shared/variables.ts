@@ -1,9 +1,9 @@
-export let url = 'http://localhost:8080/api';
-export let urllogin = `http://localhost:8080/tintuc`
-// export let url = `http://test4.hutech.edu.vn/api`
-export let urllog = null
-// export let urllogin = `http://test4.hutech.edu.vn/tintuc`
-// export let urllog = 'http://test1.hutech.edu.vn';
+// export let url = 'http://localhost:8080/api';
+// export let urllogin = `http://localhost:8080/tintuc`
+
+export let url = `http://test4.hutech.edu.vn/api`
+export let urllogin = `http://test4.hutech.edu.vn/tintuc`
+export let urllog = 'http://test1.hutech.edu.vn/api';
 export let urlLoginFace=`http://test4.hutech.edu.vn/Facebook`; // thêm biến này vô.
 
 /**

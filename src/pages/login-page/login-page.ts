@@ -6,7 +6,6 @@ import { HomePage } from '../homepage/homepage';
 import { ILoginPage, IHomePage } from '../shared/variables'
 import { Facebook } from 'ionic-native';
 import { WebsService } from '../shared/services/website.service';
-import { TinTucPage } from '../tintuc/tintuc';
 /*
   Generated class for the LoginPage page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -210,6 +209,7 @@ export class LoginPage {
             });
         }).catch(err => { // sua nay
             console.log(JSON.stringify(err));
+            this.service.ShowToastOK(err, { position: 'top', duration: 3000 })
         });
     }
 }

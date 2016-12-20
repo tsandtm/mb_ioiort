@@ -11,13 +11,14 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <icon src="www/resources/ios/icon/icon-60@3x.png"/>
     <platform name="android">
         <preference name="AndroidLaunchMode" value="singleTop" />
         <preference name="android-minSdkVersion" value="14" />
         <preference name="android-targetSdkVersion" value="16" />
     </platform>
     <platform name="ios">
-    <icon   src="www/resources/ios/icon/ic_launcher.png"                      platform="ios" width="144"  height="144" />
+    <icon   src="www/resources/ios/icon/icon-60@3x.png"                      platform="ios" width="144"  height="144" />
     <!--<icon src="www/resources/ios/icon/icon.png"     platform="ios" width="57"   height="57" />
     <icon   src="www/resources/ios/icon/icon@2x.png"                      platform="ios" width="114"  height="114" />
     <icon   src="www/resources/ios/icon/icon-40.png"                      platform="ios" width="40"   height="40" />

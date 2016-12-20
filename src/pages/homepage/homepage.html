@@ -1,19 +1,29 @@
 <ion-header>
   <ion-navbar color="primary" class="header" hideBackButton=true>
     <ion-searchbar placeholder="Tìm kiếm" style="float:right" [(ngModel)]='listFilter' (ionInput)="search()"></ion-searchbar>
-</ion-navbar>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="card-background-page" #content>
 
-  <div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
+  <!--<div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
     <div [class.opi]="web.GiaTri">
       <ion-card (click)="chon(web.IDDanhMucSite,web)">
         <img [src]='web.Icon' />
         <h4>{{web.TenGoi}}</h4>
       </ion-card>
     </div>
-  </div>
+  </div>-->
+  <ion-grid>
+    <ion-row *ngFor="let row of grid">
+      <ion-col width-33 *ngFor="let web of row  | TinDaChon:click ; let i = index" [class.opi]="web.GiaTri">
+          <ion-card (click)="chon(web.IDDanhMucSite,web)">
+            <img [src]='web.Icon' />
+            <h4>{{web.TenGoi}}</h4>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadtext}}>
@@ -27,13 +37,13 @@
     height: 55px;
     width: 100%;">
 
-<div class="dachon" (click)='dschon()'>
-  <label> {{lbdachon}}{{count}}</label>
-</div>
-<ion-buttons>
-  <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+      <div class="dachon" (click)='dschon()'>
+        <label> {{lbdachon}}{{count}}</label>
+      </div>
+      <ion-buttons>
+        <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
 </button>
-</ion-buttons>
-</div>
-</ion-toolbar>
+      </ion-buttons>
+    </div>
+  </ion-toolbar>
 </ion-footer>

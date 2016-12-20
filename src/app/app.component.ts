@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform, AlertController, Nav } from 'ionic-angular';
 import { StatusBar, Push, Splashscreen } from 'ionic-native';
+import {Http} from '@angular/http';
 
 import { LoginPage } from '../pages/login-page/login-page';
 import { TestPagePage } from '../pages/test-page/test-page';
@@ -24,14 +25,15 @@ export class MyApp {
   rootPage: any;
 
   constructor(platform: Platform, public alertCtrl: AlertController, private service: LoginService,
-    private storage: Storage) {
+    private storage: Storage,private http:Http) {
 
 
+
+ 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
-      
       Splashscreen.hide();
 
       let push = Push.init({
@@ -46,13 +48,40 @@ export class MyApp {
         windows: {}
       });
 
-
       if (platform.is('android')) {
+
+     
         push.on('registration', (data) => {
           console.log("device token ->", data.registrationId);
+
+      
           //TODO - send device token to server
+
+          // let body = new URLSearchParams();
+          // body.set('Token', data.registrationId);
+          // body.set('Device', 'android');
+          // body.set('NgayTao', '12/12/2016');
+          // body.set('TagAppID', '1');
+
+       
+
+          http.get(`http://test5.hutech.edu.vn/api/pushFireBase/clientdangky/${data.registrationId}/android/1`)
+            .subscribe((response) => {
+
+          
+            },
+            (error) => {
+
+         
+            }, () => {
+
+
+            })
+
         });
-        
+
+        //-----------------------------------end push on registration----------------------
+
         push.on('notification', (data) => {
           console.log('message', data.message);
           //if user using app and push notification comes
@@ -62,7 +91,7 @@ export class MyApp {
               title: data.title,
               message: data.message
             });
-            confirmAlert.present();
+            // confirmAlert.present();
           } else {
             //if user NOT using app and push notification comes
             //TODO: Your logic on click of push notification directly
@@ -71,9 +100,14 @@ export class MyApp {
         });
 
 
+        //-----------------------end push on notification----------------
+
         push.on('error', (e) => {
-          console.log(e.message);
+          
         });
+
+
+        //-------------------------------end push on error---------------
 
       }
     });

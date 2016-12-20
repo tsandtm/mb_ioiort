@@ -85,7 +85,6 @@ export class LoginPage {
     save: boolean = false;
     IDuser: number;
     webs1: any[];
-    count: number = 0;
 
     constructor(public navCtrl: NavController, private service: LoginService,
         private storage: Storage, private _webService: WebsService) {
@@ -112,6 +111,7 @@ export class LoginPage {
      * @function Login
      * Request lên server để login to Page
      */
+
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
@@ -119,7 +119,6 @@ export class LoginPage {
                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     // this.IDuser = result._body;
                     // console.log("id user:" + this.IDuser);
-                    console.log("count " + this.count);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
@@ -130,7 +129,6 @@ export class LoginPage {
 
                     } else {
                         this.navCtrl.push(HomePage, { id: result, flag: 1 });
-
                     }
                 }
                 else {

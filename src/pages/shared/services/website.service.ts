@@ -33,11 +33,4 @@ export class WebsService extends ServiceBase {
             .then(res => res.json() as IWeb[])
             .catch(this.handleError)
     }
-
-    Count(id:number): Promise<IWeb[]> {
-        return this.http.get(`${url}/count?IDUser=${id}`)
-            .toPromise()
-            .then(res => res.json() as IWeb[])
-            .catch(this.handleError)
-    }
 }

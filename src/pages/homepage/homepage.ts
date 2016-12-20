@@ -15,7 +15,6 @@ export class HomePage {
     lbdachon = IHomePage.Label_Dachon;
     btnnext = IHomePage.Button_Next;
     loadtext = IBienToanCuc.Loading_Text;
-
     // Biến toàn cục
     webs1: IWeb[];
     count: number = 0;
@@ -24,7 +23,7 @@ export class HomePage {
     click: boolean = false;
     IDuser: number;
     flag: number; //móc cờ : 1 là login 
-    hientin: boolean = false
+    hientin: boolean = false;
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
         private userWebSite: UserWebService) {
@@ -35,12 +34,14 @@ export class HomePage {
     ionViewDidLoad() {
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
-                this.webs1 = res
-                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                console.log(this.count)
-                if (this.count > 0 && this.flag == 1) {
+                if (res.length > 0 && this.flag == 1) {
                     this._webService.ShowLoading(IHomePage.ShowLoading)
                     this.navCtrl.push(TinTucPage, { id: this.IDuser });
+                    return;
+                } else {
+                    this.webs1 = res
+                    this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
+                    console.log(this.count)
                 }
                 return
             })
@@ -53,27 +54,25 @@ export class HomePage {
             }).catch(errorMessage => {
                 console.error(errorMessage.message)
             });
-        // let val = ev.target.value;
-        // if (val && val.trim() != '') {
-        //     this.webs1 = this.webs1.filter((item) => {
-        //         let a = (item.TenGoi.toLowerCase().indexOf(val.toLowerCase()) > -1);
-        //         let b = (item.TenGoi_KoDau.toLowerCase().indexOf(val.toLowerCase()) > -1)
-        //         return (a || b) ? true : false
-        //     })
-        // }
 
     }
-
+    //Thành : 17/12/2016 19h40p Fix khi load thêm dữ liệu mới vào
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this.start += 12;
             this._webService.GetList(this.IDuser, this.start)
                 .then(result => {
-                    console.log(result)
-                    if (result.length != 0) {
-                        result.forEach(x => this.webs1.push(x))
+                    result.some((value, index) => {
+                        let a = this.webs1.find(x => +x.IDDanhMucSite === +value.IDDanhMucSite);
+                        (a) ? result.splice(index, 1) : this.webs1.push(value)
 
-                    }
+                        if (result.length === 0) {
+                            return true
+                        } else {
+                            return false
+                        }
+
+                    })
                 })
             infiniteScroll.complete();
         }, 2000);
@@ -88,31 +87,31 @@ export class HomePage {
         let i = this.webs1.findIndex(i => (i.IDDanhMucSite === id) ? true : false)
         let web = this.webs1[i];
 
-        console.log('tin dang chon: ' + web.GiaTri);
+        // console.log('tin dang chon: ' + web.GiaTri);
 
         if (!web.GiaTri) {
-            console.log('post :D');
-            console.log('id: ' + id);
-            console.log('index: ' + i);
+            // console.log('post :D');
+            // console.log('id: ' + id);
+            // console.log('index: ' + i);
 
             this.userWebSite.createUserWebSite(this.IDuser, id, new Date())
                 .then(() => {
-                    console.log('da them');
+                    // console.log('da them');
                     web.GiaTri = true;
                     this.count++;
-                    console.log('chon ' + web.GiaTri);
+                    // console.log('chon ' + web.GiaTri);
                 })
                 .catch(error => console.error('Error: ', error))
         } else {
-            console.log('delete :D');
-            console.log('id: ' + id);
-            console.log('index: ' + i);
+            // console.log('delete :D');
+            // console.log('id: ' + id);
+            // console.log('index: ' + i);
             this.userWebSite.deleteUserWebSite(this.IDuser, id)
                 .then(() => {
-                    console.log('da xoa');
+                    // console.log('da xoa');
                     web.GiaTri = false;
                     this.count--;
-                    console.log('chon ' + web.GiaTri);
+                    // console.log('chon ' + web.GiaTri);
                 })
                 .catch(error => console.error('Error: ', error))
         }
@@ -120,7 +119,7 @@ export class HomePage {
 
     dschon(): void {
         this.click = !this.click;
-        console.log('hien tai 1: ' + this.click);
+        // console.log('hien tai 1: ' + this.click);
     }
 
     openPage(page) {

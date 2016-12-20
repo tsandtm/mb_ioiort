@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+// import {RouterModule,Routes} from 'angular2/router';
 import { MyApp } from './app.component';
 import { TinTucPage } from '../pages/tintuc/tintuc';
 import { ChiTietTinPage } from '../pages/chitiettin/chitiettin';
@@ -13,19 +13,24 @@ import { LoginPage } from '../pages/login-page/login-page';
 import { LoginService } from '../pages/shared/services/login-page.service'
 import { LktinxoaPage } from '../pages/lktinxoa/lktinxoa';
 import { TinquantamPage } from '../pages/tinquantam/tinquantam';
-import { Safe } from '../pages/chitiettin/safe';
-import { TinmoiPage } from '../pages/tinmoi/tinmoi';
+import { Safe } from '../pages/chitiettin/safe'
+import { TinmoiPage } from '../pages/tinmoi/tinmoi'
+import { Facebook } from 'ionic-native';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
+// import { SENDER_ID } from '../pages/shared/variables'
 import { LichSuPage } from '../pages/lichsu/lichsu';
-import {TinDaXemPage} from '../pages/tindaxem/tindaxem';
-
+import { TinDaXemPage } from '../pages/tindaxem/tindaxem';
+import { TestPagePage } from '../pages/test-page/test-page'
+import { Safe2 } from '../pages/test-page/pipes'
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any>{
     'swipe': { velocity: 0.4, threshold: 20 } // override default settings
   }
 
 }
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -39,10 +44,12 @@ export class MyHammerConfig extends HammerGestureConfig {
     TinmoiPage,
     HomeFilterNews,
     LichSuPage,
-    TinDaXemPage
+    TinDaXemPage,
+    TestPagePage,
+    Safe2
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -55,7 +62,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     TinquantamPage,
     TinmoiPage,
     LichSuPage,
-    TinDaXemPage
+    TinDaXemPage,
+    TestPagePage
   ],
   providers: [
     WebsService,
@@ -66,7 +74,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
-    },
+    }, 
+    Facebook,
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

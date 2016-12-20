@@ -9,7 +9,7 @@
     <ion-card *ngFor="let n of new,let i = index">
       <ion-item-sliding>
 
-        <ion-item (tap)="goDetail($event,i)">
+        <ion-item (click)="goDetail($event,i)">
           <ion-thumbnail item-left>
             <img [src]=n.URLThumbImage class="img">
           </ion-thumbnail>
@@ -18,7 +18,7 @@
         </ion-item>
 
         <ion-item-options (swipe)="del(n,i)" side="right">
-          <button ion-button color="danger" expandable (tap)="del(n,i)">
+          <button ion-button color="danger" expandable (click)="del(n,i)">
 						<ion-icon ios="ios-heart" md="md-heart"></ion-icon>
 						<div>{{Dislike}}</div>
 
@@ -26,7 +26,7 @@
         </ion-item-options>
 
         <ion-item-options (swipe)="del(n,i) " side="left">
-          <button ion-button color="danger" expandable (tap)="del(n,i)">
+          <button ion-button color="danger" expandable (click)="del(n,i)">
 						<ion-icon ios="ios-heart" md="md-heart"></ion-icon>
 						<div>{{Dislike}}</div>
 						</button>

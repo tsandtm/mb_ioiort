@@ -30,14 +30,7 @@ export class TinmoiPage {
     }
 
     del = (news: INews, i) => {
-
         this.daxoa = news;
-        let index = this.news.findIndex(x => x.IDTinTuc === news.IDTinTuc ? true : false)
-
-        this.news[index].Undo = true;
-
-        console.log(this.news[index].Undo)
-
         this._newservice.xoatin(news.IDTinTuc, this.IDuser)
             .then(result => {
                 // xóa vị trí trước
@@ -46,10 +39,16 @@ export class TinmoiPage {
                     console.log(`Đã xóa vị trí ${this.vitricu}`)
                     this.news.splice(this.vitricu, 1);
                 }
+                // Tìm vị trí tin đã xóa
+                let index = this.news.findIndex(x => x.IDTinTuc === news.IDTinTuc ? true : false)
+                //Set True để hiện Undo
+                this.news[index].Undo = true;
+
+                console.log(this.news[index].Undo)
                 console.log(`Đã xóa vị trí: ${index} Tin: ${this.news[index].TieuDe} trên server`)
                 // this.daxoa = this.news.splice(index, 1);
                 this.vitricu = index;
-                this._newservice.ShowToastOK(ITinMoi.ShowToast_Xoa, { position: "middle" })
+                // this._newservice.ShowToastOK(ITinMoi.ShowToast_Xoa, { position: "middle" })
                 return
 
             })
@@ -71,23 +70,22 @@ export class TinmoiPage {
 
     qt = (news: INews) => {
 
-        this._newservice.themtin(news.IDTinTuc,this.IDuser)
+        this._newservice.themtin(news.IDTinTuc, this.IDuser)
             .then(result => {
-                return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
+                // return this._newservice.ShowToastOK(ITinMoi.ShowToast_Them)
             })
             .catch(error => {
-                console.log('Loi' + error.message);
+                return console.log('Loi' + error.message);
             })
     }
 
     daxem = (news: INews) => {
-        this._newservice.daxem(news.IDTinTuc,this.IDuser)
+        this._newservice.daxem(news.IDTinTuc, this.IDuser)
             .then(result => {
                 return
             })
             .catch(error => {
                 return console.log('Loi' + error.message);
-
             })
     }
 

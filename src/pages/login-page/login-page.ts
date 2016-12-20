@@ -3,12 +3,10 @@ import { NavController } from 'ionic-angular';
 import { LoginService } from '../shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../homepage/homepage';
-import { ILoginPage } from '../shared/variables';
+import { ILoginPage, IHomePage } from '../shared/variables'
+import { Facebook } from 'ionic-native';
 import { WebsService } from '../shared/services/website.service';
-import { IHomePage, IBienToanCuc } from '../shared/variables'
 import { TinTucPage } from '../tintuc/tintuc';
-
-
 /*
   Generated class for the LoginPage page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -94,7 +92,9 @@ export class LoginPage {
         private storage: Storage, private _webService: WebsService) {
     }
 
-
+    /**
+     * @param Load
+     */
     ionViewDidLoad() {
         this.storage.forEach((value, key) => {
             switch (key) {
@@ -128,38 +128,23 @@ export class LoginPage {
         })
     }
 
-    countweb(): any {
-        this._webService.GetList(this.IDuser, 0)
-            .then(res => {
-                this.webs1 = res
-                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                console.log(this.count)
-                return this.count;
-            })
-            .catch(err => console.log(err));
-    }
-
-
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
                 if (result !== 0) {
-                    // console.log("id " + result._body);
                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
                     this.IDuser = result._body;
                     // console.log("id user:" + this.IDuser);
-                    this.count = this.countweb();
                     console.log("count " + this.count);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-
-                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1  });
+                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                         this._webService.ShowLoading(IHomePage.ShowLoading)
 
                     } else {
-                        this.navCtrl.push(HomePage, { id: this.IDuser , flag: 1 });
+                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
 
                     }
                 }
@@ -173,5 +158,59 @@ export class LoginPage {
     }
     Change = () => {
         console.log(`save: ${this.save}`)
+    }
+    LoginFacebook() {
+        Facebook.logout();
+        Facebook.login(['email']).then((response) => {
+            let token = response.authResponse.accessToken;
+            Facebook.api('/' + response.authResponse.userID + '?fields=id,name,email', []).then((result) => {
+                let name = result.name;
+                let email = result.email;
+                let facebook = response.authResponse.userID; // sua chu Facebook => facebook
+                this.username = facebook; // sua nay 
+                this.password = facebook; // sua nay
+                this.service.GetCountFacebook(facebook).then(resGet => {
+                    if (resGet > 0) {
+                        this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+                        this.IDuser = resGet;
+                        // them nay vo nua 1
+                        if (this.save) {
+                            this.storage.set("TaiKhoan", this.username);
+                            this.storage.set("Password", this.password);
+                            this.storage.set("Checkbox", this.save);
+                            this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                        }
+                        else {
+                            this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                        }
+                        // them nay vo nua 1
+                    }
+                    else {
+                        this.service.InserUserFacebook(facebook, name, email, token).then(resInsert => {
+                            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+                            this.service.GetCountFacebook(facebook).then(resGetID => {
+                                this.IDuser = resGetID;
+                                // them nay vo nua 2
+                                if (this.save) {
+                                    this.storage.set("TaiKhoan", this.username);
+                                    this.storage.set("Password", this.password);
+                                    this.storage.set("Checkbox", this.save);
+                                    this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                                }
+                                else {
+                                    this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                                }
+                                // them nay vo nua 2
+                            });
+                        })
+                    }
+                });
+            }).catch(err => {  // sua nay
+                console.log(JSON.stringify(err));
+                this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 })
+            });
+        }).catch(err => { // sua nay
+            console.log(JSON.stringify(err));
+        });
     }
 }

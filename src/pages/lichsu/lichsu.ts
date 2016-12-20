@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { NavParams} from 'ionic-angular';
 import { LktinxoaPage } from '../lktinxoa/lktinxoa';
 import { TinquantamPage } from '../tinquantam/tinquantam';

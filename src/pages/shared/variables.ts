@@ -4,7 +4,10 @@
 
 export let url = `http://test4.hutech.edu.vn/api`;
 export let urllogin = `http://test4.hutech.edu.vn/tintuc`;
-export let urllog =`http://test1.hutech.edu.vn`;
+export let urllog = `http://test1.hutech.edu.vn/api`;
+export let SENDER_ID = "413199343728";
+export let urlLoginFace = `http://test4.hutech.edu.vn/Facebook`;
+
 /**
  * Trang HomePage
  */
@@ -31,7 +34,7 @@ export let ILoginPage = {
 export let ITinQuanTam = {
     "Title": "Tin quan tâm",
     "Button_Dislike": "Không thích",
-    "ShowToast_Xoa":"Đã bỏ quan tâm"
+    "ShowToast_Xoa": "Đã bỏ quan tâm"
 }
 export let ITinTuc = {
     "segment_button": "Tin mới"

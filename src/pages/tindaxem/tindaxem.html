@@ -9,7 +9,7 @@
         <ion-card *ngFor="let n of new,let i = index">
             <ion-item-sliding>
 
-                <ion-item (tap)="goDetail($event,i)">
+                <ion-item (click)="goDetail($event,i)">
                     <ion-thumbnail item-left>
                         <img [src]=n.URLThumbImage style="height:400px" >
                     </ion-thumbnail>

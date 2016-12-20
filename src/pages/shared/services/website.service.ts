@@ -17,7 +17,7 @@ export class WebsService extends ServiceBase {
         super(toast, load, http, platfrom)
     }
 
-    getName(value: string,IDUser): Promise<IWeb[]> {
+    getName(value: string,IDUser:number): Promise<IWeb[]> {
         return new Promise(resolve => {
             this.http.get(`${url}/getName?string=${value}&IDUser=${IDUser}`)
                 .map(res => res.json())

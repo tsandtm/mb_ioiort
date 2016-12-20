@@ -42,16 +42,24 @@ export class TinTucPage {
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this._newservice.getWebs(this.IDuser, this.start)
-                .then(
-                (res) => {
-                    if (res.length !== 0) {
-                        for (let x of res) {
-                            x.ChuaXem = true
-                            x.Undo = false;
-                            this.newstinmoi.push(x);
+                .then((result) => {
+                    result.some((value, index) => {
+                        let a = this.newstinmoi.find(x => +x.IDTinTuc === +value.IDTinTuc);
+                        if (a) {
+                            result.splice(index, 1)
+                        } else {
+                            value.Undo = false;
+                            this.newstinmoi.push(value)
                         }
-                        this.start += IBienToanCuc.Start;
-                    }
+
+                        if (result.length === 0) {
+                            return true
+                        } else {
+                            return false
+                        }
+
+                    })
+                    this.start += IBienToanCuc.Start;
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
@@ -68,7 +76,6 @@ export class TinTucPage {
         this._newservice.getWebs(this.IDuser, 0)
             .then(nw => {
                 nw.forEach(value => {
-                    value.ChuaXem = true;
                     value.Undo = false;
                 })
 
@@ -85,25 +92,33 @@ export class TinTucPage {
             this._newservice.getWebs(this.IDuser, 0, 3)
                 .then(nw => {
                     nw.forEach(value => {
-                        value.ChuaXem = true;
                         value.Undo = false;
-                        console.log(value)
-                        console.log(typeof value.IDDanhMucSite)
-                        // this.newstinmoi.forEach(x => {
-                        //     x.IDDanhMucSite == value.IDDanhMucSite ? this.newstinmoi.unshift(x) : console.log(`${x.IDDanhMucSite} đã có `)
-                        // })
                     })
-
-                    // this.newstinmoi.unshift(nw)
                     refresher.complete();
-                    return;
+                    return Promise.resolve(nw);
+                })
+                .then((result) => {
+                    result.some((value, index) => {
+                        let a = this.newstinmoi.find(x => +x.IDTinTuc === +value.IDTinTuc);
+                        if (a) {
+                            result.splice(index, 1)
+                        } else {
+                            value.Undo = false;
+                            this.newstinmoi.push(value)
+                        }
+                        if (result.length === 0) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
                 })
                 .catch(errorMessage => {
                     console.error(errorMessage.message)
                 })
-        }, 2000);
+        }, 1000);
     }
-
+    // !(this.newstinmoi[i].IDTinTuc === res[j].IDTinTuc) ? this.newstinmoi.unshift(res[j]) : console.log(`${res[j].IDTinTuc} Đã có`)
     doPulling(refresher: Refresher) {
         // console.log('DOPULLING', refresher.progress);
     }

@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NewsService } from '../shared/services/news.service';
 import { INews } from '../shared/models/news.model';
-import { TinTucPage } from '../tintuc/tintuc';
-import { IBienToanCuc, ITinQuanTam } from '../shared/variables'
+import { IBienToanCuc } from '../shared/variables'
 import { ChiTietTinPage } from '../chitiettin/chitiettin';
 
 /*

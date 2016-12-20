@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.ionicframework.nkengineering197580" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" versionCode="1">
+    <name>nkengineering</name>
+    <description>An awesome Ionic/Cordova app.</description>
+    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <preference name="AndroidLaunchMode" value="singleTop" />
+        <preference name="android-minSdkVersion" value="14" />
+        <preference name="android-targetSdkVersion" value="16" />
+    </platform>
+    <platform name="ios">
+    <icon   src="www/resources/ios/icon/ic_launcher.png"                      platform="ios" width="144"  height="144" />
+    <!--<icon src="www/resources/ios/icon/icon.png"     platform="ios" width="57"   height="57" />
+    <icon   src="www/resources/ios/icon/icon@2x.png"                      platform="ios" width="114"  height="114" />
+    <icon   src="www/resources/ios/icon/icon-40.png"                      platform="ios" width="40"   height="40" />
+    <icon   src="www/resources/ios/icon/icon-40@2x.png"                   platform="ios" width="80"   height="80" />
+    <icon   src="www/resources/ios/icon/icon-50.png"                      platform="ios" width="50"   height="50" />
+    <icon   src="www/resources/ios/icon/icon-50@2x.png"                   platform="ios" width="100"  height="100" />
+    <icon   src="www/resources/ios/icon/icon-60.png"                      platform="ios" width="60"   height="60" />
+    <icon   src="www/resources/ios/icon/icon-60@2x.png"                   platform="ios" width="120"  height="120" />
+    <icon   src="www/resources/ios/icon/icon-60@3x.png"                   platform="ios" width="180"  height="180" />
+    <icon   src="www/resources/ios/icon/icon-72.png"                      platform="ios" width="72"   height="72" />
+    <icon   src="www/resources/ios/icon/icon-72@2x.png"                   platform="ios" width="144"  height="144" />
+    <icon   src="www/resources/ios/icon/icon-76.png"                      platform="ios" width="76"   height="76" />
+    <icon   src="www/resources/ios/icon/icon-76@2x.png"                   platform="ios" width="152"  height="152" />
+    <icon   src="www/resources/ios/icon/icon-small.png"                   platform="ios" width="29"   height="29" />
+    <icon   src="www/resources/ios/icon/icon-small@2x.png"                platform="ios" width="58"   height="58" />
+    <icon   src="www/resources/ios/icon/icon-small@3x.png"                platform="ios" width="87"   height="87" />
+        <allow-intent href="itms:*" />-->
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="16" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <preference name="FadeSplashScreenDuration" value="300" />
+    <feature name="StatusBar">
+        <param name="ios-package" onload="true" value="CDVStatusBar" />
+    </feature>
+    <allow-navigation href="http://10.1.219.128:8100" />
+    <allow-navigation href="http://192.168.56.1:8100" />
+    <allow-navigation href="http://192.168.3.67:8100" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" />
+    <gap:plugin name="cordova-plugin-statusbar" source="npm" />
+    <gap:plugin name="cordova-plugin-console" source="npm" />
+    <gap:plugin name="cordova-plugin-splashscreen" source="npm" />
+    <gap:plugin name="cordova-plugin-device" source="npm" />
+    <gap:plugin name="ionic-plugin-keyboard" source="npm" />
+    <gap:plugin name="cordova-plugin-network-information" source="npm" />
+</widget>

@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ViewController, AlertController } from 'ionic-angular';
-import { Geolocation } from 'ionic-native';
 
 import { MapService } from './map.service';
 import { DiaDiem } from './diadiem.model';
@@ -27,41 +26,31 @@ export class Map {
 
     this.showAlert('Start', 'bat dau load google map')
 
-    if (google === undefined) {
-      this.showAlert('Google undefined', 'google khong hoat dong');
-    }
+    this.showAlert('Type of google', typeof google)
 
     this.service.layDanhSachDiem()
       .then(data => {
-        this.showAlert('du lieu dia diem', JSON.stringify(data))
         this.loadMap(data);
       })
   }
 
   loadMap(data: DiaDiem[]) {
 
+    let latLng = new google.maps.LatLng(parseFloat(data[0].map_lat), parseFloat(data[0].map_long));
 
-    Geolocation.getCurrentPosition().then((position) => {
+    let mapOptions = {
+      center: latLng,
+      zoom: 5,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
 
-      let latLng = new google.maps.LatLng(parseFloat(data[0].map_lat), parseFloat(data[0].map_long));
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-      let mapOptions = {
-        center: latLng,
-        zoom: 5,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
+    data.forEach(diaDiem => {
+      this.addMarker(diaDiem);
+    })
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-      data.forEach(diaDiem => {
-        this.addMarker(diaDiem);
-      })
-
-      this.showAlert('Google Map', 'load map thành công');
-
-    }, (err) => {
-      this.showAlert('Loi geolication', JSON.stringify(err))
-    });
+    this.showAlert('Google Map', 'load map thành công');
 
   }
 
@@ -72,6 +61,7 @@ export class Map {
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(parseFloat(data.map_lat), parseFloat(data.map_long))
     }, (error) => {
+      this.showAlert('Error',JSON.stringify(error))
       console.error(error)
     });
 

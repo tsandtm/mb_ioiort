@@ -25,20 +25,55 @@ export class TinTucPage {
     constructor(private _newservice: NewsService, public navParams: NavParams,
         platform: Platform, public navCtrl: NavController, private storage: Storage) {
         this.IDuser = this.navParams.get('id');
-        console.log("id user: " + this.IDuser);
+    }
+
+    ionViewDidLoad() {
+        if (this.IDuser === undefined) {
+            this.storage.get("IDUser")
+                .then(res => {
+                    this._newservice.getWebs(res, 0)
+                        .then(nw => {
+                            nw.forEach(value => {
+                                value.Undo = false;
+                            })
+
+                            return this.newstinmoi = nw;
+                        })
+                        .catch(errorMessage => {
+                            console.error(errorMessage.message)
+                        })
+                })
+                .catch(err => this._newservice.handleError)
+        }
+        else {
+            this._newservice.getWebs(this.IDuser, 0)
+                .then(nw => {
+                    nw.forEach(value => {
+                        value.Undo = false;
+                    })
+
+                    return this.newstinmoi = nw;
+                })
+                .catch(errorMessage => {
+                    console.error(errorMessage.message)
+                })
+        }
     }
 
 
     trove = () => {
         this.navCtrl.push(HomePage, { id: this.IDuser })
     }
+
     history = () => {
         this.navCtrl.push(LichSuPage, { id: this.IDuser });
     }
+
     dangxuat = () => {
         this.storage.clear()
         this.navCtrl.push(LoginPage)
     }
+
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this._newservice.getWebs(this.IDuser, this.start)
@@ -72,19 +107,6 @@ export class TinTucPage {
         this._newservice.ShowLoading(IBienToanCuc.Loading_Text)
     }
 
-    ionViewDidLoad() {
-        this._newservice.getWebs(this.IDuser, 0)
-            .then(nw => {
-                nw.forEach(value => {
-                    value.Undo = false;
-                })
-
-                return this.newstinmoi = nw;
-            })
-            .catch(errorMessage => {
-                console.error(errorMessage.message)
-            })
-    }
 
     doRefresh = (refresher: Refresher) => {
         // console.log('DOREFRESH', refresher);

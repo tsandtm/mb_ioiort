@@ -31,21 +31,38 @@ export class HomePage {
         this.flag = this.navParams.get('flag');
     }
 
-    ionViewDidLoad() {
-        this._webService.GetList(this.IDuser, this.start)
+    /**
+     * @function Kiểm tra trước khi chạy trang
+     * 
+     */
+    ionViewCanEnter  = () =>{
+        
+         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
-                this.webs1 = res
-                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-
+                res.forEach(x => x.GiaTri ? this.count++ : this.count)
                 console.log(this.count)
                 if (this.count > 0 && this.flag == 1) {
                     this._webService.ShowLoading(IHomePage.ShowLoading)
                     this.navCtrl.push(TinTucPage, { id: this.IDuser });
+                    return;
                 }
-                return
+                this.webs1 = res
+                return;
             })
             .catch(err => console.log(err))
     }
+
+    /**
+     * Tâm Anh
+     * 
+     */
+    ionViewDidLoad() {
+
+    }
+
+    /**
+     * @function Hàm tìm kiếm danh sách danh mục trên server
+     */
     search() {
         this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
@@ -55,7 +72,11 @@ export class HomePage {
             });
 
     }
+
     //Thành : 17/12/2016 19h40p Fix khi load thêm dữ liệu mới vào
+    /**
+     * @function Sự kiện cho hàm scollview khi kéo thêm load hêm dữ liệu vào danh sách
+     */
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this.start += 12;
@@ -77,11 +98,17 @@ export class HomePage {
         }, 2000);
     }
 
+    /**
+     * @function Qua trang TinTucPage
+     */
     nextToPage() {
         this._webService.ShowLoading(IHomePage.ShowLoading)
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
 
+    /**
+     * @function Sự iện cho mỗi lần click vào sản phẩm để chọn
+     */
     chon(id: number, w: IWeb) {
         let i = this.webs1.findIndex(i => (i.IDDanhMucSite === id) ? true : false)
         let web = this.webs1[i];
@@ -116,16 +143,12 @@ export class HomePage {
         }
     }
 
+    /**
+     * @function Sự kiện fillter khi ấn nút ẩn hiện
+     */
     dschon(): void {
         this.click = !this.click;
         // console.log('hien tai 1: ' + this.click);
     }
 
-
-
-    openPage(page) {
-        // Reset the content nav to have just this page
-        // we wouldn't want the back button to show in this scenario
-        this.nav.setRoot(page.component);
-    }
 }

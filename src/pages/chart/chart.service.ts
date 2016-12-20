@@ -1,6 +1,7 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { ToastController, AlertController } from 'ionic-angular';
+import * as moment from 'moment';
 
 import { ServiceBase } from '../share/service.base';
 import { ThongTinQuanTrac } from './thongtinquantrac';
@@ -34,8 +35,7 @@ export class ChartService extends ServiceBase {
     this.Alert.create({
       title: 'json quan trac',
       message: JSON.stringify(json),
-      subTitle: new Date().toISOString()
-    })
+    }).present()
 
     let ttqt = json.map(value => {
       let qt: ThongTinQuanTrac = new ThongTinQuanTrac();
@@ -47,7 +47,7 @@ export class ChartService extends ServiceBase {
       qt.id = value.id;
       qt.PropertyValueDecimal = value.PropertyValueDecimal;
       qt.PropertyValueString = value.PropertyValueString;
-      qt.time = new Date(value.time);
+      qt.time = moment(value.time).toDate();
       return qt;
     })
 

@@ -1,13 +1,13 @@
 page-tinmoi {
-    .segment-md .segment-button.activated,
-    .segment-md .segment-button.segment-activated {
-        border-color: #248f8f;
-    }
-    .segment-md .segment-button {
-        color: #145252;
-        font-weight: bold;
-        font-size: 13px;
-    }
+    // .segment-md .segment-button.activated,
+    // .segment-md .segment-button.segment-activated {
+    //     border-color: #248f8f;
+    // }
+    // .segment-md .segment-button {
+    //     color: #145252;
+    //     font-weight: bold;
+    //     font-size: 13px;
+    // }
     .avatar {
         background-image: url("http://www.mhi.com.br/wp-content/uploads/2013/10/bg-azul-raiado.jpg");
         background-color: transparent;
@@ -20,40 +20,40 @@ page-tinmoi {
             height: 80px;
         }
     }
-    .label-md {
-        margin: 0px;
-    }
-    ion-label {
-        white-space: normal;
-    }
-    .item-md.item-block .item-inner {
-        padding: 0px;
-    }
-    .item-md {
-        padding: 0px;
-    }
-    .list-header-md,
-    .list-md ion-item-divider {
-        padding-left: 0px;
-    }
-    .body {
-        background-color: #cccccc;
-        ion-item {
-            margin-bottom: 3px;
-        }
-        ion-row {
-            background-color: #248f8f;
-            ion-icon {
-                color: white;
-            }
-        }
-    }
+    // .label-md {
+    //     margin: 0px;
+    // }
+    // ion-label {
+    //     white-space: normal;
+    // }
+    // .item-md.item-block .item-inner {
+    //     padding: 0px;
+    // }
+    // .item-md {
+    //     padding: 0px;
+    // }
+    // .list-header-md,
+    // .list-md ion-item-divider {
+    //     padding-left: 0px;
+    // }
+    // .body {
+    //     background-color: #cccccc;
+    //     ion-item {
+    //         margin-bottom: 3px;
+    //     }
+    //     ion-row {
+    //         background-color: #248f8f;
+    //         ion-icon {
+    //             color: white;
+    //         }
+    //     }
+    // }
    
-    ion-card {
-        img{
-            height: 200px;
-        }
-    }
+    // ion-card {
+    //     img{
+    //         height: 200px;
+    //     }
+    // }
     .opi {
         .card-md {
             border: solid brown;

@@ -1,11 +1,7 @@
 page-home {
-    ion-col div {
-        background-color: #F9FAFB;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 2px;
-        text-align: center;
-        width: 33%;
+    ion-grid{
+        padding-left: 0px;
+        padding-right: 10px;
     }
     .opi {
         .card-md {
@@ -60,7 +56,7 @@ page-home {
             height: 80px;
             float: left;
             /*margin-bottom: 15px;*/
-            margin: 20px 18px 15px 18px;
+            margin: 8px 15px 15px 15px;
             /*padding: 10px;*/
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             /*opacity: .8;*/
@@ -68,8 +64,8 @@ page-home {
             transition: .3s ease-in-out;
         }
         ion-card {
-            width: 30%;
-            height: 150px;
+            width: 97%;
+            height: 155px;
             float: left;
             text-align: center;
             h4 {
@@ -78,21 +74,7 @@ page-home {
                 font-size: 15px;
             }
         }
-        .card-title {
-            position: absolute;
-            top: 36%;
-            font-size: 2.0em;
-            width: 100%;
-            font-weight: bold;
-            color: #fff;
-        }
-        .card-subtitle {
-            font-size: 1.0em;
-            position: absolute;
-            top: 52%;
-            width: 100%;
-            color: #fff;
-        }
+       
     }
 }
 

@@ -6,7 +6,6 @@ import { HomePage } from '../homepage/homepage';
 import { ILoginPage, IHomePage } from '../shared/variables'
 import { Facebook } from 'ionic-native';
 import { WebsService } from '../shared/services/website.service';
-import { TinTucPage } from '../tintuc/tintuc';
 /*
   Generated class for the LoginPage page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -86,7 +85,6 @@ export class LoginPage {
     save: boolean = false;
     IDuser: number;
     webs1: any[];
-    count: number = 0;
 
     constructor(public navCtrl: NavController, private service: LoginService,
         private storage: Storage, private _webService: WebsService) {
@@ -108,10 +106,10 @@ export class LoginPage {
             if (this.username && this.password)
                 this.service.LoginToSever(this.username, this.password)
                     .then(result => {
-                        if (result !== 0) {
-                            this.IDuser = result._body;
+                        if (result !== -1) {
+                            // this.IDuser = result._body;
                             // console.log("id user:" + this.IDuser);
-                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                            this.navCtrl.push(HomePage, { id: result, flag: 1 });
                             this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
                             return
                         }
@@ -131,21 +129,19 @@ export class LoginPage {
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
             .then(result => {
-                if (result !== 0) {
+                if (result !== -1) {
                     this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' });
-                    this.IDuser = result._body;
+                    // this.IDuser = result._body;
                     // console.log("id user:" + this.IDuser);
-                    console.log("count " + this.count);
                     if (this.save) {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
-                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
+                        this.navCtrl.push(HomePage, { id: result, flag: 1 });
                         this._webService.ShowLoading(IHomePage.ShowLoading)
 
                     } else {
-                        this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
-
+                        this.navCtrl.push(HomePage, { id: result, flag: 1 });
                     }
                 }
                 else {
@@ -171,23 +167,23 @@ export class LoginPage {
                 this.password = facebook; // sua nay
                 this.service.GetCountFacebook(facebook).then(resGet => {
                     if (resGet > 0) {
-                        this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+                        this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top', duration: 3000 })
                         this.IDuser = resGet;
                         // them nay vo nua 1
                         if (this.save) {
                             this.storage.set("TaiKhoan", this.username);
                             this.storage.set("Password", this.password);
                             this.storage.set("Checkbox", this.save);
-                            this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                         }
                         else {
-                            this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                            this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                         }
                         // them nay vo nua 1
                     }
                     else {
                         this.service.InserUserFacebook(facebook, name, email, token).then(resInsert => {
-                            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top', duration: 3000 })
+                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top', duration: 3000 })
                             this.service.GetCountFacebook(facebook).then(resGetID => {
                                 this.IDuser = resGetID;
                                 // them nay vo nua 2
@@ -195,10 +191,10 @@ export class LoginPage {
                                     this.storage.set("TaiKhoan", this.username);
                                     this.storage.set("Password", this.password);
                                     this.storage.set("Checkbox", this.save);
-                                    this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                                    this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                                 }
                                 else {
-                                    this.navCtrl.setRoot(HomePage, { id: this.IDuser, flag: 1 });
+                                    this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                                 }
                                 // them nay vo nua 2
                             });
@@ -207,10 +203,11 @@ export class LoginPage {
                 });
             }).catch(err => {  // sua nay
                 console.log(JSON.stringify(err));
-                this.service.ShowToastOK("Đăng nhập thất bại xin bạn thử lại", { position: 'top', duration: 3000 })
+                this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
             });
         }).catch(err => { // sua nay
             console.log(JSON.stringify(err));
+            this.service.ShowToastOK(err, { position: 'top', duration: 3000 })
         });
     }
 }

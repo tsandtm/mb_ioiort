@@ -20,7 +20,7 @@ export class MyApp {
       title: 'thong bao chay app',
       message: 'app bat dau chay'
     });
-    alert.present();
+    // alert.present();
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -31,7 +31,7 @@ export class MyApp {
         title: 'thong bao push firebase',
         message: 'bat dau push firebase'
       });
-      alert.present();
+      // alert.present();
 
       //Splashscreen.hide();
       let push = Push.init({
@@ -50,7 +50,7 @@ export class MyApp {
         title: 'thong bao init push',
         message: 'sau khi init push'
       });
-      alert.present();
+      // alert.present();
 
 
       if (platform.is('android')) {
@@ -59,7 +59,7 @@ export class MyApp {
           title: 'platform alert',
           message: `day la platform android`
         });
-        alert.present();
+        // alert.present();
 
         push.on('registration', (data) => {
           console.log("device token ->", data.registrationId);
@@ -68,7 +68,7 @@ export class MyApp {
             title: 'init token',
             message: `token la: ${data.registrationId}`
           });
-          alert.present();
+          // alert.present();
 
 
           //TODO - send device token to server
@@ -83,7 +83,7 @@ export class MyApp {
             title: 'thong bao request',
             message: `bat dau send request`
           });
-          alert.present();
+          // alert.present();
 
 
 
@@ -94,7 +94,7 @@ export class MyApp {
                 title: 'thong bao push firebase',
                 message: `ket qua push firebase ${JSON.stringify(response)}`
               });
-              alert.present();
+              // alert.present();
 
             },
             (error) => {
@@ -104,7 +104,7 @@ export class MyApp {
                 message: `co loi khi push len firebase: ${error.message}
                  stacktrace: ${error}`
               });
-              alert.present();
+              // alert.present();
 
             }, () => {
 
@@ -112,7 +112,7 @@ export class MyApp {
                 title: 'thong bao push firebase',
                 message: `hoan thanh push len firebase`
               });
-              alert.present();
+              // alert.present();
 
             })
 
@@ -128,7 +128,7 @@ export class MyApp {
               title: data.title,
               message: data.message
             });
-            confirmAlert.present();
+            // confirmAlert.present();
           } else {
             //if user NOT using app and push notification comes
             //TODO: Your logic on click of push notification directly
@@ -144,7 +144,7 @@ export class MyApp {
             message: `co loi khi push len firebase: ${e.message}
                  stacktrace: ${e}`
           });
-          alert.present();
+          // alert.present();
         });
 
         //-------------------------------end push on error---------------

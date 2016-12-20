@@ -13,4 +13,5 @@ export interface IWeb {
     TenGoi_KoDau: string;
     chontin: boolean;
     GiaTri?:boolean;
+    DaChon?:number;
 }

@@ -4,7 +4,9 @@ import { TinTucPage } from '../tintuc/tintuc';
 import { WebsService } from '../shared/services/website.service';
 import { UserWebService } from '../shared/services/user_website.service';
 import { IWeb } from '../shared/models/website.model';
-import { IHomePage, IBienToanCuc } from '../shared/variables'
+import { IHomePage, IBienToanCuc } from '../shared/variables';
+import { Storage } from '@ionic/storage';
+
 @Component({
     selector: 'page-home',
     templateUrl: 'homepage.html'
@@ -24,29 +26,65 @@ export class HomePage {
     IDuser: number;
     flag: number; //móc cờ : 1 là login 
     hientin: boolean = false;
+    grid: Array<IWeb[]>;
+    length: number = 0;
+
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
-        private userWebSite: UserWebService) {
+        private userWebSite: UserWebService, private storage: Storage) {
         this.IDuser = this.navParams.get('id');
         this.flag = this.navParams.get('flag');
+
     }
 
     ionViewDidLoad() {
+        // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
+                // đánh móc nếu đã chọn thì vào thẳng tin tức
                 if (res.length > 0 && this.flag == 1) {
-                    this._webService.ShowLoading(IHomePage.ShowLoading)
+                    this._webService.ShowLoading(IHomePage.ShowLoading);
                     this.navCtrl.push(TinTucPage, { id: this.IDuser });
                     return;
                 } else {
-                    this.webs1 = res
-                    this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count)
-                    console.log(this.count)
+                    this.webs1 = res;
+                    this.count = this.webs1[0].DaChon;
+                    this.storage.set("count", this.count);
+                    // this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
+                    // console.log(this.count);
                 }
+                //Tạo grid view
+                // console.log("chieu dai 1 : " + res.length);
+                this.gridview(res.length);
                 return
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
     }
+
+    gridview(length: number) {
+        this.length += length;
+        // console.log("chieu dai 2 : " + this.length);
+        if (this.webs1[this.length - 1]) {
+            this.grid = Array(Math.ceil(this.length / 3));
+            let rowNum = 0; //counter to iterate over the rows in the grid
+            let num = this.length % 3 === 0 ? 3 : 2;
+            for (let i = 0; i < this.length; i += 3) { //iterate images
+                this.grid[rowNum] = Array(num); //declare two elements per row
+                if (this.webs1[i]) { //check file URI exists
+                    this.grid[rowNum][0] = this.webs1[i] //insert image
+                }
+                if (this.webs1[i + 1]) { //repeat for the second image
+                    this.grid[rowNum][1] = this.webs1[i + 1]
+                }
+                if (this.webs1[i + 2]) { //repeat for the third image
+                    this.grid[rowNum][2] = this.webs1[i + 2]
+                }
+                rowNum++; //go on to the next row
+            }
+        }
+
+    }
+
     search() {
         this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
@@ -64,15 +102,15 @@ export class HomePage {
                 .then(result => {
                     result.some((value, index) => {
                         let a = this.webs1.find(x => +x.IDDanhMucSite === +value.IDDanhMucSite);
-                        (a) ? result.splice(index, 1) : this.webs1.push(value)
-
+                        (a) ? result.splice(index, 1) : this.webs1.push(value);
                         if (result.length === 0) {
                             return true
                         } else {
                             return false
                         }
-
                     })
+                    this.gridview(result.length);
+                    
                 })
             infiniteScroll.complete();
         }, 2000);
@@ -99,6 +137,8 @@ export class HomePage {
                     // console.log('da them');
                     web.GiaTri = true;
                     this.count++;
+                    this.storage.set("count", this.count);
+
                     // console.log('chon ' + web.GiaTri);
                 })
                 .catch(error => console.error('Error: ', error))
@@ -111,6 +151,8 @@ export class HomePage {
                     // console.log('da xoa');
                     web.GiaTri = false;
                     this.count--;
+                    this.storage.set("count", this.count);
+
                     // console.log('chon ' + web.GiaTri);
                 })
                 .catch(error => console.error('Error: ', error))

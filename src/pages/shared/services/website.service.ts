@@ -12,7 +12,7 @@ import { LoadingController, ToastController, Platform } from 'ionic-angular';
 @Injectable()
 export class WebsService extends ServiceBase {
     webs: IWeb[];
-    private limit: number = 12;
+    private limit: any = 12;
     constructor(private http: Http, private toast: ToastController, private load: LoadingController, private platfrom: Platform) {
         super(toast, load, http, platfrom)
     }
@@ -27,8 +27,8 @@ export class WebsService extends ServiceBase {
         });
     }
 
-    GetList(id: number, offset: number): Promise<IWeb[]> {
-        return this.http.get(`${url}/GetList/${id}?limit=${this.limit}&offset=${offset}`)
+    GetList(id: number, offset: number, limit = this.limit): Promise<IWeb[]> {
+        return this.http.get(`${url}/GetList/${id}?limit=${limit}&offset=${offset}`)
             .toPromise()
             .then(res => res.json() as IWeb[])
             .catch(this.handleError)

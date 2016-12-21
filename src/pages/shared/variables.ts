@@ -12,7 +12,7 @@ export let urlLoginFace = `http://test4.hutech.edu.vn/Facebook`;
  * Trang HomePage
  */
 export let IHomePage = {
-    "Button_Next": "Tiếp theo",
+    "Button_Next": "TIẾP THEO",
     "Label_Dachon": "ĐÃ CHỌN: ",
     "ShowLoading": "Vui lòng chờ..!"
 }

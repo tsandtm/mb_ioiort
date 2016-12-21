@@ -57,7 +57,7 @@ export class TinmoiPage {
             })
     }
 
-    Undo = (news: INews, i: number, arr) => {
+    Undo = (news: INews) => {
         let index = this.news.findIndex(x => x.IDTinTuc === news.IDTinTuc ? true : false)
         console.log(`Vị trí ${index}`)
         this._newservice.boxoa(news.IDTinTuc, this.IDuser)
@@ -79,20 +79,20 @@ export class TinmoiPage {
             })
     }
 
-    daxem = (news: INews) => {
-        this._newservice.daxem(news.IDTinTuc, this.IDuser)
-            .then(result => {
-                return
-            })
-            .catch(error => {
-                return console.log('Loi' + error.message);
-            })
-    }
+    // daxem = (news: INews) => {
+    //     this._newservice.daxem(news.IDTinTuc, this.IDuser)
+    //         .then(result => {
+    //             return
+    //         })
+    //         .catch(error => {
+    //             return console.log('Loi' + error.message);
+    //         })
+    // }
 
     goDetail($event, index, arr) {
         console.log("index " + index);
         this.news = arr
-        this.news[index].ChuaXem = false;
+        this.news[index].ChuaXem = true;
         this.navCtrl.push(ChiTietTinPage, { index, news: this.news, IDuser: this.IDuser });
         return
     }

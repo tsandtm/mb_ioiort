@@ -6,4 +6,11 @@ page-lktinxoa {
     ion-label {
         white-space: normal;
     }
+    .item-inner{
+        margin-left: 10px;
+    }
+    .card-md , .card-ios{
+        margin: 4px 8px 4px 8px;
+        padding : 7px;
+    }
 }

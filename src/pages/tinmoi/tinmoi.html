@@ -14,7 +14,7 @@
   <ion-list>
     <ion-item-sliding #item *ngFor="let n of news,let i = index" [class.undo]="n.Undo" [class.opi]="!n.ChuaXem">
       <ion-item>
-        <ion-card (click)="daxem(n)" (click)="goDetail($event,i,news)" *ngIf="!n.Undo">
+        <ion-card (click)="goDetail($event,i,news)" *ngIf="!n.Undo">
           <img [src]=n.URLThumbImage />
           <ion-item>
             <ion-card-content class="cards">
@@ -26,7 +26,7 @@
             </ion-card-content>
           </ion-item>
         </ion-card>
-        <ion-item *ngIf="n.Undo" (click)="Undo(n,i)">
+        <ion-item *ngIf="n.Undo" (click)="Undo(n)">
           <ion-card-content>
             <strong>{{Text_Undo}}</strong>
           </ion-card-content>

@@ -19760,6 +19760,15 @@ chart {
   display: none;
 }
 
+.alertError {
+  color: red;
+  font-weight: bold;
+}
+
+.alertError .alert-message {
+  color: black;
+}
+
 .ios map-page .scroll-content,
 .md map-page .scroll-content {
   height: 100%;

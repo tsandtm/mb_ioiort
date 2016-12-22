@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ViewController, AlertController } from 'ionic-angular';
 
 import { MapService } from './map.service';
+import { NetworkService } from '../share/network.service';
 import { DiaDiem } from './diadiem.model';
 
 declare var google;
@@ -23,6 +24,11 @@ export class Map {
   }
 
   ionViewDidLoad() {
+    if (!NetworkService.isNetWorkOn()) {
+      this.showErrorAlert('Map cần internet để hoạt động','Ứng dụng cần internet');
+      this.dismiss();
+      return;
+    }
     this.service.layDanhSachDiem()
       .then(data => {
         this.loadMap(data);
@@ -89,9 +95,9 @@ export class Map {
 
   }
 
-  private showErrorAlert(message: string) {
+  private showErrorAlert(message: string, title: string = 'Error') {
     let alert = this.alertCtrl.create({
-      title: 'Error',
+      title: title,
       message: message,
       cssClass: 'alertError',
       buttons: ['Ok']

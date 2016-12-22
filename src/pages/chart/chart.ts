@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { NavController, ViewController, AlertController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
 import { ChartService } from './chart.service';
+import { NetworkService } from '../share/network.service';
 
 /*
   Generated class for the PageChart page.
@@ -37,6 +38,18 @@ export class PageChartPage {
 
 
   ionViewDidLoad() {
+    if (!NetworkService.isNetWorkOn()) {
+      this.Alert.create({
+        title: 'Ứng dụng cần internet',
+        message: 'Xin hãy kết nối internet',
+        buttons: ['OK'],
+        cssClass: 'alertError'
+      }).present();
+
+      this.dismiss();
+      return;
+
+    }
     this.options = this.createChartOption();
 
     this.callApi();
@@ -213,6 +226,11 @@ export class PageChartPage {
    */
   private checkPast() {
     let qtToUpdate: ThongTinQuanTrac[] = [];
+
+    if (!NetworkService.isNetWorkOn()) {
+      return;
+    }
+
     this.getData(5).subscribe(
       (ttqt) => {
         ttqt.forEach(qt => {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, Platform, AlertController } from 'ionic-angular';
-import { Network } from 'ionic-native';
 import { LoginPage } from '../login-page/login-page';
 import { PageChartPage } from '../chart/chart';
 import { Map } from '../map/map';

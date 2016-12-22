@@ -1,7 +1,8 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import { NavController, LoadingController, Loading } from 'ionic-angular';
+import { NavController, LoadingController, Loading, AlertController } from 'ionic-angular';
 
 import { LoginService } from './login.service';
+import { NetworkService } from '../share/network.service';
 import { HomePage } from '../home/home';
 
 @Component({
@@ -63,20 +64,34 @@ export class LoginPage {
   cloudState: any = "in";
   loginState: any = "in";
   formState: any = "in";
-  username: string;
-  password: string;
-  constructor(public navCtrl: NavController, private service: LoginService, public loadingCtrl: LoadingController) {
+  username: string = '';
+  password: string = '';
+  constructor(public navCtrl: NavController,
+    private service: LoginService,
+    public loadingCtrl: LoadingController,
+    private Alert: AlertController) {
   }
 
   Login = () => {
-    this.presentLoading()
+
+    if (!NetworkService.isNetWorkOn()) {
+      this.Alert.create({
+        title: 'Cần kết nối internet',
+        message: 'Ứng dụng cần kết nối internet để hoạt động',
+        buttons: ['Ok'],
+        cssClass: 'alertError'
+      }).present();
+      return;
+    }
+
     if (this.username.toString().length == 0 || this.password.toString().length == 0) {
-      this.service.ShowToastOK("Không được để trống")
+      this.service.ShowToastOK("Tài khoản không được để trống", { position: 'top' })
     } else {
-      this.service.LoginToSever(this.username, this.password, `POST_Login`)
+      this.presentLoading()
+      this.service.LoginToSever(this.username, this.password)
         .then(data => {
           if (data) {
-            this.service.ShowToastOK("Đăng nhập thành công")
+            this.service.ShowToastOK("Đăng nhập thành công", { position: 'top' })
             return this.navCtrl.push(HomePage)
           } else {
             this.loader.dismiss();

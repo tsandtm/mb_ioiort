@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { NavController, ViewController } from 'ionic-angular';
+import { NavController, ViewController, AlertController } from 'ionic-angular';
 import { ThongTinQuanTrac } from './thongtinquantrac';
 import { ChartService } from './chart.service';
+import { NetworkService } from '../share/network.service';
 
 /*
   Generated class for the PageChart page.
@@ -20,7 +21,6 @@ export class PageChartPage {
   chart: any;
   past: any = {};
   isLoading = true;
-  errorMessage: string = "";
   summary: {
     time: Date,
     info: Array<{ name: string, value: number, DonViTinh: string }>
@@ -31,13 +31,25 @@ export class PageChartPage {
   constructor(public navCtrl: NavController,
     private _http: Http,
     public viewCtrl: ViewController,
-    private service: ChartService) {
-
+    private service: ChartService,
+    private Alert: AlertController) {
   }
 
 
 
   ionViewDidLoad() {
+    if (!NetworkService.isNetWorkOn()) {
+      this.Alert.create({
+        title: 'Ứng dụng cần internet',
+        message: 'Xin hãy kết nối internet',
+        buttons: ['OK'],
+        cssClass: 'alertError'
+      }).present();
+
+      this.dismiss();
+      return;
+
+    }
     this.options = this.createChartOption();
 
     this.callApi();
@@ -115,38 +127,44 @@ export class PageChartPage {
    */
   callApi() {
     this.getData(75)
-      .subscribe(
-      (ttqt: ThongTinQuanTrac[]) => {
+      .subscribe((ttqt: ThongTinQuanTrac[]) => {
         this.isLoading = false;
         if (ttqt.length !== 0) {
           this.addDataToChart(ttqt);
         } else {
+
           this.showError('Hiện tại không có dữ liệu');
         }
 
-      },
-      (error) => {
+      }, (error) => {
         console.error('Error: ', error);
         this.showError(error._body);
+      }, () => {
+
+        this.Alert.create({
+          title: 'Thông báo',
+          message: 'Dữ liệu đã được lấy',
+          cssClass: 'alertSuccess',
+          buttons: ['Ok'],
+        }).present();
+
       })
   }
 
   showError(message: string) {
     this.isLoading = false;
-    this.errorMessage = message;
+    this.Alert.create({
+      title: 'Error',
+      message: message,
+      cssClass: 'alertError',
+      buttons: ['Ok']
+    }).present()
   }
 
-/**
- * cái service để gọi xuống api
- */
+  /**
+   * cái service để gọi xuống api
+   */
   private getData(sl: number) {
-    // return this._http
-    //   .get('http://quantrac.nkengineering.com.vn/api/Static/GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27&diemquantrac=2&tongsododo=' + sl)
-    //   .map(res => res.json())
-    //   .map(json => {
-    //     let ttqt = this.convertToThongTinQuanTrac(json);
-    //     return ttqt;
-    //   })
     return this.service.getThongTinQuanTrac('GET_ListThongTinQuanTrac?checkfirst=1&dodo=%27coldata12%27,%27coldata9%27,%27coldata13%27,%27coldata10%27,%27coldata32%27&diemquantrac=2&tongsododo=' + sl)
   }
 
@@ -162,12 +180,15 @@ export class PageChartPage {
       time: ttqt[0].time,
       info: a,
     };
+
   }
 
   /**
    * thêm dữ liệu vào biểu đồ và đặt thời gian chạy update
    */
   private addDataToChart(thongtinquantrac: ThongTinQuanTrac[]) {
+
+
     for (let i = 0; i < 4; i++) {
       this.chart.addSeries({
         name: thongtinquantrac[i].DoDo_Name,
@@ -205,6 +226,11 @@ export class PageChartPage {
    */
   private checkPast() {
     let qtToUpdate: ThongTinQuanTrac[] = [];
+
+    if (!NetworkService.isNetWorkOn()) {
+      return;
+    }
+
     this.getData(5).subscribe(
       (ttqt) => {
         ttqt.forEach(qt => {

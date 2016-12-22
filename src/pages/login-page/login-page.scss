@@ -53,3 +53,11 @@
         }
     }
 }
+
+.alertError{
+  color: red;
+  font-weight: bold;
+  .alert-message{
+    color: black
+  }
+}

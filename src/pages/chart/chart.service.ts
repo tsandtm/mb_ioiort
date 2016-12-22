@@ -1,6 +1,7 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController} from 'ionic-angular';
+import * as moment from 'moment';
 
 import { ServiceBase } from '../share/service.base';
 import { ThongTinQuanTrac } from './thongtinquantrac';
@@ -30,6 +31,7 @@ export class ChartService extends ServiceBase {
  * chuyển json thành thông tin quản trắc
  */
   private convertToThongTinQuanTrac(json: any[]): ThongTinQuanTrac[] {
+
     let ttqt = json.map(value => {
       let qt: ThongTinQuanTrac = new ThongTinQuanTrac();
       qt.ColumnName = value.ColumnName;
@@ -40,7 +42,7 @@ export class ChartService extends ServiceBase {
       qt.id = value.id;
       qt.PropertyValueDecimal = value.PropertyValueDecimal;
       qt.PropertyValueString = value.PropertyValueString;
-      qt.time = new Date(value.time);
+      qt.time = moment(value.time).toDate();
       return qt;
     })
 

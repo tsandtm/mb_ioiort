@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ViewController } from 'ionic-angular';
-import { Geolocation } from 'ionic-native';
+import { NavController, ViewController, AlertController } from 'ionic-angular';
 
 import { MapService } from './map.service';
+import { NetworkService } from '../share/network.service';
 import { DiaDiem } from './diadiem.model';
 
 declare var google;
@@ -16,11 +16,19 @@ export class Map {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public service: MapService, private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController,
+    public service: MapService,
+    private viewCtrl: ViewController,
+    private alertCtrl: AlertController) {
 
   }
 
   ionViewDidLoad() {
+    if (!NetworkService.isNetWorkOn()) {
+      this.showErrorAlert('Map cần internet để hoạt động','Ứng dụng cần internet');
+      this.dismiss();
+      return;
+    }
     this.service.layDanhSachDiem()
       .then(data => {
         this.loadMap(data);
@@ -29,26 +37,27 @@ export class Map {
 
   loadMap(data: DiaDiem[]) {
 
+    this.alertCtrl.create({
+      title: 'Thông báo',
+      message: 'Đang load map',
+      buttons: ['Ok'],
+      cssClass: 'alertSuccess'
+    }).present();
 
-    Geolocation.getCurrentPosition().then((position) => {
+    let latLng = new google.maps.LatLng(parseFloat(data[0].map_lat), parseFloat(data[0].map_long));
 
-      let latLng = new google.maps.LatLng(parseFloat(data[0].map_lat), parseFloat(data[0].map_long));
+    let mapOptions = {
+      center: latLng,
+      zoom: 5,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
 
-      let mapOptions = {
-        center: latLng,
-        zoom: 5,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    data.forEach(diaDiem => {
+      this.addMarker(diaDiem);
+    })
 
-      data.forEach(diaDiem => {
-        this.addMarker(diaDiem);
-      })
-
-    }, (err) => {
-      console.log(err);
-    });
 
   }
 
@@ -59,6 +68,7 @@ export class Map {
       animation: google.maps.Animation.DROP,
       position: new google.maps.LatLng(parseFloat(data.map_lat), parseFloat(data.map_long))
     }, (error) => {
+      this.showErrorAlert(JSON.stringify(error))
       console.error(error)
     });
 
@@ -72,7 +82,7 @@ export class Map {
       .then(data => {
         content += data;
       })
-      .catch(error => alert('Lỗi kết nối hãy thử lại sau'));
+      .catch(error => this.showErrorAlert('Lỗi mạng: kết nối không được xin thử lại sau'));
 
     google.maps.event.addListener(marker, 'click', () => {
 
@@ -83,6 +93,17 @@ export class Map {
 
     });
 
+  }
+
+  private showErrorAlert(message: string, title: string = 'Error') {
+    let alert = this.alertCtrl.create({
+      title: title,
+      message: message,
+      cssClass: 'alertError',
+      buttons: ['Ok']
+    });
+
+    alert.present();
   }
 
   public dismiss() {

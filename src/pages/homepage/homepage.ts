@@ -37,7 +37,12 @@ export class HomePage {
 
     }
 
-    ionViewDidLoad() {
+    /**
+     * @function Kiểm tra trước khi chạy trang
+     * 
+     */
+    ionViewCanEnter  = () =>{
+    
         // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
@@ -92,6 +97,18 @@ export class HomePage {
      Truyền vào chuỗi tìm kiếm và ID user 
      */
 
+    /**
+     * Tâm Anh
+     * 
+     */
+    ionViewDidLoad() {
+
+    }
+
+    /**
+     * @function Hàm tìm kiếm danh sách danh mục trên server
+     */
+
     search() {
         this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
@@ -103,6 +120,9 @@ export class HomePage {
     }
 
     //Thành : 17/12/2016 19h40p Fix khi load thêm dữ liệu mới vào
+    /**
+     * @function Sự kiện cho hàm scollview khi kéo thêm load hêm dữ liệu vào danh sách
+     */
     doInfinite(infiniteScroll: InfiniteScroll) {
         setTimeout(() => {
             this.start += 12;
@@ -122,13 +142,16 @@ export class HomePage {
         }, 2000);
     }
 
+    /**
+     * @function Qua trang TinTucPage
+     */
     nextToPage() {
         this._webService.ShowLoading(IHomePage.ShowLoading)
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
+    
     /**
-     * function chọn và bỏ chọn danh mục site
-     * truyền id website
+     * @function Sự kiện cho mỗi lần click vào sản phẩm để chọn
      */
     chon(id: number, w: IWeb) {
         let i = this.webs1.findIndex(i => (i.IDDanhMucSite === id) ? true : false)
@@ -168,6 +191,9 @@ export class HomePage {
         }
     }
 
+    /**
+     * @function Sự kiện fillter khi ấn nút ẩn hiện
+     */
     dschon(): void {
         this.click = !this.click;
         if (this.click) {

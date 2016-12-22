@@ -91,40 +91,26 @@ export class LoginPage {
     }
 
     /**
-     * @param Load
+     * Thành
+     * 
      */
-    ionViewDidLoad() {
-        this.storage.forEach((value, key) => {
-            switch (key) {
-                case "TaiKhoan": this.username = value; break;
-                case "Password": this.password = value; break;
-                case "Checkbox": this.save = value; break
-                default:
-            }
-            console.log(`${this.username}${this.password}`)
-
-            if (this.username && this.password)
-                this.service.LoginToSever(this.username, this.password)
-                    .then(result => {
-                        if (result !== -1) {
-                            // this.IDuser = result._body;
-                            // console.log("id user:" + this.IDuser);
-                            this.navCtrl.push(HomePage, { id: result, flag: 1 });
-                            this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
-                            return
-                        }
-                        // this.navCtrl.push(HomePage, { id: this.IDuser });
-                        else {
-                            console.log(result)
-                            this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
-                            return
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-        })
+    ionViewCanEnter = () => {
     }
+
+    /** 
+     *  Runs when the page has loaded. This event only happens once per page being created.
+     *  If a page leaves but is cached, then this event will not fire again on a subsequent viewing.
+     *  The ionViewDidLoad event is good place to put your setup code for the page.
+     */
+    ionViewDidLoad = () => {
+
+    }
+
+    /**
+     * Thành
+     * @function Login
+     * Request lên server để login to Page
+     */
 
     Login = () => {
         this.service.LoginToSever(this.username, this.password)
@@ -137,6 +123,7 @@ export class LoginPage {
                         this.storage.set("TaiKhoan", this.username);
                         this.storage.set("Password", this.password);
                         this.storage.set("Checkbox", this.save);
+                        this.storage.set("IDUser", result)
                         this.navCtrl.push(HomePage, { id: result, flag: 1 });
                         this._webService.ShowLoading(IHomePage.ShowLoading)
 
@@ -152,9 +139,19 @@ export class LoginPage {
             })
             .catch(err => console.log(err))
     }
+
+    /**
+     * THành
+     * @function Kiểm tra sự kiện khi nút Checkbox thay đổi
+     */
     Change = () => {
         console.log(`save: ${this.save}`)
     }
+
+    /**
+     * Bình
+     * @function Login facebook
+     */
     LoginFacebook() {
         Facebook.logout();
         Facebook.login(['email']).then((response) => {
@@ -174,6 +171,7 @@ export class LoginPage {
                             this.storage.set("TaiKhoan", this.username);
                             this.storage.set("Password", this.password);
                             this.storage.set("Checkbox", this.save);
+                            this.storage.set("IDUser", this.IDuser)
                             this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                         }
                         else {

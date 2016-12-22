@@ -41,13 +41,13 @@ export class HomePage {
      * @function Kiểm tra trước khi chạy trang
      * 
      */
-    ionViewCanEnter  = () =>{
-    
+    ionViewCanEnter = () => {
+        this.navCtrl.viewWillEnter.toPromise()
+        .then(res => console.log(res))
         // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
-                // đánh móc nếu đã chọn thì vào thẳng tin tức
-                if (res.length > 0 && this.flag == 1) {
+                if (res.length > 0 && this.flag === 1) {
                     this._webService.ShowLoading(IHomePage.ShowLoading);
                     this.navCtrl.push(TinTucPage, { id: this.IDuser });
                     return;
@@ -56,8 +56,7 @@ export class HomePage {
                     this.webs2 = res;
                     this.count = this.webs1[0].DaChon;
                     this.storage.set("count", this.count);
-                    // this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
-                    // console.log(this.count);
+                    this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
                 }
                 //Tạo grid view
                 // console.log("chieu dai 1 : " + res.length);
@@ -90,13 +89,6 @@ export class HomePage {
     //     }
     // }
 
-
-    /**
-     *Hàm tìm kiếm trong danh mục site
-     Tìm kiếm từ server 
-     Truyền vào chuỗi tìm kiếm và ID user 
-     */
-
     /**
      * Tâm Anh
      * 
@@ -107,12 +99,14 @@ export class HomePage {
 
     /**
      * @function Hàm tìm kiếm danh sách danh mục trên server
+     *Truyền vào chuỗi tìm kiếm và ID user
      */
 
     search() {
         this._webService.getName(this.listFilter, this.IDuser)
             .then(web => {
                 this.webs1 = web;
+                // this.gridview(web.length)
             }).catch(errorMessage => {
                 console.error(errorMessage.message)
             });

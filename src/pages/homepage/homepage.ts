@@ -43,20 +43,20 @@ export class HomePage {
      */
     ionViewCanEnter = () => {
         this.navCtrl.viewWillEnter.toPromise()
-        .then(res => console.log(res))
+            .then(res => console.log(res))
         // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
-                if (res.length > 0 && this.flag === 1) {
+                this.count = res[0].DaChon;
+                this.storage.set("count", this.count);
+                if (this.count > 0 && this.flag === 1) {
                     this._webService.ShowLoading(IHomePage.ShowLoading);
                     this.navCtrl.push(TinTucPage, { id: this.IDuser });
                     return;
                 } else {
                     this.webs1 = res;
                     this.webs2 = res;
-                    this.count = this.webs1[0].DaChon;
-                    this.storage.set("count", this.count);
-                    this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
+                    // this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
                 }
                 //Tạo grid view
                 // console.log("chieu dai 1 : " + res.length);
@@ -143,7 +143,7 @@ export class HomePage {
         this._webService.ShowLoading(IHomePage.ShowLoading)
         this.navCtrl.push(TinTucPage, { id: this.IDuser });
     }
-    
+
     /**
      * @function Sự kiện cho mỗi lần click vào sản phẩm để chọn
      */

@@ -6,7 +6,7 @@
 
 <ion-content class="card-background-page" #content>
 <!--| TinDaChon:click-->
-  <div *ngFor="let web of webs1  ; let i = index">
+  <div *ngFor="let web of webs1 ; let i = index">
     <div [class.opi]="web.GiaTri">
       <ion-card (click)="chon(web.IDDanhMucSite,web)">
         <img [src]='web.Icon' />

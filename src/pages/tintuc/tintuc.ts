@@ -31,6 +31,7 @@ export class TinTucPage {
         if (this.IDuser === undefined) {
             this.storage.get("IDUser")
                 .then(res => {
+                    this.IDuser = res;
                     this._newservice.getWebs(res, 0)
                         .then(nw => {
                             nw.forEach(value => {
@@ -71,7 +72,7 @@ export class TinTucPage {
 
     dangxuat = () => {
         this.storage.clear()
-        this.navCtrl.push(LoginPage)
+        this.navCtrl.setRoot(LoginPage)
     }
 
     doInfinite(infiniteScroll: InfiniteScroll) {

@@ -92,9 +92,12 @@ export class LoginPage {
 
     /**
      * Thành
-     * 
+     * ionViewCanEnter
+     * Runs before the view can enter. This can be used as a sort of "guard" in authenticated views 
+     * where you need to check permissions before the view can enter
      */
-    ionViewCanEnter = () => {
+    ionViewCanEnter = ():boolean => {
+        return this.SetRootPage()
     }
 
     /** 
@@ -207,5 +210,39 @@ export class LoginPage {
             console.log(JSON.stringify(err));
             this.service.ShowToastOK(err, { position: 'top', duration: 3000 })
         });
+    }
+
+
+
+    /**
+     * 
+     */
+    SetRootPage = () => {
+        return this.storage.forEach((value, key) => {
+            switch (key) {
+                case "TaiKhoan": this.username = value; break;
+                case "Password": this.password = value; break;
+                case "Checkbox" : this.save = value; break
+                default:
+            }
+            console.log(`${this.username}${this.password}`)
+            if (this.username && this.password)
+               return this.service.LoginToSever(this.username, this.password)
+                    .then(result => {
+                        if (result !== -1) {
+                            this.storage.set("IDUser", result)
+                            this.navCtrl.push(HomePage, { id: result, flag: 1 })
+                            return false;
+                        }
+                        else {
+                            console.log(result)
+                            return true;
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        return false;
+                    })
+        })
     }
 }

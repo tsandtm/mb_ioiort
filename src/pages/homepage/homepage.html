@@ -6,15 +6,15 @@
 
 <ion-content class="card-background-page" #content>
 
-  <!--<div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
+  <div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
     <div [class.opi]="web.GiaTri">
       <ion-card (click)="chon(web.IDDanhMucSite,web)">
         <img [src]='web.Icon' />
         <h4>{{web.TenGoi}}</h4>
       </ion-card>
     </div>
-  </div>-->
-  <ion-grid>
+  </div>
+  <!--<ion-grid>
     <ion-row *ngFor="let row of grid">
       <ion-col width-33 *ngFor="let web of row  | TinDaChon:click ; let i = index" [class.opi]="web.GiaTri">
           <ion-card (click)="chon(web.IDDanhMucSite,web)">
@@ -23,7 +23,7 @@
           </ion-card>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid>-->
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText={{loadtext}}>

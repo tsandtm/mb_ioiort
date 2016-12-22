@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, AlertController, Nav } from 'ionic-angular';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar, Push, Splashscreen } from 'ionic-native';
-import {Http} from '@angular/http';
+import { Http } from '@angular/http';
 
 import { LoginPage } from '../pages/login-page/login-page';
 import { TestPagePage } from '../pages/test-page/test-page';
@@ -22,20 +22,15 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   username: string;
   password: string;
-  rootPage: any;
+  rootPage = LoginPage;
 
-  constructor(platform: Platform, public alertCtrl: AlertController, private service: LoginService,
-    private storage: Storage,private http:Http) {
-
-
-
- 
+  constructor(platform: Platform,private service: LoginService,private storage: Storage, private http: Http) {
+    Splashscreen.hide()
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
-      Splashscreen.hide();
-
+      // Splashscreen.hide();
       let push = Push.init({
         android: {
           senderID: "413199343728"
@@ -50,11 +45,10 @@ export class MyApp {
 
       if (platform.is('android')) {
 
-     
         push.on('registration', (data) => {
           console.log("device token ->", data.registrationId);
 
-      
+
           //TODO - send device token to server
 
           // let body = new URLSearchParams();
@@ -63,16 +57,16 @@ export class MyApp {
           // body.set('NgayTao', '12/12/2016');
           // body.set('TagAppID', '1');
 
-       
+
 
           http.get(`http://test5.hutech.edu.vn/api/pushFireBase/clientdangky/${data.registrationId}/android/1`)
             .subscribe((response) => {
 
-          
+
             },
             (error) => {
 
-         
+
             }, () => {
 
 
@@ -87,11 +81,8 @@ export class MyApp {
           //if user using app and push notification comes
           if (data.additionalData.foreground) {
             // if application open, show popup
-            let confirmAlert = this.alertCtrl.create({
-              title: data.title,
-              message: data.message
-            });
-            // confirmAlert.present();
+
+
           } else {
             //if user NOT using app and push notification comes
             //TODO: Your logic on click of push notification directly
@@ -103,7 +94,7 @@ export class MyApp {
         //-----------------------end push on notification----------------
 
         push.on('error', (e) => {
-          
+
         });
 
 
@@ -111,40 +102,9 @@ export class MyApp {
 
       }
     });
-
-    this.SetRootPage();
   }
 
 
-  SetRootPage = () => {
-    this.storage.forEach((value, key) => {
-      switch (key) {
-        case "TaiKhoan": this.username = value; break;
-        case "Password": this.password = value; break;
-        default:
-      }
-      console.log(`${this.username}${this.password}`)
-      if (this.username && this.password)
-        this.service.LoginToSever(this.username, this.password)
-          .then(result => {
-            if (result !== -1) {
-              // this.IDuser = result._body;
-              // console.log("id user:" + this.IDuser);
-              this.storage.set("IDUser",result)
-              this.rootPage = TinTucPage
-              return;
-            }
-            // this.navCtrl.push(HomePage, { id: this.IDuser });
-            else {
-              console.log(result)
-              this.rootPage = LoginPage;
-              return;
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-    })
-  }
+ 
 }
 

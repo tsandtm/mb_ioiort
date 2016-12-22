@@ -11,7 +11,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <icon src="www/resources/ios/icon/icon-60@3x.png"/>
+    <!--<icon src="www/resources/ios/icon/icon-60@3x.png"/>-->
     <platform name="android">
         <preference name="AndroidLaunchMode" value="singleTop" />
         <preference name="android-minSdkVersion" value="14" />

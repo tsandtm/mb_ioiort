@@ -1,9 +1,9 @@
 export let url = 'http://localhost:8080/api';
 // export let urllog = 'http://localhost:8080';
-// export let urllogin = `http://localhost:8080/tintuc`;
+export let urllogin = `http://localhost:8080/tintuc`;
 
 // export let url = `http://test4.hutech.edu.vn/api`;
-export let urllogin = `http://test4.hutech.edu.vn/tintuc`;
+// export let urllogin = `http://test4.hutech.edu.vn/tintuc`;
 export let urllog = `http://test1.hutech.edu.vn/api`;
 export let SENDER_ID = "413199343728";
 export let urlLoginFace = `http://test4.hutech.edu.vn/Facebook`;

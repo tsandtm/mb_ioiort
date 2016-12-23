@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav,NavController } from 'ionic-angular';
 import { StatusBar, Push, Splashscreen } from 'ionic-native';
 import { Http } from '@angular/http';
 
@@ -22,7 +22,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   username: string;
   password: string;
-  rootPage = LoginPage;
+  rootPage=LoginPage;
+  count:number;
 
   constructor(platform: Platform,private service: LoginService,private storage: Storage, private http: Http) {
     Splashscreen.hide()
@@ -103,8 +104,5 @@ export class MyApp {
       }
     });
   }
-
-
- 
 }
 

@@ -42,24 +42,31 @@ export class HomePage {
      * 
      */
     ionViewCanEnter = () => {
+        this.storage.get("count")
+            .then(x => {
+                return x > 0 && this.flag === 1 ? this.navCtrl.push(TinTucPage, { id: this.IDuser }) : true;
+            })
+            .catch(err => console.log(err))
+    }
+
+
+    /**
+     * Tâm Anh
+     * 
+     */
+    ionViewDidLoad() {
         // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
-                if (res.length > 0 && this.flag === 1) {
-                    this._webService.ShowLoading(IHomePage.ShowLoading);
-                    this.navCtrl.push(TinTucPage, { id: this.IDuser });
-                    return;
-                } else {
-                    this.webs1 = res;
-                    this.count = this.webs1[0].DaChon;
-                    this.storage.set("count", this.count);
-                    this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
-                }
-
+                this.webs1 = res;
+                this.count = this.webs1[0].DaChon;
+                this.storage.set("count", this.count);
+                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
                 return
             })
             .catch(err => console.log(err));
     }
+
 
     /**
      * Tâm Anh 
@@ -89,13 +96,6 @@ export class HomePage {
 
     }
 
-    /**
-     * Tâm Anh
-     * 
-     */
-    ionViewDidLoad() {
-
-    }
 
     /**
      * @function Hàm tìm kiếm danh sách danh mục trên server
@@ -130,7 +130,7 @@ export class HomePage {
                             return false
                         }
                     })
-                    this.gridview(result.length);
+                    // this.gridview(result.length);
 
                 })
             infiniteScroll.complete();

@@ -139,6 +139,9 @@ export class LoginPage {
                 })
                 loading.dismiss();
                 }
+                else{
+                     loading.dismiss();
+                }
             })
         });
     }

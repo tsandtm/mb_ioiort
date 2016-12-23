@@ -89,12 +89,10 @@ export class LoginPage {
 
     /**
      * Bé Bình (News)
-     * @function su dung loading controller làm hiệu ứng vì trong login nó vẫn bị load css lên trước
-     * nên cứ chép các phần hàm trong constructor rồi fix sau nha bạn thành.
+     * xoa noi dung trong constructor
      */
     constructor(public navCtrl: NavController, private service: LoginService,
         private storage: Storage, private _webService: WebsService
-        , public loadingCtrl: LoadingController
     ) {
         
     }

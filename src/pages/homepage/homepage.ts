@@ -42,8 +42,6 @@ export class HomePage {
      * 
      */
     ionViewCanEnter = () => {
-        this.navCtrl.viewWillEnter.toPromise()
-        .then(res => console.log(res))
         // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {

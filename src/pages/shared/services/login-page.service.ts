@@ -12,6 +12,7 @@ export class LoginService extends ServiceBase {
     }
     public LoginToSever(user: any, pass: any): Promise<any> {
         return this.http.post(`${urllogin}/login`, { TaiKhoan: user, Password: pass })
+            .cache()
             .toPromise()
             .then(respone => respone.json())
             .then(res => {

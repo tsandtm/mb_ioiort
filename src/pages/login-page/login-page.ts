@@ -96,7 +96,7 @@ export class LoginPage {
      * Runs before the view can enter. This can be used as a sort of "guard" in authenticated views 
      * where you need to check permissions before the view can enter
      */
-    ionViewCanEnter = ():boolean => {
+    ionViewCanEnter = (): boolean => {
         return this.SetRootPage()
     }
 
@@ -222,12 +222,12 @@ export class LoginPage {
             switch (key) {
                 case "TaiKhoan": this.username = value; break;
                 case "Password": this.password = value; break;
-                case "Checkbox" : this.save = value; break
+                case "Checkbox": this.save = value; break
                 default:
             }
-            console.log(`${this.username}${this.password}`)
+            console.log(`${this.username} va ${this.password}`)
             if (this.username && this.password)
-               return this.service.LoginToSever(this.username, this.password)
+                return this.service.LoginToSever(this.username, this.password)
                     .then(result => {
                         if (result !== -1) {
                             this.storage.set("IDUser", result)

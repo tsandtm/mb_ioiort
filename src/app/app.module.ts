@@ -16,6 +16,7 @@ import { TinquantamPage } from '../pages/tinquantam/tinquantam';
 import { Safe } from '../pages/chitiettin/safe'
 import { TinmoiPage } from '../pages/tinmoi/tinmoi'
 import { Facebook } from 'ionic-native';
+import {WelcomePage} from '../pages/welcome/welcome';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HomeFilterNews } from '../pages/homepage/homepage.pipe';
 // import { SENDER_ID } from '../pages/shared/variables'
@@ -46,7 +47,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     LichSuPage,
     TinDaXemPage,
     TestPagePage,
-    Safe2
+    Safe2,
+    WelcomePage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -63,7 +65,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     TinmoiPage,
     LichSuPage,
     TinDaXemPage,
-    TestPagePage
+    TestPagePage,
+    WelcomePage
   ],
   providers: [
     WebsService,

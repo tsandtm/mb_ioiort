@@ -11,7 +11,7 @@ import { LoginService } from '../pages/shared/services/login-page.service';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/homepage/homepage';
 import { TinTucPage } from '../pages/tintuc/tintuc';
-
+import {WelcomePage} from '../pages/welcome/welcome';
 
 @Component({
   selector: 'my-app',
@@ -22,7 +22,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   username: string;
   password: string;
-  rootPage=LoginPage;
+  rootPage=WelcomePage;
   count:number;
 
   constructor(platform: Platform,private service: LoginService,private storage: Storage, private http: Http) {

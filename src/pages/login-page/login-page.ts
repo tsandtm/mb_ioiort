@@ -84,7 +84,6 @@ export class LoginPage {
     username: string;
     password: string;
     save: boolean = false;
-    count: number = 0; // bebinh sua nay
     IDuser: number;
     webs1: any[];
 
@@ -97,53 +96,7 @@ export class LoginPage {
         private storage: Storage, private _webService: WebsService
         , public loadingCtrl: LoadingController
     ) {
-        let loading = this.loadingCtrl.create({
-            content: 'Đang tải'
-        });
-        loading.present().then(() => {
-            this.storage.forEach((value, key) => {
-                switch (key) {
-                    case "TaiKhoan": this.username = value; break;
-                    case "Password": this.password = value; break;
-                    case "Checkbox": this.save = value; break;
-                    case "count": this.count = value; break; // thêm vô
-                    default:
-                }
-                if (this.username && this.password) {
-                 this.service.LoginToSever(this.username, this.password)
-                .then(result => {
-                    if (result !== -1) {
-                        console.log("id=" + result);
-                        console.log("count=" + this.count);
-                        if (this.count == 0) {
-                            //  this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
-                            console.log("count ==0")
-                            this.navCtrl.push(HomePage, { id: result, flag: 1 });
-                            return;
-                        }
-                        else if (this.count > 0) {
-                            // this.service.ShowToastOK(ILoginPage.Toast_ThanhCong, { position: 'top' })
-                            console.log("count >0")
-                            this.navCtrl.push(TinTucPage, { id: result });
-                            return;
-                        }
-                    }
-                    else {
-                        console.log(result)
-                        // this.service.ShowToastOK(ILoginPage.Toast_KhongThanhCong, { position: 'top', duration: 3000 })
-                        return
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-                loading.dismiss();
-                }
-                else{
-                     loading.dismiss();
-                }
-            })
-        });
+        
     }
 
     /**
@@ -154,7 +107,6 @@ export class LoginPage {
      */
     ionViewCanEnter = () => {
         // return this.SetRootPage()
-
     }
 
     /** 
@@ -163,7 +115,16 @@ export class LoginPage {
      *  The ionViewDidLoad event is good place to put your setup code for the page.
      */
     ionViewDidLoad = () => {
-
+           if(this.username!=null&&this.password!=null)
+        {
+            return false;
+        }
+    }
+    ionViewWillEnter() {
+           if(this.username!=null&&this.password!=null)
+        {
+            return false;
+        }
     }
     /**
      * Thành

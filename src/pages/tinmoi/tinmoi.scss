@@ -1,25 +1,33 @@
 page-tinmoi {
-    // .segment-md .segment-button.activated,
-    // .segment-md .segment-button.segment-activated {
-    //     border-color: #248f8f;
-    // }
-    // .segment-md .segment-button {
-    //     color: #145252;
-    //     font-weight: bold;
-    //     font-size: 13px;
-    // }
-    .avatar {
-        background-image: url("http://www.mhi.com.br/wp-content/uploads/2013/10/bg-azul-raiado.jpg");
-        background-color: transparent;
-        height: 150px;
-        img {
-            margin-left: 150px;
-            margin-top: 60px;
-            border-radius: 60%;
-            width: 80px;
-            height: 80px;
+    .label-md,
+    .label-ios {
+        .avatar {
+            background-image: url("http://www.mhi.com.br/wp-content/uploads/2013/10/bg-azul-raiado.jpg");
+            background-color: transparent;
+            height: 150px;
+            img {
+                margin-left: 40%;
+                margin-top: 60px;
+                border-radius: 60%;
+                width: 80px;
+                height: 80px;
+            }
         }
     }
+    // {
+    //     .avatar {
+    //         background-image: url("http://www.mhi.com.br/wp-content/uploads/2013/10/bg-azul-raiado.jpg");
+    //         background-color: transparent;
+    //         height: 150px;
+    //         img {
+    //             margin-left: 40%;
+    //             margin-top: 60px;
+    //             border-radius: 60%;
+    //             width: 80px;
+    //             height: 80px;
+    //         }
+    //     }
+    // }
     // .label-md {
     //     margin: 0px;
     // }
@@ -48,21 +56,32 @@ page-tinmoi {
     //         }
     //     }
     // }
-   
     // ion-card {
     //     img{
     //         height: 200px;
     //     }
     // }
+    .card-ios,
+    .card-md {
+        border: solid white;
+    }
     .opi {
-        .card-md {
+        .card-md,
+        .card-ios {
             border: solid brown;
         }
     }
     .undo {
         .card-md {
             border: 0px;
-            background-color:dimgray;
+            background-color: dimgray;
+            ion-item {
+                background-color: lightgrey;
+            }
+        }
+        .card-ios {
+            border: 0px;
+            background-color: dimgray;
             ion-item {
                 background-color: lightgrey;
             }

@@ -31,6 +31,8 @@ page-tintuc {
     //         border-style: solid;
     //     }
     // }
-
-
+    ion-infinite-scroll-content {
+        height: 20px;
+        min-height: 0px;
+    }
 }

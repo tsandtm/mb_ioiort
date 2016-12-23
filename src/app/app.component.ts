@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, NavController } from 'ionic-angular';
 import { StatusBar, Push, Splashscreen } from 'ionic-native';
 import { Http } from '@angular/http';
 
@@ -23,14 +23,14 @@ export class MyApp {
   username: string;
   password: string;
   rootPage = LoginPage;
+  count: number;
 
-  constructor(platform: Platform,private service: LoginService,private storage: Storage, private http: Http) {
-    Splashscreen.hide()
+  constructor(platform: Platform, private service: LoginService, private storage: Storage, private http: Http) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
-      // Splashscreen.hide();
+      Splashscreen.hide();
       let push = Push.init({
         android: {
           senderID: "413199343728"
@@ -103,8 +103,5 @@ export class MyApp {
       }
     });
   }
-
-
- 
 }
 

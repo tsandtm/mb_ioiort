@@ -19,15 +19,15 @@ export class HomePage {
     loadtext = IBienToanCuc.Loading_Text;
     // Biến toàn cục
     webs1: IWeb[];
+    webs2: IWeb[];
     count: number = 0;
     listFilter: string = '';
     start: number = 0;
     click: boolean = false;
     IDuser: number;
     flag: number; //móc cờ : 1 là login 
-    hientin: boolean = false;
-    grid: Array<IWeb[]>;
-    length: number = 0;
+    // grid: Array<IWeb[]>;
+    // length: number = 0;
 
     constructor(private _webService: WebsService,
         public navParams: NavParams, public navCtrl: NavController,
@@ -42,63 +42,33 @@ export class HomePage {
      * 
      */
     ionViewCanEnter = () => {
-        this.storage.get("count")
-            .then(x => {
-                return x > 0 && this.flag === 1 ? this.navCtrl.push(TinTucPage, { id: this.IDuser }) : true;
-            })
-            .catch(err => console.log(err))
-    }
-
-
-    /**
-     * Tâm Anh
-     * 
-     */
-    ionViewDidLoad() {
+        this.navCtrl.viewWillEnter.toPromise()
+            .then(res => console.log(res))
         // Load danh mục site 
         this._webService.GetList(this.IDuser, this.start)
             .then(res => {
-                this.webs1 = res;
-                this.count = this.webs1[0].DaChon;
+                this.count = res[0].DaChon;
                 this.storage.set("count", this.count);
-                this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
+                if (this.count > 0 && this.flag === 1) {
+                    this._webService.ShowLoading(IHomePage.ShowLoading);
+                    this.navCtrl.push(TinTucPage, { id: this.IDuser });
+                    return;
+                } else {
+                    this.webs1 = res;
+                    this.webs2 = res;
+                    // this.webs1.forEach(x => x.GiaTri ? this.count++ : this.count);
+                }
+                //Tạo grid view
+                // console.log("chieu dai 1 : " + res.length);
+                // this.gridview(res.length);
                 return
             })
             .catch(err => console.log(err));
     }
 
-
-    /**
-     * Tâm Anh 
-     * Sử dụng gridview để hiện
-     */
-    gridview(length: number) {
-        this.length += length;
-        // console.log("chieu dai 2 : " + this.length);
-        if (this.webs1[this.length - 1]) {
-            this.grid = Array(Math.ceil(this.length / 3));
-            let rowNum = 0; //counter to iterate over the rows in the grid
-            let num = this.length % 3 === 0 ? 3 : 2;
-            for (let i = 0; i < this.length; i += 3) { //iterate images
-                this.grid[rowNum] = Array(num); //declare two elements per row
-                if (this.webs1[i]) { //check file URI exists
-                    this.grid[rowNum][0] = this.webs1[i] //insert image
-                }
-                if (this.webs1[i + 1]) { //repeat for the second image
-                    this.grid[rowNum][1] = this.webs1[i + 1]
-                }
-                if (this.webs1[i + 2]) { //repeat for the third image
-                    this.grid[rowNum][2] = this.webs1[i + 2]
-                }
-                rowNum++; //go on to the next row
-            }
-        }
-
-    }
-
-
     /**
      * @function Hàm tìm kiếm danh sách danh mục trên server
+     *Truyền vào chuỗi tìm kiếm và ID user
      */
 
     search() {
@@ -130,8 +100,6 @@ export class HomePage {
                             return false
                         }
                     })
-                    // this.gridview(result.length);
-
                 })
             infiniteScroll.complete();
         }, 2000);
@@ -146,7 +114,7 @@ export class HomePage {
     }
 
     /**
-     * @function Sự iện cho mỗi lần click vào sản phẩm để chọn
+     * @function Sự kiện cho mỗi lần click vào sản phẩm để chọn
      */
     chon(id: number, w: IWeb) {
         let i = this.webs1.findIndex(i => (i.IDDanhMucSite === id) ? true : false)
@@ -191,7 +159,19 @@ export class HomePage {
      */
     dschon(): void {
         this.click = !this.click;
+        if (this.click) {
+            this._webService.GetList(this.IDuser, this.start, 'all')
+                .then(res => {
+                    let web = [];
+                    for (let x of res) {
+                        if (x.GiaTri)
+                            web.push(x)
+                    }
+                    this.webs1 = web;
+                })
+        } else {
+            this.webs1 = this.webs2;
+        }
         // console.log('hien tai 1: ' + this.click);
     }
-
 }

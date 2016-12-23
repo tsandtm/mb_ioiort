@@ -10,44 +10,14 @@ page-home {
                 color: white;
             }
         }
-    }
-    .tool-home {
-        button {
+        .card-ios {
+            background-color: red;
+        }
+        .card-ios h4 {
             color: white;
-            height: 55px;
-            width: 180px;
-            float: right;
-            /*padding: 20px 0px;*/
-            font-size: 18px;
-            font-weight: bold;
-            border-left: 2px solid white;
-        }
-        .dachon {
-            height: 55px;
-            width: 165px;
-            float: left;
-            padding: 18px;
-            label {
-                color: white;
-                position: absolute;
-                /*padding: 20px 0px;*/
-                font-size: 18px;
-                font-weight: bold;
-                margin-left: 5px;
-            }
         }
     }
-    // .contain {
-    //     text-align: center;
-    //     padding: 0px 3px 2px 3px;
-    //     p {
-    //         font-size: 10px;
-    //         margin: 2px;
-    //         padding-top: 4px;
-    //     }
-    // }
     .card-background-page {
-        margin: 3px;
         .card-md {
             margin: 0.35em;
             width: 30%;
@@ -65,10 +35,16 @@ page-home {
                 -webkit-transition: .3s ease-in-out;
                 transition: .3s ease-in-out;
             }
+            h4 {
+                font-weight: bold;
+                margin: 1px;
+                font-size: 14px;
+                text-align: center;
+            }
         }
         .card-ios {
-            margin: 4px;
-            width: 110px;
+            margin: 0.35em;
+            width: 30%;
             height: 150px;
             float: left;
             img {
@@ -83,35 +59,84 @@ page-home {
                 -webkit-transition: .3s ease-in-out;
                 transition: .3s ease-in-out;
             }
-        }
-        ion-card {
-            width: 97%;
-            height: 155px;
-            float: left;
-            text-align: center;
+            // ion-card {
+            //     width: 97%;
+            //     height: 155px;
+            //     float: left;
+            //     text-align: center;
             h4 {
                 font-weight: bold;
                 margin: 1px;
-                font-size: 15px;
+                font-size: 14px;
+                text-align: center;
+            }
+            // }
+        }
+    }
+    .footer-ios {
+        .toolbar-ios {
+            padding: 0px;
+        }
+        .toolbar-content-ios {
+            background-color: #387ef5;
+            .dachon {
+                float: left;
+                padding: 1.2em 15px;
+                label {
+                    color: white;
+                    position: absolute;
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .tool-home {
+            .button-ios {
+                border-radius: 0px;
+            }
+            button {
+                color: white;
+                height: 45px;
+                width: 160px;
+                float: right;
+                /*padding: 20px 0px;*/
+                font-size: 18px;
+                font-weight: bold;
+                border-left: 1px solid white;
             }
         }
     }
-    .toolbar-content-md {
-        .button-home {
+    .footer-md {
+        .toolbar-md {
+            padding: 0px;
+        }
+        .toolbar-content-md {
             background-color: #387ef5;
-            height: 55px;
-            width: 100%;
+            .dachon {
+                float: left;
+                padding: 1.2em 15px;
+                label {
+                    color: white;
+                    position: absolute;
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .tool-home {
+            .button-md {
+                border-radius: 0px;
+            }
+            button {
+                color: white;
+                height: 45px;
+                width: 160px;
+                float: right;
+                /*padding: 20px 0px;*/
+                font-size: 18px;
+                font-weight: bold;
+                border-left: 1px solid white;
+            }
         }
     }
-    .toolbar-content-ios {
-        .button-home {
-            background-color: #387ef5;
-            height: 55px;
-            width: 100%;
-        }
-    }
-}
-
-ion-toolbar {
-    max-height: 50px;
 }

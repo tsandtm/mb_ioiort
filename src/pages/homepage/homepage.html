@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content class="card-background-page" #content>
-
-  <div *ngFor="let web of webs1 | TinDaChon:click ; let i = index">
+<!--| TinDaChon:click-->
+  <div *ngFor="let web of webs1 ; let i = index">
     <div [class.opi]="web.GiaTri">
       <ion-card (click)="chon(web.IDDanhMucSite,web)">
         <img [src]='web.Icon' />
@@ -14,6 +14,7 @@
       </ion-card>
     </div>
   </div>
+
   <!--<ion-grid>
     <ion-row *ngFor="let row of grid">
       <ion-col width-33 *ngFor="let web of row  | TinDaChon:click ; let i = index" [class.opi]="web.GiaTri">
@@ -33,17 +34,10 @@
 
 <ion-footer>
   <ion-toolbar no-border class="tool-home">
-    <div style="background-color: #387ef5;
-    height: 55px;
-    width: 100%;">
-
-      <div class="dachon" (click)='dschon()'>
-        <label> {{lbdachon}}{{count}}</label>
-      </div>
-      <ion-buttons>
-        <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
-</button>
-      </ion-buttons>
+    <div class="dachon" (click)='dschon()'>
+      <label> {{lbdachon}}{{count}}</label>
     </div>
+    <button ion-button (click)='nextToPage()'>{{btnnext}} <ion-icon style="font-size:25px;margin-left:10px;" ios="ios-arrow-dropright" md="md-arrow-dropright"></ion-icon>
+  </button>
   </ion-toolbar>
 </ion-footer>

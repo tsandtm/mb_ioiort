@@ -202,6 +202,7 @@ export class LoginPage {
                                     this.storage.set("TaiKhoan", this.username);
                                     this.storage.set("Password", this.password);
                                     this.storage.set("Checkbox", this.save);
+                                    this.storage.set("IDUser", this.IDuser)
                                     this.navCtrl.push(HomePage, { id: this.IDuser, flag: 1 });
                                 }
                                 else {
@@ -218,7 +219,6 @@ export class LoginPage {
             });
         }).catch(err => { // sua nay
             console.log(JSON.stringify(err));
-            this.service.ShowToastOK(err, { position: 'top', duration: 3000 })
         });
     }
 
